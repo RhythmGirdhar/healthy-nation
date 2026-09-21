@@ -15,18 +15,26 @@ function meal(input: unknown, path: string): Meal {
     "tags", "options", "featured", "available", "price", "currency", "portion", "accent",
     "art", "image", "isSample",
   ]);
-  const image = record(value.image, `${path}.image`, ["src", "alt", "kind"]);
-  const src = text(image.src, `${path}.image.src`);
-  if (!isLocalImage(src)) throw new Error(`${path}.image.src: Use a local image path under /images`);
+  let image: Meal["image"] = null;
+  if (value.image !== null) {
+    const fields = record(value.image, `${path}.image`, ["src", "alt", "kind"]);
+    const src = text(fields.src, `${path}.image.src`);
+    if (!isLocalImage(src)) throw new Error(`${path}.image.src: Use a local image path under /images`);
+    image = {
+      src,
+      alt: text(fields.alt, `${path}.image.alt`),
+      kind: choice(fields.kind, `${path}.image.kind`, ["illustration", "photo"]),
+    };
+  }
   return {
     id: identifier(value.id, `${path}.id`),
     slug: identifier(value.slug, `${path}.slug`),
     name: text(value.name, `${path}.name`),
-    description: text(value.description, `${path}.description`),
-    category: choice(value.category, `${path}.category`, ["Bowls", "Wraps", "Breakfast"]),
-    diet: choice(value.diet, `${path}.diet`, ["Vegetarian", "Plant-based", "Non-vegetarian"]),
-    ingredients: strings(value.ingredients, `${path}.ingredients`, 1),
-    allergens: strings(value.allergens, `${path}.allergens`, 1),
+    description: text(value.description, `${path}.description`, 2000, true),
+    category: text(value.category, `${path}.category`, 100),
+    diet: choice(value.diet, `${path}.diet`, ["Vegetarian", "Plant-based", "Non-vegetarian", "Not specified"]),
+    ingredients: strings(value.ingredients, `${path}.ingredients`),
+    allergens: strings(value.allergens, `${path}.allergens`),
     tags: strings(value.tags, `${path}.tags`),
     options: array(value.options, `${path}.options`, (entry, field) => text(entry, field, 120), 1),
     featured: boolean(value.featured, `${path}.featured`),
@@ -36,11 +44,7 @@ function meal(input: unknown, path: string): Meal {
     portion: text(value.portion, `${path}.portion`),
     accent: choice(value.accent, `${path}.accent`, ["sage", "peach", "lilac", "gold"]),
     art: choice(value.art, `${path}.art`, ["bowl", "wrap", "oats"]),
-    image: {
-      src,
-      alt: text(image.alt, `${path}.image.alt`),
-      kind: choice(image.kind, `${path}.image.kind`, ["illustration", "photo"]),
-    },
+    image,
     isSample: boolean(value.isSample, `${path}.isSample`),
   };
 }
@@ -90,7 +94,7 @@ export function parsePublicCatalog(input: unknown): PublicCatalog {
             day: choice(day.day, `${path}.day`, ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]),
             mealId: identifier(day.mealId, `${path}.mealId`),
           };
-        }, 1),
+        }),
       },
       faqs: array(value.faqs, "faqs", (entry, path) => {
         const faq = record(entry, path, ["id", "question", "answer"]);

@@ -37,25 +37,29 @@ Keep the original supplied logo under `assets/brand`. Web derivatives are separa
 
 ## Sample meals and plans
 
-Edit [meals.json](../web/content/meals.json) for dishes, [plans.json](../web/content/plans.json) for meal plans, and [catalog.json](../web/content/catalog.json) for the weekly menu, FAQs, preview status, and publication metadata. The TypeScript catalog module loads and validates these files. The initial dish descriptions and plan examples are preserved from the design concept so the owner can review the demo before replacing them with his real menu.
+Edit [meals.json](../web/content/meals.json) for dishes, [plans.json](../web/content/plans.json) for meal plans, and [catalog.json](../web/content/catalog.json) for the weekly menu, FAQs, preview status, and publication metadata. The TypeScript catalog module loads and validates these files.
 
-Sample content must remain explicitly marked. Sample prices are `null`, not fabricated promotional offers. Illustrations are not actual food photographs, and ingredients/allergens/portions in a sample record are not verified food information.
+The current menu contains **55 dishes imported from Healthy Nation Online Menu.pdf**, with listed INR prices. The [import record](../web/content/menu-source.json) records the source hash, source pages, and name/price pairs. It is an audit of the import, not a second live configuration to edit.
 
-The application can link to real **general and catering inquiries** without representing the sample dishes as live offers. A configured phone number alone must not enable sample-offer requests.
+The PDF did not provide full recipes, allergens, portions, a weekly schedule, or meal plans. Those facts have not been invented. Empty ingredient/allergen lists mean **unknown**, never allergen-free; `image: null` shows a photo placeholder instead of an unrelated demonstration image. Categories are editable text. Diet labels follow the PDF's Veg/Non Veg headings; unlabeled sides and smoothies use `Not specified`.
+
+The example meal plans remain `isSample: true` with `price: null`, so they cannot be sent as live offers even though the actual dishes can. Sample and real entries can coexist; eligibility is checked for the selected items, not inferred from the phone number alone.
+
+Domain names reported by the owner are recorded in `business.json`: **thehealthynation.in** and **healthynation.co.in**. Neither has been selected as canonical or connected through DNS by this work.
 
 ## Publishing real offers
 
 Before enabling meal or plan handoff:
 
-1. Obtain approved recipes, ingredients, complete allergen/cross-contact information, portions, prices, availability, and any nutritional claims.
+1. Use owner-approved dish names and prices. Leave missing descriptions blank, unknown ingredient/allergen lists empty, and unmapped photos `null` rather than inventing information. The team must clarify food suitability and fulfillment details before accepting an order.
 2. Replace sample descriptions and images with accurate content. Only label an image as a photograph if it actually shows approved food imagery.
 3. Confirm plan duration/count, delivery cadence, choice/substitution rules, delivery-fee treatment, and cancellation/refund terms.
-4. Set publication validity deliberately. `publishedAt`, `validFrom`, and `validUntil` describe the catalog version, not an automatic promise of delivery.
-5. Change preview/sample flags only when all relevant content is genuinely approved. The build validation rejects inconsistent live/sample content.
+4. Set publication validity deliberately. `publishedAt` and `validFrom` are required for a published catalog. `validUntil: null` means no fixed expiry is configured; the PDF supplied no expiry, so none was invented. A configured expiry is still enforced. These fields do not promise stock or delivery.
+5. Set actual dishes to `isSample: false` only when their names/prices are approved. Unpriced or sample selections remain blocked. A published catalog can include explicitly marked sample plans, but those plans must retain `isSample: true` and `price: null`.
 6. Enable `business.contact.offerRequestsEnabled` only after the live catalog and business operation are ready. General-inquiry permission is separate.
 7. Validate the content and application, inspect the preview, and publish pages, catalog snapshot, assets, and configuration together.
 
-Do not flip flags just to make a disabled button clickable. Until launch facts are confirmed, leave offer requests gated and use the generic current-menu inquiry.
+Do not flip sample flags merely to make a button clickable. The PDF dishes are enabled for WhatsApp **requests**, not automatically accepted orders. Example plans remain gated. Every request still needs team confirmation.
 
 ## Menu changes and existing drafts
 
@@ -65,7 +69,7 @@ Correct urgent unavailability through the same validated publishing process. A r
 
 ## Domain and social profiles
 
-The actual domain, service coverage, operating hours, Instagram profile, and Facebook profile remain unconfirmed. Do not invent them. An optional public site origin can be configured only after domain ownership is established; see the environment example and development guide.
+Service coverage, operating hours, and Facebook remain unconfirmed. The Instagram handle `@healthy.nation.in` is printed in the supplied menu and is linked in the footer. The two reported domains are recorded, but the primary domain and hosting/DNS configuration are still undecided.
 
 Hosting and DNS are a later step. Editing these files does not deploy the website.
 

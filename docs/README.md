@@ -21,6 +21,7 @@ This folder is the home for project requirements, architecture, design, reviews,
 | --- | --- |
 | Brand | Confirmed: **Healthy Nation**, supplied green-and-white logo. |
 | Founder and contact | Confirmed: Shivansh Girdhar, degree in Culinary Sciences; WhatsApp **+91 81049 60748**. Founder photograph not supplied. |
+| Menu | 55 priced dishes imported from the supplied PDF. Missing food facts and per-dish photos are explicit; sample meal plans remain protected. |
 | Application stack | Confirmed: Next.js and TypeScript in one project. |
 | Content management | Confirmed: editable content files first; CMS/admin later. |
 | V1 transaction model | Confirmed: WhatsApp inquiry/request and manual team confirmation, not website checkout. |
@@ -29,7 +30,7 @@ This folder is the home for project requirements, architecture, design, reviews,
 | Initial code | Scaffolding and preliminary catalog/domain modules exist under `web`. |
 | Implementation | In progress, applying the independent-review corrections and confirmed founder/contact details. |
 | Independent reviews | Both architecture and visual passes completed; corrections are applied to the proposal and concept, with reproducible prototype regression checks. |
-| Hosting, domain, DNS | Deferred. No domain ownership or provider is confirmed. |
+| Hosting, domain, DNS | Owner reported **thehealthynation.in** and **healthynation.co.in**. Primary domain, hosting, and DNS configuration remain deferred. |
 | Source checkpoint | Reviewed documentation/prototype and the unfinished scaffold are preserved together; source publication is not a deployment. |
 
 The preliminary code does not yet implement all design corrections. Do not treat an architecture target, a clickable mock, or a configured test command as a delivered feature or a passed check.

@@ -1,0 +1,410 @@
+{
+  "sourceFile": "Healthy Nation Online Menu.pdf",
+  "sha256": "82857c3101d901586107a0b2e541044721ab62d50444aad03031348eddebc940",
+  "pages": 5,
+  "importedAt": "2026-09-21T06:51:48.907Z",
+  "itemCount": 55,
+  "categoryCounts": {
+    "Sides": 5,
+    "Salads": 10,
+    "Meals": 12,
+    "Wraps": 10,
+    "Bowls": 6,
+    "Sandwiches": 7,
+    "Smoothies": 5
+  },
+  "priceChecks": "All 55 numeric prices matched a second OCR pass on individual price crops.",
+  "notes": [
+    "Category labels are normalized for the website.",
+    "Veg/non-veg labels follow the PDF; sides and smoothies were not explicitly classified.",
+    "No descriptions, ingredient/allergen lists, portions, per-item photographs, meal plans, weekly schedule or expiry have been inferred.",
+    "Availability in the app means the dish can be requested; the team must confirm actual availability and the final total."
+  ],
+  "items": [
+    {
+      "id": "potato-wedges",
+      "name": "Potato Wedges",
+      "price": 129,
+      "currency": "INR",
+      "page": 1
+    },
+    {
+      "id": "peri-peri-potato-wedges",
+      "name": "Peri Peri Potato Wedges",
+      "price": 139,
+      "currency": "INR",
+      "page": 1
+    },
+    {
+      "id": "french-fries",
+      "name": "French Fries",
+      "price": 129,
+      "currency": "INR",
+      "page": 1
+    },
+    {
+      "id": "peri-peri-french-fries",
+      "name": "Peri Peri French Fries",
+      "price": 139,
+      "currency": "INR",
+      "page": 1
+    },
+    {
+      "id": "falafel-and-hummus",
+      "name": "Falafel & Hummus",
+      "price": 189,
+      "currency": "INR",
+      "page": 1
+    },
+    {
+      "id": "grilled-paneer-salad",
+      "name": "Grilled Paneer Salad",
+      "price": 280,
+      "currency": "INR",
+      "page": 1
+    },
+    {
+      "id": "peri-peri-paneer-salad",
+      "name": "Peri Peri Paneer Salad",
+      "price": 290,
+      "currency": "INR",
+      "page": 1
+    },
+    {
+      "id": "watermelon-feta-paneer-salad",
+      "name": "Watermelon Feta Paneer Salad",
+      "price": 299,
+      "currency": "INR",
+      "page": 1
+    },
+    {
+      "id": "pesto-pasta-paneer-salad",
+      "name": "Pesto Pasta Paneer Salad",
+      "price": 309,
+      "currency": "INR",
+      "page": 1
+    },
+    {
+      "id": "creamy-paneer-salad",
+      "name": "Creamy Paneer Salad",
+      "price": 290,
+      "currency": "INR",
+      "page": 1
+    },
+    {
+      "id": "grilled-chicken-salad",
+      "name": "Grilled Chicken Salad",
+      "price": 280,
+      "currency": "INR",
+      "page": 2
+    },
+    {
+      "id": "peri-peri-chicken-salad",
+      "name": "Peri Peri Chicken Salad",
+      "price": 290,
+      "currency": "INR",
+      "page": 2
+    },
+    {
+      "id": "watermelon-feta-chicken-salad",
+      "name": "Watermelon Feta Chicken Salad",
+      "price": 299,
+      "currency": "INR",
+      "page": 2
+    },
+    {
+      "id": "pesto-pasta-chicken-salad",
+      "name": "Pesto Pasta Chicken Salad",
+      "price": 309,
+      "currency": "INR",
+      "page": 2
+    },
+    {
+      "id": "caesar-salad",
+      "name": "Caesar Salad",
+      "price": 290,
+      "currency": "INR",
+      "page": 2
+    },
+    {
+      "id": "makhani-paneer-meal",
+      "name": "Makhani Paneer Meal",
+      "price": 289,
+      "currency": "INR",
+      "page": 2
+    },
+    {
+      "id": "paneer-tikka-meal",
+      "name": "Paneer Tikka Meal",
+      "price": 289,
+      "currency": "INR",
+      "page": 2
+    },
+    {
+      "id": "peri-peri-paneer-meal",
+      "name": "Peri Peri Paneer Meal",
+      "price": 279,
+      "currency": "INR",
+      "page": 2
+    },
+    {
+      "id": "pesto-paneer-meal",
+      "name": "Pesto Paneer Meal",
+      "price": 309,
+      "currency": "INR",
+      "page": 2
+    },
+    {
+      "id": "garden-spinach-paneer-meal",
+      "name": "Garden Spinach Paneer Meal",
+      "price": 289,
+      "currency": "INR",
+      "page": 2
+    },
+    {
+      "id": "creamy-paneer-meal",
+      "name": "Creamy Paneer Meal",
+      "price": 309,
+      "currency": "INR",
+      "page": 2
+    },
+    {
+      "id": "makhani-chicken-meal",
+      "name": "Makhani Chicken Meal",
+      "price": 299,
+      "currency": "INR",
+      "page": 3
+    },
+    {
+      "id": "chicken-tikka-meal",
+      "name": "Chicken Tikka Meal",
+      "price": 299,
+      "currency": "INR",
+      "page": 3
+    },
+    {
+      "id": "peri-peri-chicken-meal",
+      "name": "Peri Peri Chicken Meal",
+      "price": 289,
+      "currency": "INR",
+      "page": 3
+    },
+    {
+      "id": "pesto-chicken-meal",
+      "name": "Pesto Chicken Meal",
+      "price": 319,
+      "currency": "INR",
+      "page": 3
+    },
+    {
+      "id": "garden-spinach-chicken-meal",
+      "name": "Garden Spinach Chicken Meal",
+      "price": 299,
+      "currency": "INR",
+      "page": 3
+    },
+    {
+      "id": "creamy-chicken-meal",
+      "name": "Creamy Chicken Meal",
+      "price": 319,
+      "currency": "INR",
+      "page": 3
+    },
+    {
+      "id": "grilled-paneer-wrap",
+      "name": "Grilled Paneer Wrap",
+      "price": 279,
+      "currency": "INR",
+      "page": 3
+    },
+    {
+      "id": "peri-peri-paneer-wrap",
+      "name": "Peri Peri Paneer Wrap",
+      "price": 279,
+      "currency": "INR",
+      "page": 3
+    },
+    {
+      "id": "paneer-makhani-wrap",
+      "name": "Paneer Makhani Wrap",
+      "price": 299,
+      "currency": "INR",
+      "page": 3
+    },
+    {
+      "id": "hummus-paneer-wrap",
+      "name": "Hummus Paneer Wrap",
+      "price": 309,
+      "currency": "INR",
+      "page": 3
+    },
+    {
+      "id": "paneer-tikka-wrap",
+      "name": "Paneer Tikka Wrap",
+      "price": 289,
+      "currency": "INR",
+      "page": 3
+    },
+    {
+      "id": "grilled-chicken-wrap",
+      "name": "Grilled Chicken Wrap",
+      "price": 289,
+      "currency": "INR",
+      "page": 4
+    },
+    {
+      "id": "peri-peri-chicken-wrap",
+      "name": "Peri Peri Chicken Wrap",
+      "price": 289,
+      "currency": "INR",
+      "page": 4
+    },
+    {
+      "id": "chicken-makhani-wrap",
+      "name": "Chicken Makhani Wrap",
+      "price": 309,
+      "currency": "INR",
+      "page": 4
+    },
+    {
+      "id": "hummus-chicken-wrap",
+      "name": "Hummus Chicken Wrap",
+      "price": 319,
+      "currency": "INR",
+      "page": 4
+    },
+    {
+      "id": "chicken-tikka-wrap",
+      "name": "Chicken Tikka Wrap",
+      "price": 299,
+      "currency": "INR",
+      "page": 4
+    },
+    {
+      "id": "paneer-hummus-power-bowl",
+      "name": "Paneer Hummus Power Bowl",
+      "price": 339,
+      "currency": "INR",
+      "page": 4
+    },
+    {
+      "id": "peri-peri-paneer-cheesy-bowl",
+      "name": "Peri Peri Paneer Cheesy Bowl",
+      "price": 329,
+      "currency": "INR",
+      "page": 4
+    },
+    {
+      "id": "asian-paneer-power-bowl",
+      "name": "Asian Paneer Power Bowl",
+      "price": 329,
+      "currency": "INR",
+      "page": 4
+    },
+    {
+      "id": "chicken-hummus-power-bowl",
+      "name": "Chicken Hummus Power Bowl",
+      "price": 349,
+      "currency": "INR",
+      "page": 4
+    },
+    {
+      "id": "peri-peri-chicken-cheesy-bowl",
+      "name": "Peri Peri Chicken Cheesy Bowl",
+      "price": 339,
+      "currency": "INR",
+      "page": 4
+    },
+    {
+      "id": "asian-chicken-power-bowl",
+      "name": "Asian Chicken Power Bowl",
+      "price": 339,
+      "currency": "INR",
+      "page": 4
+    },
+    {
+      "id": "masala-paneer-sandwich",
+      "name": "Masala Paneer Sandwich",
+      "price": 269,
+      "currency": "INR",
+      "page": 5
+    },
+    {
+      "id": "falafel-hummus-sandwich",
+      "name": "Falafel Hummus Sandwich",
+      "price": 279,
+      "currency": "INR",
+      "page": 5
+    },
+    {
+      "id": "peri-peri-paneer-sandwich",
+      "name": "Peri Peri Paneer Sandwich",
+      "price": 269,
+      "currency": "INR",
+      "page": 5
+    },
+    {
+      "id": "grilled-chicken-sandwich",
+      "name": "Grilled Chicken Sandwich",
+      "price": 269,
+      "currency": "INR",
+      "page": 5
+    },
+    {
+      "id": "masala-chicken-sandwich",
+      "name": "Masala Chicken Sandwich",
+      "price": 279,
+      "currency": "INR",
+      "page": 5
+    },
+    {
+      "id": "peri-peri-chicken-sandwich",
+      "name": "Peri Peri Chicken Sandwich",
+      "price": 279,
+      "currency": "INR",
+      "page": 5
+    },
+    {
+      "id": "egg-sandwich",
+      "name": "Egg Sandwich",
+      "price": 249,
+      "currency": "INR",
+      "page": 5
+    },
+    {
+      "id": "rich-thick-chocolate-smoothie",
+      "name": "Rich Thick Chocolate Smoothie",
+      "price": 250,
+      "currency": "INR",
+      "page": 5
+    },
+    {
+      "id": "royal-blueberry-smoothie",
+      "name": "Royal Blueberry Smoothie",
+      "price": 270,
+      "currency": "INR",
+      "page": 5
+    },
+    {
+      "id": "mixed-berries-smoothie",
+      "name": "Mixed Berries Smoothie",
+      "price": 280,
+      "currency": "INR",
+      "page": 5
+    },
+    {
+      "id": "strawberry-smoothie",
+      "name": "Strawberry Smoothie",
+      "price": 250,
+      "currency": "INR",
+      "page": 5
+    },
+    {
+      "id": "mango-smoothie",
+      "name": "Mango Smoothie",
+      "price": 250,
+      "currency": "INR",
+      "page": 5
+    }
+  ]
+}

@@ -31,6 +31,10 @@ a:hover { color: var(--green); }
 ::selection { background: #d9e8c5; color: var(--forest); }
 img, svg { max-width: 100%; }
 img { height: auto; }
+.meal-image-placeholder { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 14px; color: var(--muted); background: var(--sage); text-align: center; font-size: 14px; border-radius: inherit; }
+.request-line-image .meal-image-placeholder { height: 100%; padding: 8px; }
+.request-line-image .meal-image-placeholder span { display: none; }
+.request-line-image .meal-image-placeholder svg { max-width: 30px; }
 h1, h2, h3, h4, p, figure { margin: 0; }
 h1, h2, h3 { text-wrap: balance; }
 h1, h2 { font-family: var(--serif); font-weight: 400; line-height: 1.12; letter-spacing: -.045em; }

@@ -1,7 +1,11 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { catalog } from "@/lib/catalog";
 import { parsePublicCatalog } from "@/lib/catalog-client";
 import * as route from "./route";
+
+vi.mock("@/data/catalog", async () => ({
+  catalogData: (await import("@/lib/catalog-fixture")).catalogFixtureData,
+}));
 
 describe("static /catalog.json artifact", () => {
   it("exports only a static GET handler, not a runtime or mutation API", () => {

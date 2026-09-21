@@ -5,7 +5,7 @@ import styles from "../content.module.css";
 
 export const metadata: Metadata = {
   title: "Frequently asked questions",
-  description: "Questions about Healthy Nation's menu preview, meal plans, ingredients, delivery, and WhatsApp inquiries.",
+  description: "Questions about Healthy Nation's menu, meal plans, ingredients, delivery, and WhatsApp order requests.",
 };
 
 export default function FaqPage() {
@@ -15,8 +15,8 @@ export default function FaqPage() {
       <span className={styles.eyebrow}>Before you order</span>
       <h1 className={styles.title}>Frequently asked questions</h1>
       <p className={styles.lede}>
-        The menu on this site is a preview. Ask us about current meals,
-        prices, delivery, or specific dietary requirements before ordering.
+        Dish names and prices come from the supplied Healthy Nation menu.
+        Check availability, delivery, and any dietary requirements with the team before ordering.
       </p>
       <div className={styles.faqList}>
         {faqs.map(faq => (

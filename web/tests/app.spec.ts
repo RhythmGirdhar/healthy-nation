@@ -1,4 +1,7 @@
 import { test as base, expect } from "@playwright/test";
+import businessContent from "../content/business.json";
+import { parsePublicCatalog } from "../src/lib/catalog-client";
+import { formatPrice } from "../src/lib/format";
 
 const test = base.extend<{ observePage: void }>({
   observePage: [async ({ page, baseURL }, use) => {
@@ -27,7 +30,7 @@ test("About page shows the confirmed founder, qualification, and honest portrait
   const founderLink = page.getByRole("link", { name: "Message Shivansh" });
   const url = new URL((await founderLink.getAttribute("href"))!);
   expect(url.origin).toBe("https://wa.me");
-  expect(url.pathname).toBe("/918104960748");
+  expect(url.pathname).toBe(`/${businessContent.contact.phoneNumber}`);
   expect(url.searchParams.get("text")).toContain("Hi Shivansh!");
   await expect(founderLink).toHaveAttribute("target", "_blank");
   await expect(founderLink).toHaveAttribute("rel", /noopener/);
@@ -39,7 +42,7 @@ test("public contact links use the supplied number without turning samples into 
   expect(await contacts.count()).toBeGreaterThan(0);
   for (const link of await contacts.all()) {
     const url = new URL((await link.getAttribute("href"))!);
-    expect(url.pathname).toBe("/918104960748");
+    expect(url.pathname).toBe(`/${businessContent.contact.phoneNumber}`);
     expect(url.searchParams.get("text")).not.toMatch(/Meal \d|Selected plan|Harissa chicken|Paneer garden/);
     await expect(link).toHaveAttribute("referrerpolicy", "no-referrer");
   }
@@ -58,7 +61,7 @@ test("catering prepares a reviewed message and invalidates it when the inputs ch
   expect(text).toMatch(/headcount.*12|people.*12/i);
   expect(text).toContain(`${year}-06-12`);
   const url = new URL((await message.getByRole("link", { name: /Open WhatsApp to send/ }).getAttribute("href"))!);
-  expect(url.pathname).toBe("/918104960748");
+  expect(url.pathname).toBe(`/${businessContent.contact.phoneNumber}`);
   expect(url.searchParams.get("text")).toBe(text);
   expect(text).not.toMatch(/Harissa|Paneer|Sample \/ preview catalog request/);
   await page.getByLabel("Approximate number of people (optional)").fill("15");
@@ -78,15 +81,70 @@ test("the exported catalog is public, versioned, and read-only", async ({ reques
   expect(response.status()).toBe(200);
   expect(response.headers()["content-type"]).toContain("application/json");
   expect(response.headers()["cache-control"]).toContain("no-store");
-  const catalog = await response.json();
+  const catalog = parsePublicCatalog(await response.json());
   expect(catalog.schemaVersion).toBe(1);
-  expect(catalog.isPreview).toBe(true);
+  expect(catalog.isPreview).toBe(false);
   expect(catalog.publication.revision).toMatch(/^[a-f0-9]{64}$/);
-  expect(catalog.meals).toHaveLength(6);
-  expect(catalog.meals.every((meal: { isSample: boolean; price: number | null }) => meal.isSample && meal.price === null)).toBe(true);
+  expect(catalog.meals.length).toBeGreaterThan(0);
+  expect(catalog.meals.every((meal) => !meal.isSample && meal.price !== null)).toBe(true);
   expect((await request.post("/catalog.json", { data: {} })).status()).toBe(405);
   expect((await request.get("/api/catalog/")).status()).toBe(404);
   expect((await request.get("/menu/not-a-real-meal/")).status()).toBe(404);
+});
+
+test("a real meal request opens a correctly addressed WhatsApp draft with quantity and listed price", async ({ page, request }) => {
+  const response = await request.get("/catalog.json");
+  const catalog = parsePublicCatalog(await response.json());
+  const meal = catalog.meals.find((entry) => !entry.isSample && entry.available && entry.price !== null);
+  if (!meal) throw new Error("The published menu has no requestable real dish.");
+  await page.goto(`/menu/${meal.slug}/`);
+  await expect(page.getByRole("heading", { level: 1, name: meal.name })).toBeVisible();
+  await page.getByRole("button", { name: /Add to request/ }).click();
+  await expect(page).toHaveURL(/\/request\/$/);
+  await page.getByRole("button", { name: `Increase quantity of ${meal.name}`, exact: true }).click();
+  await page.getByRole("button", { name: "Preview message" }).click();
+  const dialog = page.getByRole("dialog", { name: "Review your message" });
+  const handoff = dialog.getByRole("link", { name: "Open WhatsApp" });
+  await expect(handoff).toBeVisible();
+  const url = new URL((await handoff.getAttribute("href"))!);
+  const message = url.searchParams.get("text");
+  expect(url.origin).toBe("https://wa.me");
+  expect(url.pathname).toBe(`/${businessContent.contact.phoneNumber}`);
+  expect(message).toBe(await dialog.getByLabel("Your message draft").inputValue());
+  expect(message).toContain(`Name: ${meal.name}`);
+  expect(message).toContain("Quantity: 2");
+  expect(message).toContain(`Unit price: ${formatPrice(meal.price)}`);
+  expect(message).not.toContain("Sample / preview");
+  await page.getByRole("button", { name: "Close message preview", exact: true }).click();
+  await page.reload();
+  await expect(page.getByRole("main")).toContainText(meal.name);
+  await expect(page.getByLabel("Quantity: 2", { exact: true })).toBeVisible();
+});
+
+test("menu categories come from JSON and unprovided food facts are explicit", async ({ page, request }) => {
+  const catalog = parsePublicCatalog(await (await request.get("/catalog.json")).json());
+  await page.goto("/menu/");
+  const category = page.locator("#menu-category");
+  await expect(category).toBeVisible();
+  for (const name of new Set(catalog.meals.map((meal) => meal.category))) {
+    await expect(category.getByRole("option", { name, exact: true })).toHaveCount(1);
+  }
+  const meal = catalog.meals.find((entry) => !entry.image && !entry.ingredients.length && !entry.allergens.length);
+  if (!meal) throw new Error("Expected an imported dish with unprovided photo and ingredients.");
+  await page.goto(`/menu/${meal.slug}/`);
+  await expect(page.getByRole("img", { name: `${meal.name}: photo not provided` })).toBeVisible();
+  await expect(page.getByRole("main")).toContainText("The supplied menu does not list ingredients");
+  await expect(page.getByRole("main")).toContainText("does not mean the dish is allergen-free");
+});
+
+test("sample meal plans remain local-only despite the live menu and configured phone", async ({ page }) => {
+  await page.goto("/plans/");
+  await page.getByRole("button", { name: "Explore this sample plan" }).first().click();
+  await expect(page).toHaveURL(/\/request\/$/);
+  await page.getByRole("button", { name: "Preview message" }).click();
+  const dialog = page.getByRole("dialog", { name: "Review your message" });
+  await expect(dialog.getByRole("link", { name: "Open WhatsApp" })).toHaveCount(0);
+  await expect(dialog).toContainText(/sample|preview/i);
 });
 
 test("the main pages, logo and supporting content do not overflow", async ({ page }) => {

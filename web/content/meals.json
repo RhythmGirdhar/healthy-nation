@@ -1,206 +1,1267 @@
 [
   {
-    "id": "harissa-chicken-bowl",
-    "image": {
-      "src": "/images/meal-harissa.svg",
-      "alt": "Illustration of a sample harissa chicken bowl, not actual food photography",
-      "kind": "illustration"
-    },
-    "slug": "harissa-chicken-bowl",
-    "name": "Harissa chicken bowl",
-    "description": "Warm spice, vibrant greens, and a generous little moment for lunch.",
-    "category": "Bowls",
-    "diet": "Non-vegetarian",
-    "ingredients": [
-      "Chicken, grain base, cucumber, tomato, leafy greens, and a harissa-style dressing."
-    ],
-    "allergens": [
-      "Illustrative recipe only: dressing and grains may contain allergens. Confirm the full allergen list and cross-contact with the team."
-    ],
-    "tags": [
-      "Chicken · protein-focused idea"
-    ],
+    "id": "potato-wedges",
+    "slug": "potato-wedges",
+    "name": "Potato Wedges",
+    "description": "",
+    "category": "Sides",
+    "diet": "Not specified",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
     "options": [
-      "Standard",
-      "Dressing on the side"
+      "Standard"
     ],
-    "featured": true,
+    "featured": false,
     "available": true,
-    "price": null,
-    "currency": "INR",
-    "portion": "Portion to be confirmed",
-    "accent": "peach",
-    "art": "bowl",
-    "isSample": true
-  },
-  {
-    "id": "paneer-garden-bowl",
-    "image": {
-      "src": "/images/meal-paneer.svg",
-      "alt": "Illustration of a sample paneer garden bowl, not actual food photography",
-      "kind": "illustration"
-    },
-    "slug": "paneer-garden-bowl",
-    "name": "Paneer garden bowl",
-    "description": "Golden paneer meets a colorful garden of crunch and comfort.",
-    "category": "Bowls",
-    "diet": "Vegetarian",
-    "ingredients": [
-      "Paneer, grain base, cabbage, cucumber, tomato, leafy greens, and herb dressing."
-    ],
-    "allergens": [
-      "Illustrative allergens include milk from paneer; this is not a complete list. Confirm all allergens and cross-contact with the team."
-    ],
-    "tags": [
-      "Vegetarian concept"
-    ],
-    "options": [
-      "Standard",
-      "Dressing on the side"
-    ],
-    "featured": true,
-    "available": true,
-    "price": null,
-    "currency": "INR",
-    "portion": "Portion to be confirmed",
-    "accent": "sage",
-    "art": "bowl",
-    "isSample": true
-  },
-  {
-    "id": "lemon-herb-chickpea-bowl",
-    "image": {
-      "src": "/images/meal-chickpea.svg",
-      "alt": "Illustration of a sample lemon herb chickpea bowl, not actual food photography",
-      "kind": "illustration"
-    },
-    "slug": "lemon-herb-chickpea-bowl",
-    "name": "Lemon herb chickpea bowl",
-    "description": "Bright lemon, earthy chickpeas, and all the fresh green energy.",
-    "category": "Bowls",
-    "diet": "Plant-based",
-    "ingredients": [
-      "Chickpeas, grain base, cucumber, tomato, leafy greens, lemon, and herbs."
-    ],
-    "allergens": [
-      "Illustrative recipe only: grains and dressing may contain allergens. Confirm the full allergen list and cross-contact with the team."
-    ],
-    "tags": [
-      "Plant-led concept"
-    ],
-    "options": [
-      "Standard",
-      "Dressing on the side"
-    ],
-    "featured": true,
-    "available": true,
-    "price": null,
+    "price": 129,
     "currency": "INR",
     "portion": "Portion to be confirmed",
     "accent": "gold",
     "art": "bowl",
-    "isSample": true
+    "image": null,
+    "isSample": false
   },
   {
-    "id": "oats-berry-pot",
-    "image": {
-      "src": "/images/meal-oats.svg",
-      "alt": "Illustration of a sample oats and berry pot, not actual food photography",
-      "kind": "illustration"
-    },
-    "slug": "oats-berry-pot",
-    "name": "Oats & berry pot",
-    "description": "A soft, spoonable start with oats, berries, and a little crunch.",
-    "category": "Breakfast",
-    "diet": "Vegetarian",
-    "ingredients": [
-      "Oats, berries, a milk or plant-based base to be confirmed, and seed topping."
-    ],
-    "allergens": [
-      "Illustrative allergens include milk and potentially gluten or nuts in toppings; this is not a complete list. Confirm all allergens and cross-contact with the team."
-    ],
-    "tags": [
-      "Breakfast · vegetarian concept"
-    ],
+    "id": "peri-peri-potato-wedges",
+    "slug": "peri-peri-potato-wedges",
+    "name": "Peri Peri Potato Wedges",
+    "description": "",
+    "category": "Sides",
+    "diet": "Not specified",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
     "options": [
-      "Standard",
-      "Toppings on the side"
+      "Standard"
     ],
     "featured": false,
     "available": true,
-    "price": null,
+    "price": 139,
     "currency": "INR",
     "portion": "Portion to be confirmed",
-    "accent": "lilac",
-    "art": "oats",
-    "isSample": true
+    "accent": "gold",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
   },
   {
-    "id": "sesame-tofu-crunch-bowl",
-    "image": {
-      "src": "/images/meal-tofu.svg",
-      "alt": "Illustration of a sample sesame tofu bowl, not actual food photography",
-      "kind": "illustration"
-    },
-    "slug": "sesame-tofu-crunch-bowl",
-    "name": "Sesame tofu crunch bowl",
-    "description": "Golden tofu, ribbons of vegetables, and a nutty sesame finish.",
-    "category": "Bowls",
-    "diet": "Plant-based",
-    "ingredients": [
-      "Tofu, grain base, carrot, cabbage, cucumber, leafy greens, sesame, and dressing."
-    ],
-    "allergens": [
-      "Illustrative allergens include soy and sesame; this is not a complete list. Confirm all allergens and cross-contact with the team."
-    ],
-    "tags": [
-      "Plant-led · protein-focused idea"
-    ],
+    "id": "french-fries",
+    "slug": "french-fries",
+    "name": "French Fries",
+    "description": "",
+    "category": "Sides",
+    "diet": "Not specified",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
     "options": [
-      "Standard",
-      "Dressing on the side"
+      "Standard"
     ],
     "featured": false,
     "available": true,
-    "price": null,
+    "price": 129,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "gold",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "peri-peri-french-fries",
+    "slug": "peri-peri-french-fries",
+    "name": "Peri Peri French Fries",
+    "description": "",
+    "category": "Sides",
+    "diet": "Not specified",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 139,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "gold",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "falafel-and-hummus",
+    "slug": "falafel-and-hummus",
+    "name": "Falafel & Hummus",
+    "description": "",
+    "category": "Sides",
+    "diet": "Not specified",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 189,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "gold",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "grilled-paneer-salad",
+    "slug": "grilled-paneer-salad",
+    "name": "Grilled Paneer Salad",
+    "description": "",
+    "category": "Salads",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": true,
+    "available": true,
+    "price": 280,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "peri-peri-paneer-salad",
+    "slug": "peri-peri-paneer-salad",
+    "name": "Peri Peri Paneer Salad",
+    "description": "",
+    "category": "Salads",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 290,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "watermelon-feta-paneer-salad",
+    "slug": "watermelon-feta-paneer-salad",
+    "name": "Watermelon Feta Paneer Salad",
+    "description": "",
+    "category": "Salads",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 299,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "pesto-pasta-paneer-salad",
+    "slug": "pesto-pasta-paneer-salad",
+    "name": "Pesto Pasta Paneer Salad",
+    "description": "",
+    "category": "Salads",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 309,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "creamy-paneer-salad",
+    "slug": "creamy-paneer-salad",
+    "name": "Creamy Paneer Salad",
+    "description": "",
+    "category": "Salads",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 290,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "grilled-chicken-salad",
+    "slug": "grilled-chicken-salad",
+    "name": "Grilled Chicken Salad",
+    "description": "",
+    "category": "Salads",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 280,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "peri-peri-chicken-salad",
+    "slug": "peri-peri-chicken-salad",
+    "name": "Peri Peri Chicken Salad",
+    "description": "",
+    "category": "Salads",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 290,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "watermelon-feta-chicken-salad",
+    "slug": "watermelon-feta-chicken-salad",
+    "name": "Watermelon Feta Chicken Salad",
+    "description": "",
+    "category": "Salads",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 299,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "pesto-pasta-chicken-salad",
+    "slug": "pesto-pasta-chicken-salad",
+    "name": "Pesto Pasta Chicken Salad",
+    "description": "",
+    "category": "Salads",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 309,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "caesar-salad",
+    "slug": "caesar-salad",
+    "name": "Caesar Salad",
+    "description": "",
+    "category": "Salads",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 290,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "makhani-paneer-meal",
+    "slug": "makhani-paneer-meal",
+    "name": "Makhani Paneer Meal",
+    "description": "",
+    "category": "Meals",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 289,
     "currency": "INR",
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "isSample": true
+    "image": null,
+    "isSample": false
   },
   {
-    "id": "green-goddess-wrap",
-    "image": {
-      "src": "/images/meal-wrap.svg",
-      "alt": "Illustration of a sample vegetable wrap, not actual food photography",
-      "kind": "illustration"
-    },
-    "slug": "green-goddess-wrap",
-    "name": "Green goddess wrap",
-    "description": "A bright, herby handful for a day that keeps you moving.",
-    "category": "Wraps",
+    "id": "paneer-tikka-meal",
+    "slug": "paneer-tikka-meal",
+    "name": "Paneer Tikka Meal",
+    "description": "",
+    "category": "Meals",
     "diet": "Vegetarian",
-    "ingredients": [
-      "Wrap, leafy greens, chickpea filling, carrot, tomato, and green herb dressing."
-    ],
-    "allergens": [
-      "Illustrative allergens include wheat and potentially milk in dressing; this is not a complete list. Confirm all allergens and cross-contact with the team."
-    ],
-    "tags": [
-      "Plant-led concept"
-    ],
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
     "options": [
-      "Standard",
-      "Dressing on the side"
+      "Standard"
     ],
     "featured": false,
     "available": true,
-    "price": null,
+    "price": 289,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "peri-peri-paneer-meal",
+    "slug": "peri-peri-paneer-meal",
+    "name": "Peri Peri Paneer Meal",
+    "description": "",
+    "category": "Meals",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 279,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "pesto-paneer-meal",
+    "slug": "pesto-paneer-meal",
+    "name": "Pesto Paneer Meal",
+    "description": "",
+    "category": "Meals",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 309,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "garden-spinach-paneer-meal",
+    "slug": "garden-spinach-paneer-meal",
+    "name": "Garden Spinach Paneer Meal",
+    "description": "",
+    "category": "Meals",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 289,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "creamy-paneer-meal",
+    "slug": "creamy-paneer-meal",
+    "name": "Creamy Paneer Meal",
+    "description": "",
+    "category": "Meals",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 309,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "makhani-chicken-meal",
+    "slug": "makhani-chicken-meal",
+    "name": "Makhani Chicken Meal",
+    "description": "",
+    "category": "Meals",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": true,
+    "available": true,
+    "price": 299,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "chicken-tikka-meal",
+    "slug": "chicken-tikka-meal",
+    "name": "Chicken Tikka Meal",
+    "description": "",
+    "category": "Meals",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 299,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "peri-peri-chicken-meal",
+    "slug": "peri-peri-chicken-meal",
+    "name": "Peri Peri Chicken Meal",
+    "description": "",
+    "category": "Meals",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 289,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "pesto-chicken-meal",
+    "slug": "pesto-chicken-meal",
+    "name": "Pesto Chicken Meal",
+    "description": "",
+    "category": "Meals",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 319,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "garden-spinach-chicken-meal",
+    "slug": "garden-spinach-chicken-meal",
+    "name": "Garden Spinach Chicken Meal",
+    "description": "",
+    "category": "Meals",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 299,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "creamy-chicken-meal",
+    "slug": "creamy-chicken-meal",
+    "name": "Creamy Chicken Meal",
+    "description": "",
+    "category": "Meals",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 319,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "grilled-paneer-wrap",
+    "slug": "grilled-paneer-wrap",
+    "name": "Grilled Paneer Wrap",
+    "description": "",
+    "category": "Wraps",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 279,
     "currency": "INR",
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "wrap",
-    "isSample": true
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "peri-peri-paneer-wrap",
+    "slug": "peri-peri-paneer-wrap",
+    "name": "Peri Peri Paneer Wrap",
+    "description": "",
+    "category": "Wraps",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 279,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "wrap",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "paneer-makhani-wrap",
+    "slug": "paneer-makhani-wrap",
+    "name": "Paneer Makhani Wrap",
+    "description": "",
+    "category": "Wraps",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 299,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "wrap",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "hummus-paneer-wrap",
+    "slug": "hummus-paneer-wrap",
+    "name": "Hummus Paneer Wrap",
+    "description": "",
+    "category": "Wraps",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 309,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "wrap",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "paneer-tikka-wrap",
+    "slug": "paneer-tikka-wrap",
+    "name": "Paneer Tikka Wrap",
+    "description": "",
+    "category": "Wraps",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 289,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "wrap",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "grilled-chicken-wrap",
+    "slug": "grilled-chicken-wrap",
+    "name": "Grilled Chicken Wrap",
+    "description": "",
+    "category": "Wraps",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 289,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "wrap",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "peri-peri-chicken-wrap",
+    "slug": "peri-peri-chicken-wrap",
+    "name": "Peri Peri Chicken Wrap",
+    "description": "",
+    "category": "Wraps",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 289,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "wrap",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "chicken-makhani-wrap",
+    "slug": "chicken-makhani-wrap",
+    "name": "Chicken Makhani Wrap",
+    "description": "",
+    "category": "Wraps",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 309,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "wrap",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "hummus-chicken-wrap",
+    "slug": "hummus-chicken-wrap",
+    "name": "Hummus Chicken Wrap",
+    "description": "",
+    "category": "Wraps",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 319,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "wrap",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "chicken-tikka-wrap",
+    "slug": "chicken-tikka-wrap",
+    "name": "Chicken Tikka Wrap",
+    "description": "",
+    "category": "Wraps",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 299,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "wrap",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "paneer-hummus-power-bowl",
+    "slug": "paneer-hummus-power-bowl",
+    "name": "Paneer Hummus Power Bowl",
+    "description": "",
+    "category": "Bowls",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": true,
+    "available": true,
+    "price": 339,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "gold",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "peri-peri-paneer-cheesy-bowl",
+    "slug": "peri-peri-paneer-cheesy-bowl",
+    "name": "Peri Peri Paneer Cheesy Bowl",
+    "description": "",
+    "category": "Bowls",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 329,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "gold",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "asian-paneer-power-bowl",
+    "slug": "asian-paneer-power-bowl",
+    "name": "Asian Paneer Power Bowl",
+    "description": "",
+    "category": "Bowls",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 329,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "gold",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "chicken-hummus-power-bowl",
+    "slug": "chicken-hummus-power-bowl",
+    "name": "Chicken Hummus Power Bowl",
+    "description": "",
+    "category": "Bowls",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 349,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "gold",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "peri-peri-chicken-cheesy-bowl",
+    "slug": "peri-peri-chicken-cheesy-bowl",
+    "name": "Peri Peri Chicken Cheesy Bowl",
+    "description": "",
+    "category": "Bowls",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 339,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "gold",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "asian-chicken-power-bowl",
+    "slug": "asian-chicken-power-bowl",
+    "name": "Asian Chicken Power Bowl",
+    "description": "",
+    "category": "Bowls",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 339,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "gold",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "masala-paneer-sandwich",
+    "slug": "masala-paneer-sandwich",
+    "name": "Masala Paneer Sandwich",
+    "description": "",
+    "category": "Sandwiches",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 269,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "falafel-hummus-sandwich",
+    "slug": "falafel-hummus-sandwich",
+    "name": "Falafel Hummus Sandwich",
+    "description": "",
+    "category": "Sandwiches",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 279,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "peri-peri-paneer-sandwich",
+    "slug": "peri-peri-paneer-sandwich",
+    "name": "Peri Peri Paneer Sandwich",
+    "description": "",
+    "category": "Sandwiches",
+    "diet": "Vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 269,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "grilled-chicken-sandwich",
+    "slug": "grilled-chicken-sandwich",
+    "name": "Grilled Chicken Sandwich",
+    "description": "",
+    "category": "Sandwiches",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 269,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "masala-chicken-sandwich",
+    "slug": "masala-chicken-sandwich",
+    "name": "Masala Chicken Sandwich",
+    "description": "",
+    "category": "Sandwiches",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 279,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "peri-peri-chicken-sandwich",
+    "slug": "peri-peri-chicken-sandwich",
+    "name": "Peri Peri Chicken Sandwich",
+    "description": "",
+    "category": "Sandwiches",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 279,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "egg-sandwich",
+    "slug": "egg-sandwich",
+    "name": "Egg Sandwich",
+    "description": "",
+    "category": "Sandwiches",
+    "diet": "Non-vegetarian",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 249,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "rich-thick-chocolate-smoothie",
+    "slug": "rich-thick-chocolate-smoothie",
+    "name": "Rich Thick Chocolate Smoothie",
+    "description": "",
+    "category": "Smoothies",
+    "diet": "Not specified",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 250,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "lilac",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "royal-blueberry-smoothie",
+    "slug": "royal-blueberry-smoothie",
+    "name": "Royal Blueberry Smoothie",
+    "description": "",
+    "category": "Smoothies",
+    "diet": "Not specified",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 270,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "lilac",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "mixed-berries-smoothie",
+    "slug": "mixed-berries-smoothie",
+    "name": "Mixed Berries Smoothie",
+    "description": "",
+    "category": "Smoothies",
+    "diet": "Not specified",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 280,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "lilac",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "strawberry-smoothie",
+    "slug": "strawberry-smoothie",
+    "name": "Strawberry Smoothie",
+    "description": "",
+    "category": "Smoothies",
+    "diet": "Not specified",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 250,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "lilac",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
+  },
+  {
+    "id": "mango-smoothie",
+    "slug": "mango-smoothie",
+    "name": "Mango Smoothie",
+    "description": "",
+    "category": "Smoothies",
+    "diet": "Not specified",
+    "ingredients": [],
+    "allergens": [],
+    "tags": [],
+    "options": [
+      "Standard"
+    ],
+    "featured": false,
+    "available": true,
+    "price": 250,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "lilac",
+    "art": "bowl",
+    "image": null,
+    "isSample": false
   }
 ]

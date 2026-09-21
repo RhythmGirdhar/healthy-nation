@@ -1,9 +1,13 @@
-import { describe, expect, it } from "vitest";
-import { catalogData } from "@/data/catalog";
+import { describe, expect, it, vi } from "vitest";
+import { catalogFixtureData as catalogData } from "@/lib/catalog-fixture";
 import { createHash } from "node:crypto";
 import { catalog, getMeal, getPublicCatalog, validateCatalog } from "@/lib/catalog";
 import { formatPrice } from "@/lib/format";
 import { parsePublicCatalog } from "@/lib/catalog-client";
+
+vi.mock("@/data/catalog", async () => ({
+  catalogData: (await import("@/lib/catalog-fixture")).catalogFixtureData,
+}));
 
 function editableCopy() {
   return structuredClone(catalogData);
@@ -111,19 +115,28 @@ describe("editable catalog", () => {
       expect(validateCatalog(liveContent()).isPreview).toBe(false);
     });
 
-    it.each(["meals", "plans"] as const)("rejects samples and missing live prices in %s", (collection) => {
+    it.each(["meals", "plans"] as const)("keeps sample pricing and real-offer pricing distinct in %s", (collection) => {
       const input = liveContent();
       input[collection][0].isSample = true;
-      expect(() => validateCatalog(input)).toThrow(/non-sample/);
+      expect(() => validateCatalog(input)).toThrow(/Sample content must have a null/);
       input[collection][0].isSample = false;
       input[collection][0].price = null;
       expect(() => validateCatalog(input)).toThrow(/non-null price/);
     });
 
-    it("rejects a sample weekly menu in a live publication", () => {
+    it("allows an unpublished weekly menu alongside real offers", () => {
       const input = liveContent();
       input.weeklyMenu.isSample = true;
-      expect(() => validateCatalog(input)).toThrow(/live weekly menu/);
+      input.weeklyMenu.days = [];
+      expect(validateCatalog(input).weeklyMenu.days).toEqual([]);
+      input.weeklyMenu.isSample = false;
+      expect(() => validateCatalog(input)).toThrow(/at least one day/);
+    });
+
+    it("allows sample plans alongside real meals without treating the plans as live offers", () => {
+      const input = liveContent();
+      input.plans.forEach((plan) => { plan.isSample = true; plan.price = null; });
+      expect(validateCatalog(input).plans.every((plan) => plan.isSample)).toBe(true);
     });
 
     it.each(["publishedAt", "validFrom", "validUntil"] as const)(
@@ -137,10 +150,16 @@ describe("editable catalog", () => {
       },
     );
 
-    it.each(["validFrom", "validUntil"] as const)("requires live %s", (field) => {
+    it("requires the publication start for live content", () => {
       const input = liveContent();
-      input.publication[field] = null;
+      input.publication.validFrom = null;
       expect(() => validateCatalog(input)).toThrow(/Live publication requires/);
+    });
+
+    it("does not invent an expiry when the supplied menu has none", () => {
+      const input = liveContent();
+      input.publication.validUntil = null;
+      expect(validateCatalog(input).publication.validUntil).toBeNull();
     });
 
     it.each([
@@ -215,13 +234,13 @@ describe("editable catalog", () => {
     expect(() => validateCatalog(input)).toThrow(/Meal options must be unique/);
   });
 
-  it.each(["name", "description", "portion"] as const)("rejects a blank meal %s", (field) => {
+  it.each(["name", "category", "portion"] as const)("rejects a blank meal %s", (field) => {
     const input = editableCopy();
     input.meals[0][field] = "  ";
     expect(() => validateCatalog(input)).toThrow(`meals.0.${field}: Must not be blank`);
   });
 
-  it.each(["ingredients", "allergens", "options"] as const)(
+  it.each(["options"] as const)(
     "requires nonempty meal %s",
     (field) => {
       const input = editableCopy();
@@ -236,7 +255,7 @@ describe("editable catalog", () => {
     expect(() => validateCatalog(input)).toThrow(/Invalid catalog: weeklyMenu/);
   });
 
-  it.each(["currency", "category", "diet", "art", "accent", "slug"] as const)(
+  it.each(["currency", "diet", "art", "accent", "slug"] as const)(
     "rejects unsupported meal %s",
     (field) => {
       const input = editableCopy();

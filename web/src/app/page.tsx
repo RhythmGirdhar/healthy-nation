@@ -4,6 +4,7 @@ import { Leaf, Soup, Sun } from "lucide-react";
 import { getPublicCatalog } from "@/lib/catalog";
 import { MealCard } from "@/components/meal-card";
 import { WhatsAppLink, CATERING_INQUIRY } from "@/components/whatsapp-link";
+import { MealImage } from "@/components/meal-image";
 
 export default function HomePage() {
   const catalog = getPublicCatalog();
@@ -21,9 +22,9 @@ export default function HomePage() {
       </div>
       {hero && <figure className="hero-art">
         <div className="hero-art-label" aria-hidden="true"><span>Explore the menu</span><strong>Individual meals</strong></div>
-        <Image className="hero-meal" src={hero.image.src} alt={hero.image.alt} width={600} height={495} priority unoptimized />
+        <MealImage className="hero-meal" meal={hero} width={600} height={495} priority />
         <div className="hero-art-label peach-label" aria-hidden="true"><span>Plan your week</span><strong>Team-managed plans</strong></div>
-        <figcaption>{hero.image.kind === "illustration" ? "Original illustration · actual food photography to follow" : hero.name}</figcaption>
+        {hero.image && <figcaption>{hero.image.kind === "illustration" ? "Original illustration · actual food photography to follow" : hero.name}</figcaption>}
       </figure>}
     </section>
     <section className="values-band" aria-label="Our guiding ambitions"><div className="container values-inner">
@@ -54,7 +55,7 @@ export default function HomePage() {
       <div className="faq-list">
         <details><summary>Is this an available menu?</summary><p>{catalog.isPreview ? "Our current dishes and plans are illustrative samples. Recipes, pricing, portions, and availability need approval." : "Review each meal’s published details. Availability, delivery, and the final price still need to be confirmed with the team."} You can ask our team about the current offering through WhatsApp.</p></details>
         <details><summary>Where do you deliver?</summary><p>The delivery area, schedule, fees, and ordering windows are awaiting confirmation. Please ask the team before planning a meal request.</p></details>
-        <details><summary>Can I check ingredients and allergens?</summary><p>Sample ingredients and allergen notes are not verified recipes. Confirm the complete ingredients, allergens, and cross-contact information with the team; these samples cannot establish dietary suitability.</p></details>
+        <details><summary>Can I check ingredients and allergens?</summary><p>The supplied menu lists dish names and prices, not complete recipes or allergen information. Confirm ingredients, allergens, and cross-contact with the team before ordering.</p></details>
       </div>
     </section>
     <section className="container catering-teaser"><div><h2>Catering</h2><p>Ask about food for your team or event. Menus, availability, service area, and pricing need confirmation.</p><Link href="/catering/" className="text-link">View catering information <span aria-hidden="true">↗</span></Link></div><WhatsAppLink message={CATERING_INQUIRY} className="button secondary">Ask about catering</WhatsAppLink></section>

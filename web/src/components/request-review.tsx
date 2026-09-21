@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { buildInquiryMessage, getHandoffDecision, getLocalCalendarDate } from "@/lib/inquiry";
@@ -9,6 +8,7 @@ import type { DraftItem, HandoffDecision, InquiryPurpose, Meal } from "@/lib/typ
 import { useRequest } from "./request-provider";
 import { MessagePreview } from "./message-preview";
 import { WhatsAppLink } from "./whatsapp-link";
+import { MealImage } from "./meal-image";
 
 function focusUndo() {
   requestAnimationFrame(() => document.getElementById("undo-request-change")?.focus());
@@ -41,14 +41,14 @@ function MealLine({ item, index, meal }: { item: DraftItem; index: number; meal?
   }
   return <article className="request-line" data-line-meal={item.mealId}>
     <div className={`request-line-image accent-${meal?.accent || "sage"}`}>
-      {meal ? <Image src={meal.image.src} alt="" width={120} height={100} unoptimized /> : <span aria-hidden="true">?</span>}
+      {meal ? <MealImage meal={meal} width={120} height={100} decorative /> : <span aria-hidden="true">?</span>}
     </div>
     <div className="request-line-content">
       <span className="eyebrow">{meal?.isSample ? "Sample meal" : "Meal selection"}</span>
       <h2>{name}</h2>
       <p className="line-price">{meal ? formatPrice(meal.price) : "Price unavailable"}</p>
       {meal && <p className="small-note">{meal.portion}</p>}
-      {meal && <details className="line-food-details"><summary>Ingredients & allergen notes</summary><h3>{meal.isSample ? "Illustrative ingredients" : "Ingredients"}</h3><ul>{meal.ingredients.map((ingredient) => <li key={ingredient}>{ingredient}</li>)}</ul><h3>Allergen information</h3><ul>{meal.allergens.map((allergen) => <li key={allergen}>{allergen}</li>)}</ul>{meal.isSample && <p>Verification is pending. Do not use these sample notes to assess dietary suitability.</p>}</details>}
+      {meal && <details className="line-food-details"><summary>Ingredients & allergen notes</summary><h3>{meal.isSample ? "Illustrative ingredients" : "Ingredients"}</h3>{meal.ingredients.length ? <ul>{meal.ingredients.map((ingredient) => <li key={ingredient}>{ingredient}</li>)}</ul> : <p>Ingredients are not provided in the menu. Confirm with the team.</p>}<h3>Allergen information</h3>{meal.allergens.length ? <ul>{meal.allergens.map((allergen) => <li key={allergen}>{allergen}</li>)}</ul> : <p>Allergens and cross-contact information are not provided. Check before ordering.</p>}{meal.isSample && <p>Verification is pending. Do not use these sample notes to assess dietary suitability.</p>}</details>}
       {!meal && <p className="form-error">This meal is no longer in the catalog. Remove it or browse the current menu; it has not been silently removed.</p>}
       {meal && !meal.available && <p className="form-error">This meal is currently unavailable. Remove it before requesting available offers.</p>}
       {meal ? <div className="field">
@@ -99,7 +99,7 @@ export function RequestReview() {
     try {
       const time = new Date(now || snapshot.publication.publishedAt);
       const body = buildInquiryMessage(draft, snapshot, time);
-      message = (offer && (isSample || !fresh) ? "LOCAL DRAFT — SAMPLE OR UNVERIFIED OFFER. NOT A CONFIRMED ORDER.\n\n" : "") + body;
+      message = (offer && isSample ? "SAMPLE PREVIEW — NOT A CONFIRMED OFFER.\n\n" : offer && !fresh ? "LOCAL DRAFT — CURRENT MENU CHECK PENDING. NOT A CONFIRMED ORDER.\n\n" : "") + body;
       decision = getHandoffDecision(draft, snapshot, request.contact, { fresh, now: time });
       if (offer && needsReview) decision = { ...decision, allowed: false, url: null, reason: "The catalog changed. Review the issues below and acknowledge the updated details before handoff." };
     } catch (failure) {
@@ -170,8 +170,8 @@ export function RequestReview() {
         {validationError && <p className="form-error" role="alert">{validationError}</p>}
         {offer && !empty && <div className="catalog-check">
           {isSample && <p className="notice"><strong>Sample offers cannot be sent.</strong> These selections are for local review only. Ask the team about the real current menu instead.</p>}
-          <button type="button" className="button secondary" disabled={!ready || refreshing} onClick={request.refreshCatalog}>{refreshing ? "Checking catalog…" : "Check current catalog"}</button>
-          <p className="small-note">{checkedAt && !fresh && !needsReview ? "The catalog check expired or your selection changed. Check again before handoff." : "A fresh catalog check is required before any live offer handoff. Your draft is kept if the check fails."}</p>
+          <button type="button" className="button secondary" disabled={!ready || refreshing} onClick={request.refreshCatalog}>{refreshing ? "Checking menu…" : "Refresh menu details"}</button>
+          <p className="small-note">{checkedAt && !fresh && !needsReview ? "The menu check expired or your selection changed. Preview your message to check again." : "We check the latest menu when you preview a real meal request. Your selections stay here if the check fails."}</p>
           {!!issues.length && <div className="catalog-issues" role="status" aria-live="polite"><h3>Catalog review</h3><ul>{issues.map((issue, index) => <li key={`${index}:${issue}`}>{issue}</li>)}</ul></div>}
           {needsReview && <button type="button" className="button secondary" disabled={!checkedAt || refreshing} onClick={request.acknowledgeCatalog}>I reviewed the catalog changes</button>}
         </div>}

@@ -1,0 +1,206 @@
+[
+  {
+    "id": "harissa-chicken-bowl",
+    "image": {
+      "src": "/images/meal-harissa.svg",
+      "alt": "Illustration of a sample harissa chicken bowl, not actual food photography",
+      "kind": "illustration"
+    },
+    "slug": "harissa-chicken-bowl",
+    "name": "Harissa chicken bowl",
+    "description": "Warm spice, vibrant greens, and a generous little moment for lunch.",
+    "category": "Bowls",
+    "diet": "Non-vegetarian",
+    "ingredients": [
+      "Chicken, grain base, cucumber, tomato, leafy greens, and a harissa-style dressing."
+    ],
+    "allergens": [
+      "Illustrative recipe only: dressing and grains may contain allergens. Confirm the full allergen list and cross-contact with the team."
+    ],
+    "tags": [
+      "Chicken · protein-focused idea"
+    ],
+    "options": [
+      "Standard",
+      "Dressing on the side"
+    ],
+    "featured": true,
+    "available": true,
+    "price": null,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "isSample": true
+  },
+  {
+    "id": "paneer-garden-bowl",
+    "image": {
+      "src": "/images/meal-paneer.svg",
+      "alt": "Illustration of a sample paneer garden bowl, not actual food photography",
+      "kind": "illustration"
+    },
+    "slug": "paneer-garden-bowl",
+    "name": "Paneer garden bowl",
+    "description": "Golden paneer meets a colorful garden of crunch and comfort.",
+    "category": "Bowls",
+    "diet": "Vegetarian",
+    "ingredients": [
+      "Paneer, grain base, cabbage, cucumber, tomato, leafy greens, and herb dressing."
+    ],
+    "allergens": [
+      "Illustrative allergens include milk from paneer; this is not a complete list. Confirm all allergens and cross-contact with the team."
+    ],
+    "tags": [
+      "Vegetarian concept"
+    ],
+    "options": [
+      "Standard",
+      "Dressing on the side"
+    ],
+    "featured": true,
+    "available": true,
+    "price": null,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "bowl",
+    "isSample": true
+  },
+  {
+    "id": "lemon-herb-chickpea-bowl",
+    "image": {
+      "src": "/images/meal-chickpea.svg",
+      "alt": "Illustration of a sample lemon herb chickpea bowl, not actual food photography",
+      "kind": "illustration"
+    },
+    "slug": "lemon-herb-chickpea-bowl",
+    "name": "Lemon herb chickpea bowl",
+    "description": "Bright lemon, earthy chickpeas, and all the fresh green energy.",
+    "category": "Bowls",
+    "diet": "Plant-based",
+    "ingredients": [
+      "Chickpeas, grain base, cucumber, tomato, leafy greens, lemon, and herbs."
+    ],
+    "allergens": [
+      "Illustrative recipe only: grains and dressing may contain allergens. Confirm the full allergen list and cross-contact with the team."
+    ],
+    "tags": [
+      "Plant-led concept"
+    ],
+    "options": [
+      "Standard",
+      "Dressing on the side"
+    ],
+    "featured": true,
+    "available": true,
+    "price": null,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "gold",
+    "art": "bowl",
+    "isSample": true
+  },
+  {
+    "id": "oats-berry-pot",
+    "image": {
+      "src": "/images/meal-oats.svg",
+      "alt": "Illustration of a sample oats and berry pot, not actual food photography",
+      "kind": "illustration"
+    },
+    "slug": "oats-berry-pot",
+    "name": "Oats & berry pot",
+    "description": "A soft, spoonable start with oats, berries, and a little crunch.",
+    "category": "Breakfast",
+    "diet": "Vegetarian",
+    "ingredients": [
+      "Oats, berries, a milk or plant-based base to be confirmed, and seed topping."
+    ],
+    "allergens": [
+      "Illustrative allergens include milk and potentially gluten or nuts in toppings; this is not a complete list. Confirm all allergens and cross-contact with the team."
+    ],
+    "tags": [
+      "Breakfast · vegetarian concept"
+    ],
+    "options": [
+      "Standard",
+      "Toppings on the side"
+    ],
+    "featured": false,
+    "available": true,
+    "price": null,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "lilac",
+    "art": "oats",
+    "isSample": true
+  },
+  {
+    "id": "sesame-tofu-crunch-bowl",
+    "image": {
+      "src": "/images/meal-tofu.svg",
+      "alt": "Illustration of a sample sesame tofu bowl, not actual food photography",
+      "kind": "illustration"
+    },
+    "slug": "sesame-tofu-crunch-bowl",
+    "name": "Sesame tofu crunch bowl",
+    "description": "Golden tofu, ribbons of vegetables, and a nutty sesame finish.",
+    "category": "Bowls",
+    "diet": "Plant-based",
+    "ingredients": [
+      "Tofu, grain base, carrot, cabbage, cucumber, leafy greens, sesame, and dressing."
+    ],
+    "allergens": [
+      "Illustrative allergens include soy and sesame; this is not a complete list. Confirm all allergens and cross-contact with the team."
+    ],
+    "tags": [
+      "Plant-led · protein-focused idea"
+    ],
+    "options": [
+      "Standard",
+      "Dressing on the side"
+    ],
+    "featured": false,
+    "available": true,
+    "price": null,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "peach",
+    "art": "bowl",
+    "isSample": true
+  },
+  {
+    "id": "green-goddess-wrap",
+    "image": {
+      "src": "/images/meal-wrap.svg",
+      "alt": "Illustration of a sample vegetable wrap, not actual food photography",
+      "kind": "illustration"
+    },
+    "slug": "green-goddess-wrap",
+    "name": "Green goddess wrap",
+    "description": "A bright, herby handful for a day that keeps you moving.",
+    "category": "Wraps",
+    "diet": "Vegetarian",
+    "ingredients": [
+      "Wrap, leafy greens, chickpea filling, carrot, tomato, and green herb dressing."
+    ],
+    "allergens": [
+      "Illustrative allergens include wheat and potentially milk in dressing; this is not a complete list. Confirm all allergens and cross-contact with the team."
+    ],
+    "tags": [
+      "Plant-led concept"
+    ],
+    "options": [
+      "Standard",
+      "Dressing on the side"
+    ],
+    "featured": false,
+    "available": true,
+    "price": null,
+    "currency": "INR",
+    "portion": "Portion to be confirmed",
+    "accent": "sage",
+    "art": "wrap",
+    "isSample": true
+  }
+]

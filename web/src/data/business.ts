@@ -13,6 +13,7 @@ type Business = {
   serviceArea: string | null;
   orderingHours: string | null;
   social: { instagram: string | null; facebook: string | null };
+  domains: string[];
 };
 
 const content: Omit<Business, "phoneDisplay"> = businessContent;

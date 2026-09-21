@@ -4,7 +4,7 @@
     "phoneNumber": "918104960748",
     "approved": true,
     "generalInquiriesEnabled": true,
-    "offerRequestsEnabled": false
+    "offerRequestsEnabled": true
   },
   "founder": {
     "name": "Shivansh Girdhar",
@@ -14,7 +14,11 @@
   "serviceArea": null,
   "orderingHours": null,
   "social": {
-    "instagram": null,
+    "instagram": "https://www.instagram.com/healthy.nation.in/",
     "facebook": null
-  }
+  },
+  "domains": [
+    "thehealthynation.in",
+    "healthynation.co.in"
+  ]
 }

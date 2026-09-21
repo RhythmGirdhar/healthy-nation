@@ -12,7 +12,7 @@ Read the [documentation index](README.md), [product brief](product-brief.md), [a
 - V1 is a public, read-only meal/plan storefront. Customers prepare requests and manually send them through WhatsApp. The team explicitly confirms availability, price, payment arrangements, and delivery.
 - A selected meal is not reserved. Opening WhatsApp is not proof of sending, payment, acceptance, or fulfillment.
 - Do not add checkout, automatic recurring billing, customer accounts, a transactional database, a CMS, or deployment resources to V1 without an explicit scope decision.
-- The founder is **Shivansh Girdhar**, who holds a **degree in Culinary Sciences**. The owner supplied **+91 81049 60748** for WhatsApp inquiries. No founder photo, real menu, food photography, pricing, verified nutrition, service area, or domain ownership has been supplied yet. Clearly label samples and portrait placeholders. Do not invent additional biography or enable live offer requests from sample dishes.
+- The founder is **Shivansh Girdhar**, who holds a **degree in Culinary Sciences**. The owner supplied **+91 81049 60748** and a five-page menu PDF containing 55 priced dishes. The real dishes can be requested; the example plans remain preview-only. Do not invent recipes, allergens, portions, nutrition, per-dish photos, additional biography, or delivery coverage.
 - Keep general, meal, plan, and catering inquiries distinct. Do not quietly include an inactive selection in a different inquiry.
 
 ## Architecture guidance
@@ -24,6 +24,7 @@ The accepted V1 direction is one Next.js App Router + TypeScript project with bu
 - Use pure, explicitly parameterized draft/reconciliation/message functions and type-only imports where appropriate.
 - Keep catalog revision and validity separate from draft schema version. Reconcile stale selections without silently dropping unaffected lines.
 - Use one shared, fail-closed preview/live handoff policy across all entry points.
+- Published real dishes may coexist with explicitly flagged sample plans. Validate the selected offers individually. A missing menu expiry is represented by `validUntil: null`, not an invented date; fresh catalog checks and any configured bounds still apply.
 - Use static-compatible generated routes and image assets if the static-first proposal is accepted. Do not assume a runtime API or image optimizer is available.
 - Do not create HTTP endpoints merely for pages to fetch their own local catalog.
 

@@ -6,7 +6,7 @@
 
 The owner approved implementing the reviewed Next.js + TypeScript design. The application is being built around a static export, validated editable content, and browser-side request drafts. The browser design concept remains a separate review artifact.
 
-The founder and public WhatsApp number are confirmed. Food offers, pricing, service coverage, and a founder photo are not supplied; sample-offer handoff remains gated even while general and catering inquiries can link to the real number.
+The founder and public WhatsApp number are confirmed. The owner-supplied PDF now provides 55 dishes and their INR prices. Real meal requests are enabled; example plans remain gated. Ingredients, allergens, portions, individual dish photos, service coverage, and the founder photo remain unconfirmed or unmapped.
 
 ## Repository layout
 

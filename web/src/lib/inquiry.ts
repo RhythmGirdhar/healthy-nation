@@ -186,9 +186,12 @@ export function getHandoffDecision(
       const { publishedAt, validFrom, validUntil } = snapshot.publication;
       if (
         !Number.isFinite(now.getTime()) || !isUtcTimestamp(publishedAt) ||
-        validFrom === null || validUntil === null || !isUtcTimestamp(validFrom) || !isUtcTimestamp(validUntil) ||
-        Date.parse(publishedAt) > Date.parse(validFrom) || Date.parse(validFrom) >= Date.parse(validUntil) ||
-        now.getTime() < Date.parse(validFrom) || now.getTime() >= Date.parse(validUntil)
+        validFrom === null || !isUtcTimestamp(validFrom) ||
+        (validUntil !== null && !isUtcTimestamp(validUntil)) ||
+        Date.parse(publishedAt) > Date.parse(validFrom) ||
+        (validUntil !== null && Date.parse(validFrom) >= Date.parse(validUntil)) ||
+        now.getTime() < Date.parse(validFrom) ||
+        (validUntil !== null && now.getTime() >= Date.parse(validUntil))
       ) {
         return blocked("This menu is not within its published availability window. Refresh it or ask a general question.");
       }

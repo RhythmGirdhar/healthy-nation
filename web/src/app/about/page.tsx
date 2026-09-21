@@ -87,7 +87,7 @@ export default function AboutPage() {
       <aside className={styles.contactCard}>
         <h2>Contact Healthy Nation</h2>
         <p>
-          The menu on this website is a preview. Contact
+          Browse the menu or contact
           Shivansh at {business.phoneDisplay} for current meals and plans.
           The team confirms availability, pricing, and delivery before accepting an order.
         </p>

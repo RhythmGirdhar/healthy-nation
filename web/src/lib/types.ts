@@ -3,8 +3,8 @@ export type Meal = {
   slug: string;
   name: string;
   description: string;
-  category: "Bowls" | "Wraps" | "Breakfast";
-  diet: "Vegetarian" | "Plant-based" | "Non-vegetarian";
+  category: string;
+  diet: "Vegetarian" | "Plant-based" | "Non-vegetarian" | "Not specified";
   ingredients: string[];
   allergens: string[];
   tags: string[];
@@ -16,7 +16,7 @@ export type Meal = {
   portion: string;
   accent: "sage" | "peach" | "lilac" | "gold";
   art: "bowl" | "wrap" | "oats";
-  image: { src: string; alt: string; kind: "illustration" | "photo" };
+  image: { src: string; alt: string; kind: "illustration" | "photo" } | null;
   isSample: boolean;
 };
 

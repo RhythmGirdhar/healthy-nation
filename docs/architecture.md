@@ -56,7 +56,7 @@ Do not include `POST /orders`, payments, customer login, or menu editing. Add an
 
 ### Catalog freshness and draft lifecycle
 
-- Separate `draftSchemaVersion` from `catalogRevision`. Each published catalog has a revision, `publishedAt`, `validFrom`, and `validUntil`; publication validity is a business-owned launch setting, not an invented fixed order window.
+- Separate `draftSchemaVersion` from `catalogRevision`. Each published catalog has a revision, `publishedAt`, and `validFrom`. `validUntil` is optional: `null` represents a menu with no declared fixed expiry. Any configured expiry is enforced; do not invent one to activate an imported menu.
 - Retain the draft's source revision in same-tab session storage. Expire its live-offer eligibility at the catalog validity boundary. Keep it visible for correction instead of silently discarding it.
 - Before an offer handoff, fetch the same-origin `catalog.json` with browser-cache bypass and an appropriate revalidation policy at the eventual host. Check that it is within its validity window.
 - Reconcile all lines against that one snapshot. Preserve unchanged selections. Flag removed/unavailable meals, unsupported options, revised prices, and changed plan terms; require the customer to review affected lines again.
@@ -168,7 +168,7 @@ Define a single fail-closed policy used by every entry point, not separate rules
 
 - **Design preview:** local message preview/copy only. No real WhatsApp handoff.
 - **General inquiry:** may be enabled separately only after the owner has verified the business number and approved the public contact configuration. It must not silently include sample meal or plan selections.
-- **Meal/plan request:** also requires approved live publication, a freshly reconciled in-date catalog, and exclusively valid, available, non-sample selected offers. An approved number by itself cannot enable sample-offer requests.
+- **Meal/plan request:** also requires approved live publication, a freshly reconciled catalog within its configured bounds, and exclusively valid, available, non-sample selected offers. Real meals may coexist with sample plans; only the selected offers are eligible. An approved number by itself cannot enable sample-offer requests.
 - **Catering:** a separately approved general inquiry until actual catering offers and terms have been verified.
 
 Number syntax validation is not ownership verification. Owner approval is a human launch gate. Test each entry point, missing/invalid configuration, preview/live combinations, and mixed sample/live selections.
@@ -247,7 +247,7 @@ These are future changes, not reasons to add a database or payments to the read-
 3. Whether the request-review step is clear enough before opening WhatsApp.
 4. Whether the simple read-only backend and code-edited menu are sufficient for launch.
 
-The owner has supplied founder **Shivansh Girdhar**, his **degree in Culinary Sciences**, and WhatsApp **+91 81049 60748**. Actual recipes, founder/food photos, verified food information, prices, service area, and policies remain launch inputs. Domain ownership and hosting setup remain deferred.
+The owner supplied founder **Shivansh Girdhar**, his **degree in Culinary Sciences**, WhatsApp **+91 81049 60748**, and a menu PDF containing **55 priced dishes**. Unprovided descriptions, ingredients, allergens, portions, and unmapped photographs remain explicitly unknown. The example plans are not promoted to real offers. Domains **thehealthynation.in** and **healthynation.co.in** are recorded; canonical-domain selection, hosting, and DNS remain deferred.
 
 ## Work status
 

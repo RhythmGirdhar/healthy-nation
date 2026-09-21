@@ -16,11 +16,11 @@ const mealSchema = z.strictObject({
   id: identifier,
   slug: identifier,
   name: text,
-  description: text,
-  category: z.enum(["Bowls", "Wraps", "Breakfast"]),
-  diet: z.enum(["Vegetarian", "Plant-based", "Non-vegetarian"]),
-  ingredients: z.array(text).min(1).max(1000),
-  allergens: z.array(text).min(1).max(1000),
+  description: z.string().trim().max(2000).regex(/^[^\u0000-\u001f\u007f]*$/, "Control characters are not allowed"),
+  category: text.max(100),
+  diet: z.enum(["Vegetarian", "Plant-based", "Non-vegetarian", "Not specified"]),
+  ingredients: z.array(text).max(1000),
+  allergens: z.array(text).max(1000),
   tags: z.array(text).max(1000),
   options: z.array(text.max(120)).min(1).max(1000),
   featured: z.boolean(),
@@ -34,7 +34,7 @@ const mealSchema = z.strictObject({
     src: z.string().max(2000).refine(isLocalImage, "Use a local image path under /images"),
     alt: text,
     kind: z.enum(["illustration", "photo"]),
-  }),
+  }).nullable(),
   isSample: z.boolean(),
 });
 
@@ -76,7 +76,7 @@ const catalogSchema = z
             mealId: identifier,
           }),
         )
-        .min(1).max(7),
+        .max(7),
     }),
     faqs: z
       .array(z.strictObject({ id: identifier, question: text, answer: text }))

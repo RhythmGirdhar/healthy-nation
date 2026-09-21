@@ -12,7 +12,7 @@ export function MessagePreview({ message, decision }: { message: string; decisio
   const text = useRef<HTMLTextAreaElement>(null);
   const [copyStatus, setCopyStatus] = useState("");
   const [handoffError, setHandoffError] = useState("");
-  const { draft, snapshot, contact, checkedAt, needsReview } = useRequest();
+  const { draft, snapshot, contact, checkedAt, needsReview, refreshing, refreshCatalog, error } = useRequest();
 
   function close() { dialog.current?.close(); }
   async function copy() {
@@ -29,6 +29,11 @@ export function MessagePreview({ message, decision }: { message: string; decisio
     <button ref={trigger} type="button" className="button" disabled={!message} onClick={() => {
       setCopyStatus("");
       setHandoffError("");
+      const realOffer = !snapshot.isPreview && (draft.purpose === "meals"
+        ? draft.items.length > 0 && draft.items.every((item) => snapshot.meals.find((meal) => meal.id === item.mealId)?.isSample === false)
+        : draft.purpose === "plan" && snapshot.plans.find((plan) => plan.id === draft.planId)?.isSample === false);
+      const fresh = checkedAt !== null && Date.now() - checkedAt < 60000 && !needsReview;
+      if (realOffer && !fresh && !refreshing) void refreshCatalog();
       dialog.current?.showModal();
       title.current?.focus();
     }}>Preview message <span aria-hidden="true">↗</span></button>
@@ -41,8 +46,9 @@ export function MessagePreview({ message, decision }: { message: string; decisio
         <div className="button-row"><button type="button" className="button secondary" onClick={copy}>Copy draft</button><button type="button" className="text-button" onClick={() => { text.current?.focus(); text.current?.select(); setCopyStatus("Message selected. Use your device’s Copy command."); }}>Select message</button></div>
         <p role="status" aria-live="polite" className="small-note">{copyStatus}</p>
         <div className="notice">
-          {decision.allowed ? <p><strong>WhatsApp opens in a new tab.</strong> Opening the link shares the prepared draft with WhatsApp before you press Send. Only you send it to the team; the team still needs to confirm availability, final price, and delivery.</p> : <p><strong>Local preview only.</strong> {decision.reason || "This request is not eligible for handoff."} You can review or copy the draft, but cannot send sample offers through this website.</p>}
+          {refreshing ? <p role="status">Checking the latest menu before preparing your WhatsApp link…</p> : decision.allowed ? <p><strong>WhatsApp opens in a new tab.</strong> Opening the link shares the prepared draft with WhatsApp before you press Send. Only you send it to the team; the team still needs to confirm availability, final price, and delivery.</p> : <p><strong>Local preview only.</strong> {decision.reason || "This request is not eligible for handoff."} You can review or copy the draft. Resolve the issue above before opening WhatsApp with this request.</p>}
         </div>
+        {error && <p role="alert" className="form-error">{error}</p>}
         {handoffError && <p role="alert" className="form-error">{handoffError}</p>}
         <div className="dialog-actions">
           <button type="button" className="button secondary" onClick={close}>Back to request</button>

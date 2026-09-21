@@ -1,6 +1,16 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { catalog } from "@/lib/catalog";
 import { parsePublicCatalog } from "@/lib/catalog-client";
+
+vi.mock("@/data/catalog", async () => ({
+  catalogData: (await import("@/lib/catalog-fixture")).catalogFixtureData,
+}));
+
+function fixtureImage(snapshot: typeof catalog) {
+  const image = snapshot.meals[0].image;
+  if (!image) throw new Error("The image-validation fixture must have an image.");
+  return image;
+}
 
 describe("untrusted public catalog snapshots", () => {
   it("parses a JSON response into a detached validated snapshot", () => {
@@ -42,24 +52,24 @@ describe("untrusted public catalog snapshots", () => {
 
   it("rejects unexpected nested fields", () => {
     const input = structuredClone(catalog);
-    Object.assign(input.meals[0].image, { token: "private" });
+    Object.assign(fixtureImage(input), { token: "private" });
     expect(() => parsePublicCatalog(input)).toThrow(/Unrecognized key/);
   });
 
-  it.each(["name", "description", "portion"] as const)("requires meal %s", (key) => {
+  it.each(["name", "portion"] as const)("requires meal %s", (key) => {
     const input = structuredClone(catalog);
     input.meals[0][key] = "";
     expect(() => parsePublicCatalog(input)).toThrow(key);
   });
 
-  it.each(["ingredients", "allergens", "options"] as const)("requires nonempty %s", (key) => {
+  it.each(["options"] as const)("requires nonempty %s", (key) => {
     const input = structuredClone(catalog);
     input.meals[0][key] = [];
     expect(() => parsePublicCatalog(input)).toThrow(key);
   });
 
   it.each([
-    ["category", "unsupported"], ["diet", "unsupported"], ["currency", "USD"],
+    ["category", ""], ["diet", "unsupported"], ["currency", "USD"],
     ["art", "unsupported"], ["accent", "unsupported"], ["available", "yes"],
     ["featured", 1], ["isSample", "true"], ["price", -1],
   ])("rejects invalid meal field %s", (key, value) => {
@@ -94,11 +104,27 @@ describe("untrusted public catalog snapshots", () => {
 
   it("rejects untrusted image URLs and empty alt text", () => {
     const input = structuredClone(catalog);
-    input.meals[0].image.src = "https://example.test/tracker";
+    fixtureImage(input).src = "https://example.test/tracker";
     expect(() => parsePublicCatalog(input)).toThrow(/local image path/);
-    input.meals[0].image.src = catalog.meals[0].image.src;
-    input.meals[0].image.alt = "";
+    fixtureImage(input).src = fixtureImage(catalog).src;
+    fixtureImage(input).alt = "";
     expect(() => parsePublicCatalog(input)).toThrow(/image.alt/);
+  });
+
+  it("represents missing source facts and photos without fabricating them", () => {
+    const input = structuredClone(catalog);
+    Object.assign(input.meals[0], {
+      category: "Smoothies",
+      diet: "Not specified",
+      description: "",
+      ingredients: [],
+      allergens: [],
+      image: null,
+    });
+    const parsed = parsePublicCatalog(input);
+    expect(parsed.meals[0].image).toBeNull();
+    expect(parsed.meals[0].ingredients).toEqual([]);
+    expect(parsed.meals[0].category).toBe("Smoothies");
   });
 
   it.each(["deliverySchedule", "choicePolicy", "deliveryFees"] as const)("requires plan %s", (field) => {

@@ -1,0 +1,59 @@
+[
+  {
+    "id": "sample-starter",
+    "deliverySchedule": "To be confirmed",
+    "choicePolicy": "To be confirmed",
+    "deliveryFees": "To be confirmed",
+    "name": "The lunch reset",
+    "eyebrow": "Ease into the idea",
+    "description": "A gentle starting point for a few busy days.",
+    "meals": 3,
+    "days": 3,
+    "price": null,
+    "inclusions": [
+      "Concept: 3 individual lunches",
+      "A mix of sample bowl ideas",
+      "Dates discussed with the team"
+    ],
+    "featured": false,
+    "isSample": true
+  },
+  {
+    "id": "sample-weekday",
+    "deliverySchedule": "To be confirmed",
+    "choicePolicy": "To be confirmed",
+    "deliveryFees": "To be confirmed",
+    "name": "The weekday rhythm",
+    "eyebrow": "Make room for a routine",
+    "description": "One less daily decision. A little more variety.",
+    "meals": 5,
+    "days": 5,
+    "price": null,
+    "inclusions": [
+      "Concept: 5 weekday lunches",
+      "A proposed rotating menu",
+      "Preferences discussed with the team"
+    ],
+    "featured": true,
+    "isSample": true
+  },
+  {
+    "id": "sample-two-week",
+    "deliverySchedule": "To be confirmed",
+    "choicePolicy": "To be confirmed",
+    "deliveryFees": "To be confirmed",
+    "name": "The active routine",
+    "eyebrow": "Around your active day",
+    "description": "Meal ideas with a protein-focused direction.",
+    "meals": 5,
+    "days": 5,
+    "price": null,
+    "inclusions": [
+      "Concept: 5 balanced meals",
+      "Protein-focused recipe direction",
+      "Verified nutrition still pending"
+    ],
+    "featured": false,
+    "isSample": true
+  }
+]

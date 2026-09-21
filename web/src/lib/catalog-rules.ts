@@ -26,7 +26,7 @@ export function catalogIssues(data: CatalogContent): CatalogIssue[] {
       if (entry.isSample && entry.price !== null) {
         add([collection, index, "price"], "Sample content must have a null, unconfirmed price");
       }
-      if (!data.isPreview && (entry.isSample || entry.price === null)) {
+      if (!data.isPreview && !entry.isSample && entry.price === null) {
         add([collection, index], "Live offers require non-sample content and an approved non-null price");
       }
     });
@@ -40,8 +40,11 @@ export function catalogIssues(data: CatalogContent): CatalogIssue[] {
     if (days.has(entry.day)) add(["weeklyMenu", "days", index, "day"], `Duplicate weekly menu day "${entry.day}"`);
     days.add(entry.day);
   });
-  if (!data.isPreview && data.weeklyMenu.isSample) {
-    add(["weeklyMenu", "isSample"], "A live weekly menu must not be marked as sample");
+  if (!data.weeklyMenu.isSample && data.weeklyMenu.days.length === 0) {
+    add(["weeklyMenu", "days"], "A published weekly menu requires at least one day");
+  }
+  if (!data.isPreview && !data.meals.some((meal) => !meal.isSample) && !data.plans.some((plan) => !plan.isSample)) {
+    add(["isPreview"], "A live publication requires at least one non-sample offer");
   }
   const { publishedAt, validFrom, validUntil } = data.publication;
   for (const [key, value] of Object.entries({ publishedAt, validFrom, validUntil })) {
@@ -56,13 +59,13 @@ export function catalogIssues(data: CatalogContent): CatalogIssue[] {
     if (validFrom !== null || validUntil !== null) {
       add(["publication"], "Preview publication validity must be null");
     }
-  } else if (validFrom === null || validUntil === null) {
-    add(["publication"], "Live publication requires validFrom and validUntil UTC timestamps");
+  } else if (validFrom === null) {
+    add(["publication"], "Live publication requires a validFrom UTC timestamp");
   } else if (
     Date.parse(publishedAt) > Date.parse(validFrom) ||
-    Date.parse(validFrom) >= Date.parse(validUntil)
+    (validUntil !== null && Date.parse(validFrom) >= Date.parse(validUntil))
   ) {
-    add(["publication"], "Publication timestamps must be ordered: publishedAt <= validFrom < validUntil");
+    add(["publication"], "Publication timestamps must be ordered: publishedAt <= validFrom < validUntil (when an expiry is provided)");
   }
   return issues;
 }

@@ -35,8 +35,8 @@ export function record(input: unknown, path: string, keys: readonly string[]): R
   return value;
 }
 
-export function text(input: unknown, path: string, max = 2000): string {
-  if (typeof input !== "string" || !input.trim()) throw new Error(`${path}: Must not be blank`);
+export function text(input: unknown, path: string, max = 2000, allowEmpty = false): string {
+  if (typeof input !== "string" || (!allowEmpty && !input.trim())) throw new Error(`${path}: Must not be blank`);
   if (input.length > max || /[\u0000-\u001f\u007f]/.test(input)) {
     throw new Error(`${path}: Use at most ${max} characters without control characters`);
   }

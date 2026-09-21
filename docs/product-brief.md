@@ -23,7 +23,7 @@ Exact UI color tokens, typography, and any alternate logo formats remain design 
 
 The founder is **Shivansh Girdhar**, who holds a **degree in Culinary Sciences**. The About page should state only these supplied biographical facts and use a labeled portrait placeholder until an approved photo is available.
 
-The owner supplied **+91 81049 60748** for WhatsApp contact. General and catering inquiries may link to that number. Sample meal/plan requests remain local previews until actual offers and their publication settings are approved.
+The owner supplied **+91 81049 60748** for WhatsApp contact and **Healthy Nation Online Menu.pdf**, containing 55 priced dishes. General, catering, and real-menu meal requests link to that number after review; example meal plans remain local previews. The team still confirms availability, delivery, and the final total.
 
 ## Mission and business goals
 

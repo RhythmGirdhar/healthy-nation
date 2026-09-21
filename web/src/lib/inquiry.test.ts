@@ -12,6 +12,10 @@ import {
 } from "@/lib/inquiry";
 import type { ContactSettings, PublicCatalog } from "@/lib/types";
 
+vi.mock("@/data/catalog", async () => ({
+  catalogData: (await import("@/lib/catalog-fixture")).catalogFixtureData,
+}));
+
 function buildInquiryMessage(input: InquiryDraft, snapshot: PublicCatalog = catalog, now?: Date) {
   return buildMessage(input, snapshot, now);
 }
@@ -527,10 +531,24 @@ describe("WhatsApp configuration and URL encoding", () => {
       expect(result.allowed).toBe(true);
     });
 
-    it.each(["validFrom", "validUntil"] as const)("blocks absent live %s at the final boundary", (field) => {
+    it("blocks an absent publication start at the final boundary", () => {
       const snapshot = liveCatalog();
-      snapshot.publication[field] = null;
+      snapshot.publication.validFrom = null;
       expect(decision(draft({ catalogRevision: snapshot.publication.revision }), snapshot).url).toBeNull();
+    });
+
+    it("allows a current menu with no declared expiry", () => {
+      const snapshot = liveCatalog();
+      snapshot.publication.validUntil = null;
+      expect(decision(draft({ catalogRevision: snapshot.publication.revision }), snapshot).allowed).toBe(true);
+    });
+
+    it("allows real meal requests while keeping example plan requests blocked", () => {
+      const snapshot = liveCatalog();
+      snapshot.plans.forEach((plan) => { plan.isSample = true; plan.price = null; });
+      const input = draft({ catalogRevision: snapshot.publication.revision });
+      expect(decision(input, snapshot).allowed).toBe(true);
+      expect(decision({ ...input, purpose: "plan", planId: "sample-weekday" }, snapshot).allowed).toBe(false);
     });
 
     it("blocks a malformed clock without generating a URL", () => {

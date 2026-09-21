@@ -11,10 +11,10 @@ export function SiteFooter() {
         <nav className="footer-nav" aria-label="Footer navigation">
           <div><h2>Explore</h2><Link href="/menu/">The menu</Link><Link href="/plans/">Meal plans</Link><Link href="/about/">About us</Link></div>
           <div><h2>Let’s talk</h2><WhatsAppLink className="text-link">{business.phoneDisplay}</WhatsAppLink><Link href="/catering/">Corporate catering</Link><WhatsAppLink message={CATERING_INQUIRY} className="text-link">Ask about catering</WhatsAppLink></div>
-          <div><h2>Good to know</h2><Link href="/faq/">FAQs & information</Link><Link href="/request/">Review your request</Link><span>Delivery area: to be confirmed</span></div>
+          <div><h2>Good to know</h2><Link href="/faq/">FAQs & information</Link><Link href="/request/">Review your request</Link>{business.social.instagram && <a href={business.social.instagram} target="_blank" rel="noopener noreferrer" referrerPolicy="no-referrer">Instagram</a>}<span>Delivery area: to be confirmed</span></div>
         </nav>
       </div>
-      <div className="footer-bottom"><p>Healthy Nation · Flavorful, balanced everyday eating.</p><p>Prices, service details, verified recipes & policies are awaiting approval.</p></div>
+      <div className="footer-bottom"><p>Healthy Nation · Flavorful, balanced everyday eating.</p><p>Confirm availability, delivery charges, ingredients, and allergens with the team before ordering.</p></div>
       <WhatsAppDisclosure />
     </div>
   </footer>;
