@@ -6,4 +6,4 @@ Project documentation lives in [`../docs`](../docs/README.md).
 - [System architecture proposal](../docs/architecture.md)
 - [Agent guidance](../docs/AGENTS.md)
 
-This is an unfinished Next.js + TypeScript scaffold. Implementation is paused for design review; the browser design concept is separate from this application.
+This is the Next.js + TypeScript application. V1 implementation is in progress following owner approval of the reviewed design. The browser design concept is a separate review artifact; hosting and commerce remain deferred.

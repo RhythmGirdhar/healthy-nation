@@ -4,9 +4,9 @@
 
 ## Current state
 
-The application was scaffolded with Next.js, TypeScript, Tailwind CSS, and ESLint. Preliminary catalog, inquiry, and API modules exist, but the owner paused implementation to discuss design first.
+The owner approved implementing the reviewed Next.js + TypeScript design. The application is being built around a static export, validated editable content, and browser-side request drafts. The browser design concept remains a separate review artifact.
 
-The current app is not the clickable design concept and does not implement the revised architecture in full. In particular, preliminary API routes and the default Next.js configuration are not the proposed static-export V1. Reconcile them after design approval.
+The founder and public WhatsApp number are confirmed. Food offers, pricing, service coverage, and a founder photo are not supplied; sample-offer handoff remains gated even while general and catering inquiries can link to the real number.
 
 ## Repository layout
 
@@ -22,9 +22,10 @@ healthy-nation
     architecture.md        System design proposal
     reviews.md             Independent review register
     development.md         This guide
+    content-editing.md     Founder, contact, and catalog editing
     AGENTS.md              Project-specific contributor guidance
     design                 Review-only visual/architecture artifacts
-  web                      Next.js application scaffold
+  web                      Next.js application
 ```
 
 ## Prerequisites
@@ -36,7 +37,7 @@ healthy-nation
 
 Dependency versions are recorded in `web/package.json` and `web/package-lock.json`. Use the lockfile rather than updating packages simply to start the project.
 
-## Run the current scaffold
+## Run the application locally
 
 From the repository root in PowerShell:
 
@@ -48,7 +49,24 @@ npm run dev
 
 Open `http://localhost:3000`. If that port is occupied, follow the address printed by Next.js. Press `Ctrl+C` in the terminal to stop the server.
 
-This starts the unfinished scaffold, not the design-review prototype.
+This starts the application in `web`, not the design-review prototype.
+
+## Build and preview the static site
+
+From `web`:
+
+```powershell
+npm run build
+npm run start
+```
+
+The build produces `web/out`. The start command is a small **local preview server**, not a permanent application backend. It serves the exported files on `http://127.0.0.1:3000` and returns real 404 responses for missing pages. To use another port:
+
+```powershell
+node scripts\serve-static.mjs --port 3001
+```
+
+The eventual host must serve the generated routes/assets and revalidate `catalog.json` appropriately. Hosting, cache-header configuration at that host, and DNS have not been set up.
 
 ## Public configuration
 
@@ -62,10 +80,9 @@ Run this from `web` only if `.env.local` does not already exist; do not overwrit
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_WHATSAPP_NUMBER` | Owner-confirmed international digits-only business number. Leave blank until confirmed. |
 | `NEXT_PUBLIC_SITE_URL` | Confirmed public origin for eventual site metadata. Leave blank during initial local work. |
 
-These values are public, not secrets. A valid number format is not proof of ownership, and a configured number must not bypass the design's preview/live gates. Do not assume that `healthynation.in` belongs to this business.
+The owner-approved public number (`918104960748`), founder details, and inquiry permissions are maintained in `content/business.json`, not a secret environment variable. The display format is derived by the TypeScript loader. A configured number must not bypass the preview/live gates. Do not assume that `healthynation.in` belongs to this business.
 
 Never commit `.env.local`, credentials, or private customer information. The environment example is intentionally empty.
 
@@ -79,11 +96,25 @@ Run these from `web`:
 | `npm run lint` | Run ESLint. |
 | `npm run typecheck` | Generate Next.js route types and run TypeScript checking. |
 | `npm test` | Run the preliminary Vitest tests. |
-| `npm run build` | Build the current Next.js configuration; it is not yet the approved static-export implementation. |
-| `npm run start` | Serve the existing production build with a Next.js runtime. |
-| `npm run test:e2e` | Playwright command is configured, but the application end-to-end suite still needs implementation. Do not treat configuration as coverage. |
+| `npm run build` | Produce the static export in `out`, validating build-time content. |
+| `npm run start` | Serve the exported site locally without a Next.js application server. |
+| `npm run test:e2e` | Run the application browser suite against a completed static build on port 3100. Windows uses installed Microsoft Edge; other platforms use Playwright Chromium. |
 
-This table documents commands, not a claim that every check passed or that V1 is complete. After approval, align build scripts, server mode, and tests with the chosen delivery mode.
+Run `npm run build` before the browser suite. If Playwright reports that its browser executable is missing on a non-Windows environment, install its Chromium browser with `npx playwright install chromium` and retry. The tests never send a WhatsApp message.
+
+This table documents commands, not a claim that every check passed or that the business is ready to launch.
+
+## Images
+
+The supplied logo is preserved separately from its optimized web derivative. Original concept illustrations are exported into `public/images` and clearly identified as illustrations, not actual food photography.
+
+To regenerate those illustrations from the reviewed design artifact:
+
+```powershell
+node scripts\export-illustrations.mjs
+```
+
+Generated assets are stored with the app; the ordinary application build does not depend on extracting the prototype. See [content editing](content-editing.md) before replacing images or publishing real offers.
 
 ## Preview the design documents
 
@@ -97,6 +128,6 @@ Open `http://127.0.0.1:4180/design/architecture.html` for the system-design pres
 
 This local server exposes only the documentation directory on this machine. It is not hosting the business website and does not change DNS. If the port is already in use, use another port rather than stopping an unrelated process.
 
-## After design approval
+## Before deployment
 
-Reconcile the scaffold with the accepted architecture, implement the approved customer flows, add the missing verification, and update these instructions to match the actual application. Hosting, a verified domain, publishing permissions, and deployment remain separate decisions.
+Confirm real food content, operational policies, catalog validity, and the intended contact capabilities. Sample menu pages must not be presented as live offers. Hosting, verified domain ownership, publishing configuration, and deployment remain separate decisions.

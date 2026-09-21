@@ -2,7 +2,7 @@
 
 ## Current phase
 
-The owner requested design-first discussion and two independent reviews before application work continues. Both reviews are complete and their corrections are documented; owner approval is still pending. Keep application implementation paused until explicitly asked to resume. Changes to documentation and the design concept are within the current review scope.
+The owner has approved implementing the reviewed design. Both independent reviews are complete and their corrections are documented. Build the V1 application using those decisions; hosting, DNS, payments, and customer accounts remain deferred.
 
 Read the [documentation index](README.md), [product brief](product-brief.md), [architecture proposal](architecture.md), and [review register](reviews.md). Preserve the difference between approved requirements, proposed design, incomplete scaffolding, and delivered behavior.
 
@@ -12,12 +12,12 @@ Read the [documentation index](README.md), [product brief](product-brief.md), [a
 - V1 is a public, read-only meal/plan storefront. Customers prepare requests and manually send them through WhatsApp. The team explicitly confirms availability, price, payment arrangements, and delivery.
 - A selected meal is not reserved. Opening WhatsApp is not proof of sending, payment, acceptance, or fulfillment.
 - Do not add checkout, automatic recurring billing, customer accounts, a transactional database, a CMS, or deployment resources to V1 without an explicit scope decision.
-- No real menu, food photography, pricing, verified nutrition, service area, business number, or domain ownership has been approved yet. Clearly label samples. Do not invent business facts or enable live requests from sample offers.
+- The founder is **Shivansh Girdhar**, who holds a **degree in Culinary Sciences**. The owner supplied **+91 81049 60748** for WhatsApp inquiries. No founder photo, real menu, food photography, pricing, verified nutrition, service area, or domain ownership has been supplied yet. Clearly label samples and portrait placeholders. Do not invent additional biography or enable live offer requests from sample dishes.
 - Keep general, meal, plan, and catering inquiries distinct. Do not quietly include an inactive selection in a different inquiry.
 
 ## Architecture guidance
 
-The current proposal favors one Next.js App Router + TypeScript project with build-validated editable content and static delivery. This is a proposal awaiting approval, not a description of all existing code.
+The accepted V1 direction is one Next.js App Router + TypeScript project with build-validated editable content and static delivery. Existing preliminary code must be reconciled with these boundaries as implementation proceeds.
 
 - Keep content loading and full catalog validation on the build/server side.
 - Supply small serializable public data snapshots to interactive components. Do not import the full content/validation graph into client code.

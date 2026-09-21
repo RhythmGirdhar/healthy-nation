@@ -2,7 +2,7 @@
 
 [Documentation index](README.md) | [Product brief](product-brief.md) | [Review findings](reviews.md)
 
-**For discussion, not an approved implementation plan.** Independent engineering and business/product reviews are complete; corrections are recorded in the proposal and prototype. See the [review register](reviews.md) for evidence, limitations, and dispositions. Hosting, DNS, and deployment are deliberately deferred.
+**Reviewed V1 direction approved for implementation.** Independent engineering and business/product reviews are complete; corrections are recorded here and in the prototype. See the [review register](reviews.md) for evidence, limitations, and dispositions. Hosting, DNS, and deployment are deliberately deferred.
 
 ## The recommendation in one sentence
 
@@ -156,7 +156,7 @@ Use session-scoped storage for same-tab refresh/navigation continuity. Revalidat
 
 ### Environment configuration
 
-- Public WhatsApp business number: required before enabling a real handoff; not a secret.
+- Public WhatsApp business number: the owner supplied **+91 81049 60748** (`918104960748` in links), approving general and catering inquiries. This public setting is not a secret and does not enable sample-offer handoff.
 - Public site origin: set only after the real domain is confirmed; useful for canonical metadata and sitemap URLs.
 - No payment keys, database credentials, CMS tokens, or customer authentication secrets in V1.
 
@@ -247,10 +247,10 @@ These are future changes, not reasons to add a database or payments to the read-
 3. Whether the request-review step is clear enough before opening WhatsApp.
 4. Whether the simple read-only backend and code-edited menu are sufficient for launch.
 
-Actual recipes, photos, verified food information, prices, phone number, service area, and policies remain launch inputs. Domain ownership and hosting setup can wait until the application direction is approved.
+The owner has supplied founder **Shivansh Girdhar**, his **degree in Culinary Sciences**, and WhatsApp **+91 81049 60748**. Actual recipes, founder/food photos, verified food information, prices, service area, and policies remain launch inputs. Domain ownership and hosting setup remain deferred.
 
 ## Work status
 
-The repository checkpoint includes initial Next.js scaffolding and preliminary catalog/domain work from before this design-first request. Application implementation remains paused pending owner design approval. Project documentation and review artifacts are consolidated under `docs`. Publishing this source does not deploy the site. The clickable concept is not the application and does not send messages or place orders.
+Application implementation is in progress following owner approval. The initial scaffold is being reconciled with these reviewed boundaries. Project documentation and review artifacts are consolidated under `docs`. Publishing source does not deploy the site. The standalone clickable concept remains separate from the application and does not send messages or place orders.
 
-This proposal records the recommended design; it does not claim that the preliminary modules already meet these revised boundaries. Reconcile that implementation only after design approval. The root README links to the documentation index; the product brief records already-decided facts, and this document remains a proposal until approved.
+This document records the accepted design direction, not a blanket claim that every implementation or business launch gate has passed. The root README links to the documentation index; the product brief and content-editing guide record supplied business facts and remaining inputs.

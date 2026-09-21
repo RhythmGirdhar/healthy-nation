@@ -1,0 +1,20 @@
+{
+  "name": "Healthy Nation",
+  "contact": {
+    "phoneNumber": "918104960748",
+    "approved": true,
+    "generalInquiriesEnabled": true,
+    "offerRequestsEnabled": false
+  },
+  "founder": {
+    "name": "Shivansh Girdhar",
+    "qualification": "Degree in Culinary Sciences",
+    "portrait": null
+  },
+  "serviceArea": null,
+  "orderingHours": null,
+  "social": {
+    "instagram": null,
+    "facebook": null
+  }
+}

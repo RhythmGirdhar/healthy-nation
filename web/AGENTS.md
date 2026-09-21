@@ -1,4 +1,4 @@
-Project-specific guidance is in [../docs/AGENTS.md](../docs/AGENTS.md). Application implementation is currently paused for design review.
+Project-specific guidance is in [../docs/AGENTS.md](../docs/AGENTS.md). The owner has approved implementing the reviewed V1 design; hosting and commerce remain deferred.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

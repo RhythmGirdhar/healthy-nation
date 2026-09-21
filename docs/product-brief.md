@@ -8,7 +8,7 @@ Flavorful, nutritious everyday meals, made affordable and convenient.
 
 Healthy Nation is a planned food business web application for discovering individual meals, exploring meal plans, and connecting directly with the team to inquire and order.
 
-**Project status:** Awaiting owner design approval after two independent reviews and their corrections. Initial Next.js scaffolding and preliminary catalog code exist in `web`, but application implementation remains paused. The roadmap below is not a claim that V1 is complete. No hosting, DNS, or production deployment has been configured.
+**Project status:** The owner has approved implementation of the reviewed V1 design. The application is being built in `web`; the roadmap below is not a claim that all business launch inputs are ready. No hosting, DNS, or production deployment has been configured.
 
 ## Confirmed brand identity
 
@@ -18,6 +18,12 @@ Healthy Nation is a planned food business web application for discovering indivi
 - **Visual direction:** Use the logo as the brand reference, with white space, green accents, and colorful food photography. Preserve the logo's proportions and colors rather than stretching or recoloring it.
 
 Exact UI color tokens, typography, and any alternate logo formats remain design decisions; they are not specified by this image alone.
+
+## Confirmed founder and contact
+
+The founder is **Shivansh Girdhar**, who holds a **degree in Culinary Sciences**. The About page should state only these supplied biographical facts and use a labeled portrait placeholder until an approved photo is available.
+
+The owner supplied **+91 81049 60748** for WhatsApp contact. General and catering inquiries may link to that number. Sample meal/plan requests remain local previews until actual offers and their publication settings are approved.
 
 ## Mission and business goals
 
@@ -165,7 +171,7 @@ The catalog is for publishable content. Customer messages, addresses, medical in
 
 ## Proposed technology stack
 
-Next.js and TypeScript have been scaffolded locally. Editable content files are the selected V1 approach; CMS and hosting recommendations from the initial discussion are deferred. Remaining design choices are under review.
+Next.js and TypeScript are the approved stack. Editable content files and static delivery are the selected V1 approach; CMS and hosting-provider recommendations from the initial discussion remain deferred.
 
 | Layer | V1 recommendation | Purpose |
 | --- | --- | --- |
@@ -178,7 +184,7 @@ Next.js and TypeScript have been scaffolded locally. Editable content files are 
 
 V1 does not need a separate Express service, microservices, a dedicated search engine, or customer authentication.
 
-The current architecture proposal favors a static export with a build-time catalog layer rather than a permanent API server. It remains under design review. If Vercel is selected later, its Hobby plan is restricted to non-commercial use; see the [Vercel fair-use guidelines](https://vercel.com/docs/limits/fair-use-guidelines#commercial-usage).
+The accepted architecture uses a static export with a build-time catalog layer rather than a permanent API server. If Vercel is selected later, its Hobby plan is restricted to non-commercial use; see the [Vercel fair-use guidelines](https://vercel.com/docs/limits/fair-use-guidelines#commercial-usage).
 
 Reference documentation: [Next.js](https://nextjs.org/docs/app/getting-started), [Next.js static exports](https://nextjs.org/docs/app/guides/static-exports), and [Tailwind CSS](https://tailwindcss.com/docs).
 
@@ -223,4 +229,4 @@ Before making public promises, resolve who owns menu updates, inquiry responses,
 
 ## Development status
 
-The repository contains this brief, the supplied brand logo, and an unfinished Next.js application scaffold with preliminary catalog/domain modules in `web`. Existing draft code is not the approved design or a finished V1. Local setup, tests, and architecture documentation will be reconciled when design is approved and implementation resumes. No cloud resources, CMS project, production WhatsApp integration, or payment integration have been provisioned.
+The repository contains the reviewed design, supplied brand logo, and the Next.js application being implemented in `web`. General inquiry links use the owner-provided public WhatsApp number; this does not require an automated WhatsApp API integration. No cloud resources, CMS project, payment integration, or production deployment has been provisioned.

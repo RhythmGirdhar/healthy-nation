@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { catalogData } from "@/data/catalog";
-import { catalog, formatPrice, getMeal, validateCatalog } from "@/lib/catalog";
+import { createHash } from "node:crypto";
+import { catalog, getMeal, getPublicCatalog, validateCatalog } from "@/lib/catalog";
+import { formatPrice } from "@/lib/format";
+import { parsePublicCatalog } from "@/lib/catalog-client";
 
 function editableCopy() {
   return structuredClone(catalogData);
@@ -28,13 +31,12 @@ describe("editable catalog", () => {
     for (const entry of [...catalog.meals, ...catalog.plans]) {
       expect(entry.isSample).toBe(true);
       expect(entry.price).toBeNull();
-      expect(entry.description).toMatch(/sample/i);
+      expect(entry.description.trim().length).toBeGreaterThan(0);
     }
     for (const meal of catalog.meals) {
-      for (const description of [...meal.ingredients, ...meal.allergens, meal.portion]) {
-        expect(description).toMatch(/illustrative/i);
-        expect(description).toMatch(/confirm.*team/i);
-      }
+      expect(meal.ingredients.every((ingredient) => ingredient.trim().length > 0)).toBe(true);
+      expect(meal.allergens.join(" ")).toMatch(/confirm.*team/i);
+      expect(meal.portion).toBe("Portion to be confirmed");
       expect(meal.currency).toBe("INR");
       expect(meal.options).toContain("Standard");
     }
@@ -43,9 +45,136 @@ describe("editable catalog", () => {
   it("validates without mutating editable data or sharing nested references", () => {
     const original = editableCopy();
     const result = validateCatalog(original);
-    expect(result).toEqual(catalog);
+    expect(result).toEqual(original);
     expect(result).not.toBe(original);
     expect(result.meals[0]).not.toBe(original.meals[0]);
+  });
+
+  describe("catalog publication", () => {
+    function liveContent() {
+      const input = validateCatalog(editableCopy());
+      input.isPreview = false;
+      for (const entry of [...input.meals, ...input.plans]) {
+        entry.isSample = false;
+        entry.price = 100;
+      }
+      input.weeklyMenu.isSample = false;
+      input.publication = {
+        publishedAt: "2030-01-01T00:00:00.000Z",
+        validFrom: "2030-01-02T00:00:00.000Z",
+        validUntil: "2030-01-09T00:00:00.000Z",
+      };
+      return input;
+    }
+
+    it("computes the same content SHA256 for every page and JSON snapshot", () => {
+      const content = validateCatalog(catalogData);
+      const expected = createHash("sha256").update(JSON.stringify(content)).digest("hex");
+      expect(catalog.publication.revision).toBe(expected);
+      expect(getPublicCatalog()).toEqual(catalog);
+      expect(getPublicCatalog()).not.toBe(catalog);
+      expect(parsePublicCatalog(getPublicCatalog())).toEqual(catalog);
+      expect(catalog.schemaVersion).toBe(1);
+    });
+
+    it("changes the revision when editable public content changes", () => {
+      const original = catalogData.faqs[0].answer;
+      try {
+        catalogData.faqs[0].answer = `${original} Updated content.`;
+        expect(getPublicCatalog().publication.revision).not.toBe(catalog.publication.revision);
+      } finally {
+        catalogData.faqs[0].answer = original;
+      }
+      expect(getPublicCatalog().publication.revision).toBe(catalog.publication.revision);
+    });
+
+    it("fails snapshot generation when editable content is malformed", () => {
+      const original = catalogData.meals[0].name;
+      try {
+        catalogData.meals[0].name = "";
+        expect(() => getPublicCatalog()).toThrow(/Invalid catalog: meals.0.name/);
+      } finally {
+        catalogData.meals[0].name = original;
+      }
+    });
+
+    it("keeps server and public-parser technical collection bounds aligned", () => {
+      const input = editableCopy();
+      input.meals[0].tags = Array.from({ length: 1001 }, () => "Tag");
+      expect(() => validateCatalog(input)).toThrow(/tags/);
+      const snapshot = structuredClone(catalog);
+      snapshot.meals[0].tags = input.meals[0].tags;
+      expect(() => parsePublicCatalog(snapshot)).toThrow(/tags/);
+    });
+
+    it("accepts a fully approved live content shape", () => {
+      expect(validateCatalog(liveContent()).isPreview).toBe(false);
+    });
+
+    it.each(["meals", "plans"] as const)("rejects samples and missing live prices in %s", (collection) => {
+      const input = liveContent();
+      input[collection][0].isSample = true;
+      expect(() => validateCatalog(input)).toThrow(/non-sample/);
+      input[collection][0].isSample = false;
+      input[collection][0].price = null;
+      expect(() => validateCatalog(input)).toThrow(/non-null price/);
+    });
+
+    it("rejects a sample weekly menu in a live publication", () => {
+      const input = liveContent();
+      input.weeklyMenu.isSample = true;
+      expect(() => validateCatalog(input)).toThrow(/live weekly menu/);
+    });
+
+    it.each(["publishedAt", "validFrom", "validUntil"] as const)(
+      "rejects invalid UTC %s values",
+      (field) => {
+        for (const invalid of ["2030-02-30T12:00:00Z", "2030-01-01", "2030-01-01T00:00:00+05:30", "invalid", "2030-01-01T24:00:00Z"]) {
+          const input = liveContent();
+          input.publication[field] = invalid;
+          expect(() => validateCatalog(input)).toThrow(/UTC timestamp/);
+        }
+      },
+    );
+
+    it.each(["validFrom", "validUntil"] as const)("requires live %s", (field) => {
+      const input = liveContent();
+      input.publication[field] = null;
+      expect(() => validateCatalog(input)).toThrow(/Live publication requires/);
+    });
+
+    it.each([
+      ["2030-01-03T00:00:00Z", "2030-01-02T00:00:00Z", "2030-01-09T00:00:00Z"],
+      ["2030-01-01T00:00:00Z", "2030-01-09T00:00:00Z", "2030-01-09T00:00:00Z"],
+      ["2030-01-01T00:00:00Z", "2030-01-09T00:00:00Z", "2030-01-02T00:00:00Z"],
+    ])("requires ordered publication timestamps", (publishedAt, validFrom, validUntil) => {
+      const input = liveContent();
+      input.publication = { publishedAt, validFrom, validUntil };
+      expect(() => validateCatalog(input)).toThrow(/must be ordered/);
+    });
+
+    it("keeps preview validity explicitly null", () => {
+      const input = validateCatalog(editableCopy());
+      input.publication.validFrom = "2030-01-01T00:00:00Z";
+      expect(() => validateCatalog(input)).toThrow(/Preview publication validity must be null/);
+    });
+
+    it.each(["https://example.test/food.jpg", "//example.test/food.jpg", "/images/../secret.svg", "/images/meal.svg?draft=1", "/other/meal.svg"])(
+      "rejects nonlocal or unsafe image source %s", (src) => {
+        const input = editableCopy();
+        input.meals[0].image.src = src;
+        expect(() => validateCatalog(input)).toThrow(/local image path/);
+      },
+    );
+
+    it("requires accessible image descriptions and declared illustration/photo status", () => {
+      const input = editableCopy();
+      input.meals[0].image.alt = " ";
+      expect(() => validateCatalog(input)).toThrow(/image.alt/);
+      input.meals[0].image.alt = "Sample illustration";
+      input.meals[0].image.kind = "unknown";
+      expect(() => validateCatalog(input)).toThrow(/image.kind/);
+    });
   });
 
   it("requires globally unique catalog IDs", () => {

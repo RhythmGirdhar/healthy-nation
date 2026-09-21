@@ -1,13 +1,45 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { catalog } from "@/lib/catalog";
 import {
-  buildInquiryMessage,
+  buildInquiryMessage as buildMessage,
   EMPTY_DRAFT,
   getLocalCalendarDate,
   getWhatsAppUrl,
+  getHandoffDecision,
   parseDraft,
+  reconcileDraft,
   type InquiryDraft,
 } from "@/lib/inquiry";
+import type { ContactSettings, PublicCatalog } from "@/lib/types";
+
+function buildInquiryMessage(input: InquiryDraft, snapshot: PublicCatalog = catalog, now?: Date) {
+  return buildMessage(input, snapshot, now);
+}
+
+const NOW = new Date("2030-01-15T12:00:00.000Z");
+const approvedContact: ContactSettings = {
+  phoneNumber: "12345678901",
+  approved: true,
+  generalInquiriesEnabled: true,
+  offerRequestsEnabled: true,
+};
+
+function liveCatalog(): PublicCatalog {
+  const snapshot = structuredClone(catalog);
+  snapshot.isPreview = false;
+  snapshot.weeklyMenu.isSample = false;
+  for (const entry of [...snapshot.meals, ...snapshot.plans]) {
+    entry.isSample = false;
+    entry.price = 100;
+  }
+  snapshot.publication = {
+    revision: "a".repeat(64),
+    publishedAt: "2030-01-01T00:00:00.000Z",
+    validFrom: "2030-01-10T00:00:00.000Z",
+    validUntil: "2030-01-20T00:00:00.000Z",
+  };
+  return snapshot;
+}
 
 function draft(overrides: Partial<InquiryDraft> = {}): InquiryDraft {
   return {
@@ -25,10 +57,12 @@ afterEach(() => {
 describe("untrusted inquiry draft parsing", () => {
   it("accepts an empty saved draft without requiring a completed inquiry", () => {
     expect(parseDraft(EMPTY_DRAFT)).toEqual({
-      version: 1,
+      version: 2,
+      catalogRevision: null,
       items: [],
       planId: null,
       requestedDate: "",
+      planStartDate: "",
       purpose: "meals",
       headcount: "",
     });
@@ -47,7 +81,7 @@ describe("untrusted inquiry draft parsing", () => {
   });
 
   it("rejects a stale version and missing required fields", () => {
-    expect(() => parseDraft({ ...draft(), version: 2 })).toThrow(/version/);
+    expect(() => parseDraft({ ...draft(), version: 1 })).toThrow(/version/);
     const missingField: Partial<InquiryDraft> = draft();
     delete missingField.headcount;
     expect(() => parseDraft(missingField)).toThrow(/headcount/);
@@ -86,24 +120,27 @@ describe("untrusted inquiry draft parsing", () => {
     },
   );
 
-  it("rejects a removed meal ID", () => {
+  it("preserves a removed meal ID for visible correction", () => {
     const input = draft();
     input.items[0].mealId = "removed-meal";
-    expect(() => parseDraft(input)).toThrow(/Unknown meal ID "removed-meal"/);
+    expect(parseDraft(input).items[0].mealId).toBe("removed-meal");
+    expect(() => buildInquiryMessage(input)).toThrow(/Unknown meal ID "removed-meal"/);
   });
 
-  it("rejects a removed plan ID", () => {
-    expect(() => parseDraft(draft({ planId: "removed-plan" }))).toThrow(
-      /Unknown plan ID "removed-plan"/,
-    );
+  it("preserves a removed plan ID for correction only when that purpose is active", () => {
+    expect(parseDraft(draft({ planId: "removed-plan" })).planId).toBe("removed-plan");
+    expect(() => buildInquiryMessage(draft({ planId: "removed-plan", purpose: "plan" }))).toThrow(/Unknown plan ID/);
+    expect(buildInquiryMessage(draft({ planId: "removed-plan" }))).toContain("Meal inquiry");
   });
 
   it("requires a supported option for that particular meal", () => {
     const input = draft();
     input.items[0].option = "Toppings on the side";
-    expect(() => parseDraft(input)).toThrow(/Unsupported option/);
+    expect(parseDraft(input).items[0].option).toBe("Toppings on the side");
+    expect(() => buildInquiryMessage(input)).toThrow(/Unsupported option/);
     input.items[0].mealId = "oats-berry-pot";
     expect(parseDraft(input).items[0].option).toBe("Toppings on the side");
+    expect(buildInquiryMessage(input)).toContain("Toppings on the side");
   });
 
   it("rejects duplicate meal-option pairs rather than silently combining quantities", () => {
@@ -209,7 +246,7 @@ describe("inquiry message generation", () => {
     );
     expect(message).toContain("Purpose: Meal plan inquiry");
     expect(message).toContain("ID: sample-weekday");
-    expect(message).toContain("Name: Sample weekday");
+    expect(message).toContain("Name: The weekday rhythm");
     expect(message).toContain("5 meals over 5 days");
     expect(message).toContain("Plan price: Price to be confirmed");
     expect(message).not.toContain("harissa-chicken-bowl");
@@ -265,9 +302,9 @@ describe("inquiry message generation", () => {
     (purpose) => {
       vi.useFakeTimers();
       vi.setSystemTime(new Date(2030, 0, 15, 0, 1));
-      const input = draft({ purpose, planId: "sample-weekday", requestedDate: "2030-01-14" });
+      const input = draft({ purpose, planId: "sample-weekday", requestedDate: "2030-01-14", planStartDate: "2030-01-14" });
       expect(parseDraft(input).requestedDate).toBe("2030-01-14");
-      expect(() => buildInquiryMessage(input)).toThrow(/Requested date is in the past/);
+      expect(() => buildInquiryMessage(input)).toThrow(/Requested (start )?date is in the past/);
     },
   );
 
@@ -331,6 +368,325 @@ describe("local calendar date helper", () => {
 describe("WhatsApp configuration and URL encoding", () => {
   it.each([undefined, "", "   "])("returns null for an unconfigured phone %s", (phone) => {
     expect(getWhatsAppUrl(phone, "Hello")).toBeNull();
+  });
+
+  describe("versioned draft limits and purpose isolation", () => {
+    it.each(["", "revision-1", "a".repeat(63), "z".repeat(64)])("rejects malformed catalog revision %s", (catalogRevision) => {
+      expect(() => parseDraft(draft({ catalogRevision }))).toThrow(/catalogRevision/);
+    });
+
+    it("accepts a catalog revision independently of draft schema version", () => {
+      expect(parseDraft(draft({ catalogRevision: "b".repeat(64) })).version).toBe(2);
+    });
+
+    it.each(["", "A Meal", "a".repeat(81), "../meal", "meal\nid"])("rejects malformed meal ID %s", (mealId) => {
+      const input = draft();
+      input.items[0].mealId = mealId;
+      expect(() => parseDraft(input)).toThrow(/mealId/);
+    });
+
+    it.each(["", " ", "a".repeat(121), "Standard\nmedical notes", "Standard\u0000"])("rejects malformed option text", (option) => {
+      const input = draft();
+      input.items[0].option = option;
+      expect(() => parseDraft(input)).toThrow(/option/);
+    });
+
+    it.each(["2030-02-30", "tomorrow", "2030-1-01"])("validates plan-start calendar shape %s", (planStartDate) => {
+      expect(() => parseDraft(draft({ planStartDate }))).toThrow(/planStartDate/);
+    });
+
+    it.each(["general", "catering"] as const)("never includes dormant offers in %s messages", (purpose) => {
+      const input = draft({
+        purpose,
+        planId: "removed-plan",
+        items: [{ mealId: "removed-meal", quantity: 1, option: "Obsolete option" }],
+        planStartDate: "2000-01-01",
+        requestedDate: purpose === "general" ? "2000-01-01" : "",
+      });
+      const message = buildInquiryMessage(input);
+      for (const forbidden of ["removed", "Obsolete", "2000", "Sample / preview", "illustrative", "Meal 1", "Selected plan"]) {
+        expect(message).not.toContain(forbidden);
+      }
+      expect(message).toContain("not a paid or accepted order");
+    });
+
+    it("uses only the plan start date and describes all plan terms without quantities", () => {
+      const input = draft({
+        purpose: "plan", planId: "sample-weekday", planStartDate: "2030-01-16",
+        requestedDate: "2000-01-01", headcount: "100",
+        items: [{ mealId: "removed-meal", quantity: 1, option: "Removed option" }],
+      });
+      const message = buildInquiryMessage(input, catalog, NOW);
+      expect(message).toContain("Requested start date: 2030-01-16");
+      for (const label of ["Description:", "Delivery cadence:", "Meal choices:", "Delivery fees:", "Inclusions:"]) {
+        expect(message).toContain(label);
+      }
+      for (const forbidden of ["Requested date:", "2000", "headcount", "Quantity:", "removed-meal"]) {
+        expect(message).not.toContain(forbidden);
+      }
+    });
+
+    it("ignores an expired plan date when the active purpose is meals", () => {
+      const message = buildInquiryMessage(draft({ planStartDate: "2000-01-01", planId: "removed-plan" }));
+      expect(message).not.toContain("2000");
+      expect(message).not.toContain("removed-plan");
+    });
+
+    it("does not make verified-recipe claims for live offers", () => {
+      const message = buildInquiryMessage(draft(), liveCatalog(), NOW);
+      expect(message).not.toContain("illustrative and unverified");
+      expect(message).not.toMatch(/(?:guaranteed|verified recipes)/i);
+      expect(message).toContain("Please discuss ingredients, allergens, cross-contact");
+    });
+  });
+
+  describe("single fail-closed WhatsApp handoff capability", () => {
+    function decision(
+      input: InquiryDraft,
+      snapshot: PublicCatalog = catalog,
+      contact: ContactSettings = approvedContact,
+      fresh = true,
+      now = NOW,
+    ) {
+      return getHandoffDecision(input, snapshot, contact, { fresh, now });
+    }
+
+    it.each(["general", "catering"] as const)("allows approved %s regardless of preview/freshness and dormant offers", (purpose) => {
+      const input = draft({
+        purpose, planId: "removed-plan", planStartDate: "2000-01-01",
+        items: [{ mealId: "removed-meal", quantity: 1, option: "Old option" }],
+      });
+      const result = decision(input, catalog, { ...approvedContact, offerRequestsEnabled: false }, false);
+      expect(result.allowed).toBe(true);
+      expect(result.reason).toBeNull();
+      expect(result.url).not.toBeNull();
+      expect(new URL(result.url!).searchParams.get("text")).toBe(result.message);
+      expect(result.message).not.toMatch(/removed|Sample|Old option/);
+    });
+
+    it.each(["meals", "plan"] as const)("blocks sample %s despite an approved phone and enabled offers", (purpose) => {
+      const result = decision(draft({ purpose, planId: "sample-weekday", catalogRevision: catalog.publication.revision }));
+      expect(result).toMatchObject({ allowed: false, url: null });
+      expect(result.reason).toMatch(/Sample/);
+      expect(result.message).toMatch(/Sample \/ preview/);
+    });
+
+    it.each(["general", "catering", "meals", "plan"] as const)("requires approved contact for %s", (purpose) => {
+      const result = decision(draft({ purpose, planId: "sample-weekday" }), catalog, { ...approvedContact, approved: false });
+      expect(result).toMatchObject({ allowed: false, url: null });
+      expect(result.reason).toMatch(/contact has not been approved/);
+    });
+
+    it.each(["general", "catering"] as const)("requires the general-contact flag for %s", (purpose) => {
+      const result = decision(draft({ purpose }), catalog, { ...approvedContact, generalInquiriesEnabled: false });
+      expect(result).toMatchObject({ allowed: false, url: null });
+      expect(result.reason).toMatch(/not enabled/);
+    });
+
+    it.each(["meals", "plan"] as const)("requires the offer flag for live %s", (purpose) => {
+      const snapshot = liveCatalog();
+      const result = decision(
+        draft({ purpose, planId: "sample-weekday", catalogRevision: snapshot.publication.revision }),
+        snapshot, { ...approvedContact, offerRequestsEnabled: false },
+      );
+      expect(result).toMatchObject({ allowed: false, url: null });
+      expect(result.reason).toMatch(/Live meal and plan requests are not enabled/);
+    });
+
+    it.each(["meals", "plan"] as const)("allows a fresh, in-date approved live %s request", (purpose) => {
+      const snapshot = liveCatalog();
+      const result = decision(draft({ purpose, planId: "sample-weekday", catalogRevision: snapshot.publication.revision }), snapshot);
+      expect(result.allowed).toBe(true);
+      expect(result.url).toMatch(/^https:\/\/wa\.me\/12345678901\?text=/);
+      expect(result.message).not.toContain("Sample / preview");
+    });
+
+    it.each([false, true])("blocks stale or mismatched live snapshots (fresh=%s)", (fresh) => {
+      const snapshot = liveCatalog();
+      const result = decision(draft({ catalogRevision: fresh ? "b".repeat(64) : snapshot.publication.revision }), snapshot, approvedContact, fresh);
+      expect(result).toMatchObject({ allowed: false, url: null });
+      expect(result.reason).toMatch(/Refresh the catalog and review/);
+    });
+
+    it("blocks a missing draft catalog revision", () => {
+      expect(decision(draft(), liveCatalog()).allowed).toBe(false);
+    });
+
+    it.each(["2030-01-09T23:59:59.999Z", "2030-01-20T00:00:00.000Z", "2030-02-01T00:00:00Z"])(
+      "blocks offers outside publication validity at %s", (time) => {
+        const snapshot = liveCatalog();
+        const result = decision(draft({ catalogRevision: snapshot.publication.revision }), snapshot, approvedContact, true, new Date(time));
+        expect(result).toMatchObject({ allowed: false, url: null });
+        expect(result.reason).toMatch(/availability window/);
+      },
+    );
+
+    it("allows the inclusive start of a publication", () => {
+      const snapshot = liveCatalog();
+      const result = decision(draft({ catalogRevision: snapshot.publication.revision }), snapshot, approvedContact, true, new Date(snapshot.publication.validFrom!));
+      expect(result.allowed).toBe(true);
+    });
+
+    it.each(["validFrom", "validUntil"] as const)("blocks absent live %s at the final boundary", (field) => {
+      const snapshot = liveCatalog();
+      snapshot.publication[field] = null;
+      expect(decision(draft({ catalogRevision: snapshot.publication.revision }), snapshot).url).toBeNull();
+    });
+
+    it("blocks a malformed clock without generating a URL", () => {
+      const snapshot = liveCatalog();
+      expect(decision(draft({ catalogRevision: snapshot.publication.revision }), snapshot, approvedContact, true, new Date(NaN)).allowed).toBe(false);
+    });
+
+    it.each(["isSample", "price"] as const)("blocks a selected sample/unpriced meal in a mixed snapshot (%s)", (field) => {
+      const snapshot = liveCatalog();
+      if (field === "isSample") snapshot.meals[0].isSample = true;
+      else snapshot.meals[0].price = null;
+      expect(decision(draft({ catalogRevision: snapshot.publication.revision }), snapshot).url).toBeNull();
+    });
+
+    it("blocks an unavailable active meal but not dormant selections in a plan inquiry", () => {
+      const snapshot = liveCatalog();
+      snapshot.meals[0].available = false;
+      const input = draft({ catalogRevision: snapshot.publication.revision });
+      expect(decision(input, snapshot).reason).toMatch(/unavailable/);
+      expect(decision({ ...input, purpose: "plan", planId: "sample-weekday" }, snapshot).allowed).toBe(true);
+    });
+
+    it.each(["", "+12345678901", "0123456789"])("fails closed for missing or invalid phone %s", (phoneNumber) => {
+      const result = decision(draft({ purpose: "general" }), catalog, { ...approvedContact, phoneNumber });
+      expect(result).toMatchObject({ allowed: false, url: null });
+      expect(result.reason).toMatch(/missing|Invalid WhatsApp phone/);
+      expect(result.message).toContain("General inquiry");
+    });
+
+    it("surfaces invalid requests instead of returning an apparently successful draft", () => {
+      const result = decision(draft({ items: [] }));
+      expect(result).toMatchObject({ allowed: false, url: null, message: "" });
+      expect(result.reason).toMatch(/Choose at least one meal/);
+    });
+
+    it("blocks an expired active date but ignores dormant dates", () => {
+      expect(decision(draft({ purpose: "catering", requestedDate: "2000-01-01" })).reason).toMatch(/past/);
+      expect(decision(draft({ purpose: "general", requestedDate: "2000-01-01" })).allowed).toBe(true);
+    });
+
+    it("keeps overlong reviewed messages available without silently truncating or linking", () => {
+      const snapshot = liveCatalog();
+      snapshot.meals[0].name = "🥗".repeat(1000);
+      const result = decision(draft({ catalogRevision: snapshot.publication.revision }), snapshot);
+      expect(result).toMatchObject({ allowed: false, url: null });
+      expect(result.reason).toMatch(/too long.*Copy/);
+      expect(result.message).toContain("🥗".repeat(1000));
+    });
+  });
+
+  describe("catalog reconciliation without silent selection loss", () => {
+    function snapshots() {
+      const previous = liveCatalog();
+      const current = structuredClone(previous);
+      current.publication.revision = "b".repeat(64);
+      const input = draft({
+        catalogRevision: previous.publication.revision,
+        items: [
+          { mealId: previous.meals[0].id, quantity: 2, option: "Standard" },
+          { mealId: previous.meals[1].id, quantity: 1, option: "Standard" },
+        ],
+        planId: previous.plans[0].id,
+      });
+      return { previous, current, input };
+    }
+
+    it("updates only the revision when selected terms are unchanged", () => {
+      const { previous, current, input } = snapshots();
+      current.faqs[0].answer = "Updated general FAQ";
+      const result = reconcileDraft(input, previous, current);
+      expect(result).toMatchObject({ needsReview: false, issues: [] });
+      expect(result.draft).toEqual({ ...input, catalogRevision: current.publication.revision });
+      expect(input.catalogRevision).toBe(previous.publication.revision);
+      expect(result.draft.items).not.toBe(input.items);
+    });
+
+    it("preserves removed and unaffected selections and blocks the stale active row", () => {
+      const { previous, current, input } = snapshots();
+      current.meals = current.meals.slice(1);
+      const result = reconcileDraft(input, previous, current);
+      expect(result.draft.items).toEqual(input.items);
+      expect(result.needsReview).toBe(true);
+      expect(result.issues.join(" ")).toMatch(/Harissa chicken bowl.*removed/);
+      expect(() => buildInquiryMessage(result.draft, current, NOW)).toThrow(/Unknown meal ID/);
+    });
+
+    it("preserves and reports unavailable meals and unsupported options", () => {
+      const { previous, current, input } = snapshots();
+      current.meals[0].available = false;
+      current.meals[1].options = ["Dressing on the side"];
+      const result = reconcileDraft(input, previous, current);
+      expect(result.draft.items).toEqual(input.items);
+      expect(result.issues.join(" ")).toMatch(/unavailable/);
+      expect(result.issues.join(" ")).toMatch(/no longer supports/);
+      expect(getHandoffDecision(result.draft, current, approvedContact, { fresh: true, now: NOW }).allowed).toBe(false);
+    });
+
+    it.each(["price", "portion", "allergens", "options"] as const)("requires review after meal %s changes", (field) => {
+      const { previous, current, input } = snapshots();
+      if (field === "price") current.meals[0].price = 150;
+      if (field === "portion") current.meals[0].portion = "Updated portion";
+      if (field === "allergens") current.meals[0].allergens = ["Updated allergen information"];
+      if (field === "options") current.meals[0].options.push("New option");
+      const result = reconcileDraft(input, previous, current);
+      expect(result.needsReview).toBe(true);
+      expect(result.issues.join(" ")).toMatch(/current terms/);
+      expect(result.draft.items).toEqual(input.items);
+    });
+
+    it.each(["price", "deliverySchedule", "choicePolicy", "deliveryFees"] as const)("requires review after plan %s changes", (field) => {
+      const { previous, current, input } = snapshots();
+      if (field === "price") current.plans[0].price = 200;
+      else current.plans[0][field] = "Updated terms";
+      const result = reconcileDraft(input, previous, current);
+      expect(result.needsReview).toBe(true);
+      expect(result.issues.join(" ")).toMatch(/current plan/);
+      expect(result.draft.planId).toBe(input.planId);
+    });
+
+    it("keeps a removed plan selected so the user can see and correct it", () => {
+      const { previous, current, input } = snapshots();
+      current.plans = current.plans.slice(1);
+      const result = reconcileDraft({ ...input, purpose: "plan" }, previous, current);
+      expect(result.draft.planId).toBe(input.planId);
+      expect(result.issues.join(" ")).toMatch(/removed/);
+      expect(() => buildInquiryMessage(result.draft, current, NOW)).toThrow(/Unknown plan/);
+    });
+
+    it("requires review after publication validity or status changes", () => {
+      const { previous, current, input } = snapshots();
+      current.publication.validUntil = "2030-01-21T00:00:00Z";
+      expect(reconcileDraft(input, previous, current).issues.join(" ")).toMatch(/validity window changed/);
+      current.publication.validUntil = previous.publication.validUntil;
+      current.isPreview = true;
+      expect(reconcileDraft(input, previous, current).needsReview).toBe(true);
+    });
+
+    it("does not mistake an unknown source revision for a successfully checked previous snapshot", () => {
+      const { previous, current, input } = snapshots();
+      input.catalogRevision = "c".repeat(64);
+      expect(reconcileDraft(input, previous, current).issues.join(" ")).toMatch(/different catalog/);
+    });
+
+    it("requires review for existing selections without an originating revision", () => {
+      const { previous, current, input } = snapshots();
+      input.catalogRevision = null;
+      expect(reconcileDraft(input, previous, current).needsReview).toBe(true);
+      expect(reconcileDraft(EMPTY_DRAFT, previous, current).needsReview).toBe(false);
+    });
+
+    it("preserves optional dates, purpose and headcount", () => {
+      const { previous, current, input } = snapshots();
+      Object.assign(input, { requestedDate: "2030-01-16", planStartDate: "2030-01-17", purpose: "catering", headcount: "25" });
+      const result = reconcileDraft(input, previous, current);
+      expect(result.draft).toEqual({ ...input, catalogRevision: current.publication.revision });
+    });
   });
 
   it("encodes ampersands, newlines, unicode and URL metacharacters exactly once", () => {
