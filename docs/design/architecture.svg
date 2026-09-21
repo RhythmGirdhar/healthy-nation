@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 710" role="img" aria-labelledby="title desc">
+  <title id="title">Healthy Nation V1 architecture proposal: one application, no order database</title>
+  <desc id="desc">Editable catalog files are validated and read by a shared Next.js backend. Pages are pre-rendered and displayed in the customer's browser. A local selection draft is reviewed and manually sent to WhatsApp, where the team confirms the order. Hosting is undecided.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#53816a"/></marker>
+  </defs>
+  <rect width="1100" height="710" rx="24" fill="#faf9f4"/>
+  <g font-family="Arial, Helvetica, sans-serif" fill="#173d2c">
+    <text x="40" y="46" font-size="13" letter-spacing="2" font-weight="700">HEALTHY NATION / SYSTEM DESIGN</text>
+    <text x="40" y="85" font-size="28" font-weight="700">A small system with a clear handoff.</text>
+    <text x="40" y="113" font-size="15" fill="#55665b">V1 proposal. Content is read-only; customer orders are confirmed by the team.</text>
+    <rect x="34" y="143" width="1032" height="256" rx="18" fill="#edf2e8" stroke="#cbd9c8"/>
+    <text x="58" y="174" font-size="13" font-weight="700" letter-spacing="1">ONE NEXT.JS + TYPESCRIPT APPLICATION</text>
+    <rect x="58" y="196" width="230" height="153" rx="14" fill="#fff" stroke="#ccdbcf"/>
+    <text x="77" y="227" font-size="18" font-weight="700">Editable content</text>
+    <text x="77" y="253" font-size="14" fill="#55665b">Meals / plans / FAQs</text>
+    <text x="77" y="277" font-size="14" fill="#55665b">Weekly menu / public settings</text>
+    <text x="77" y="319" font-size="12" font-weight="700">Versioned in Git</text>
+    <path d="M295 271H350" fill="none" stroke="#53816a" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="364" y="196" width="300" height="153" rx="14" fill="#fff" stroke="#ccdbcf"/>
+    <text x="383" y="227" font-size="18" font-weight="700">Validated catalog backend</text>
+    <text x="383" y="253" font-size="14" fill="#55665b">Typed schema + reference validation</text>
+    <text x="383" y="277" font-size="14" fill="#55665b">Build-only loader + public data</text>
+    <text x="383" y="319" font-size="12" font-weight="700">Revision + validity; no HTTP service</text>
+    <path d="M671 271H726" fill="none" stroke="#53816a" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="740" y="196" width="300" height="153" rx="14" fill="#fff" stroke="#ccdbcf"/>
+    <text x="760" y="227" font-size="18" font-weight="700">Pre-rendered pages</text>
+    <text x="760" y="253" font-size="14" fill="#55665b">Static pages + catalog.json</text>
+    <text x="760" y="277" font-size="14" fill="#55665b">Optimized brand and food assets</text>
+    <text x="760" y="319" font-size="12" font-weight="700">Rebuild when content changes</text>
+    <text x="58" y="380" font-size="13" fill="#55665b">No separate Express service. No customer database. No live payment integration.</text>
+    <path d="M890 350V419H218V448" fill="none" stroke="#53816a" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="49" y="460" width="336" height="156" rx="16" fill="#fff" stroke="#cbd9c8"/>
+    <text x="69" y="490" font-size="18" font-weight="700">Customer's browser</text>
+    <text x="69" y="518" font-size="14" fill="#55665b">Search; retain a non-sensitive draft</text>
+    <text x="69" y="542" font-size="14" fill="#55665b">Refresh catalog; reconcile request</text>
+    <text x="69" y="582" font-size="12" font-weight="700">Review the message before leaving</text>
+    <path d="M393 537H460" fill="none" stroke="#53816a" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="398" y="523" font-size="10" fill="#55665b">Handoff</text>
+    <rect x="474" y="460" width="241" height="156" rx="16" fill="#fff" stroke="#cbd9c8"/>
+    <text x="494" y="490" font-size="18" font-weight="700">WhatsApp</text>
+    <text x="494" y="518" font-size="14" fill="#55665b">Opening shares the draft URL</text>
+    <text x="494" y="542" font-size="14" fill="#55665b">Customer manually sends</text>
+    <text x="494" y="582" font-size="12" font-weight="700">No automatic sending</text>
+    <path d="M723 537H790" fill="none" stroke="#53816a" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="804" y="460" width="247" height="156" rx="16" fill="#173d2c"/>
+    <text x="824" y="490" font-size="18" font-weight="700" fill="#fff">Healthy Nation team</text>
+    <text x="824" y="518" font-size="14" fill="#e4ecdd">Check availability and total</text>
+    <text x="824" y="542" font-size="14" fill="#e4ecdd">Agree on payment and delivery</text>
+    <text x="824" y="582" font-size="12" font-weight="700" fill="#fff">Explicitly confirm the order</text>
+    <text x="50" y="652" font-size="14" font-weight="700">A request is not an accepted order.</text>
+    <text x="50" y="677" font-size="13" fill="#55665b">Hosting and domain are deferred. There is no automatic order-status sync from WhatsApp to the website.</text>
+  </g>
+</svg>
