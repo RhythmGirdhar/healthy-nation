@@ -2,9 +2,11 @@
 
 <img src="assets/brand/healthy-nation-logo.png" alt="Healthy Nation green-and-white logo" width="360" />
 
-A planned food-business web application for discovering meals, exploring meal plans, and preparing WhatsApp inquiries and order requests.
+A food website for finding meals, exploring meal-plan options and preparing WhatsApp requests.
 
-**Status:** V1 implementation in progress. The owner approved the reviewed design and supplied founder details for **Shivansh Girdhar**, who holds a **degree in Culinary Sciences**, and WhatsApp **+91 81049 60748**. The Next.js + TypeScript app lives in `web`. Hosting, the domain, and production deployment are deferred.
+**Status:** V1 runs locally with 55 priced dishes, 75 unique kitchen photos and reviewed WhatsApp requests. The Next.js + TypeScript app and editable JSON are in `web`. Dish photos remain labelled examples until exact matches are confirmed. Hosting, DNS, checkout and payments remain deferred.
+
+Run the app from `web` with `npm ci` and `npm run dev`, then open `http://localhost:3000`. See the [development guide](docs/development.md) for static-build and preview commands.
 
 ## Documentation
 
@@ -14,6 +16,8 @@ Start with the [documentation index](docs/README.md).
 - [System architecture proposal](docs/architecture.md)
 - [Visual design and preview](docs/design/README.md)
 - [Independent reviews and corrections](docs/reviews.md)
+- [Customer reviews and improvements](docs/customer-reviews.md)
+- [Questions for the founder](docs/founder-questions.md)
 - [Local development guide](docs/development.md)
 - [Editing founder, contact, and menu content](docs/content-editing.md)
 - [Agent and contributor guidance](docs/AGENTS.md)

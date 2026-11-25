@@ -4,7 +4,7 @@ const { createRequire } = require("node:module");
 const fromWeb = createRequire(path.resolve(__dirname, "..", "..", "web", "package.json"));
 const { chromium, expect } = fromWeb("@playwright/test");
 
-const base = process.argv[2] || "http://127.0.0.1:4180/design/index.html";
+const base = process.argv[2] || "http://127.0.0.1:4180/design/concept-baseline.html";
 const origin = new URL(base).origin;
 assert(["127.0.0.1", "localhost"].includes(new URL(base).hostname), "Use a local design preview.");
 const futureYear = new Date().getFullYear() + 1;

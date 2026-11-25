@@ -3,7 +3,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..", "..");
-const prototype = await readFile(resolve(root, "docs", "design", "index.html"), "utf8");
+const prototype = await readFile(resolve(root, "docs", "design", "concept-baseline.html"), "utf8");
 const match = prototype.match(/<defs>([\s\S]*?)<\/defs>/);
 if (!match) throw new Error("The reviewed prototype does not contain the illustration definitions.");
 

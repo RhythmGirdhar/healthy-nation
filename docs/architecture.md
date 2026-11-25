@@ -2,7 +2,7 @@
 
 [Documentation index](README.md) | [Product brief](product-brief.md) | [Review findings](reviews.md)
 
-**Reviewed V1 direction approved for implementation.** Independent engineering and business/product reviews are complete; corrections are recorded here and in the prototype. See the [review register](reviews.md) for evidence, limitations, and dispositions. Hosting, DNS, and deployment are deliberately deferred.
+**V1 is implemented locally.** Engineering/product design reviews and two independent customer-role reviews are recorded in the [review register](reviews.md) and [customer findings](customer-reviews.md). Hosting, DNS and deployment remain deferred.
 
 ## The recommendation in one sentence
 
@@ -18,7 +18,7 @@ The public website is read-only. Selecting meals changes a draft in the customer
 
 | Part | Responsibility | What it does not do in V1 |
 | --- | --- | --- |
-| Editable content | Store meals, supported options, meal plans, sample weekly menus, FAQs, and public business settings in typed files in Git. | Store customer records, addresses, medical notes, or payments. |
+| Editable content | Store meals, supported options, plans, weekly menus, FAQs and public settings in validated JSON files in Git. | Store customer records, addresses, medical notes, or payments. |
 | Catalog validation | Check content structure, unique identifiers, menu references, prices, availability, and sample-versus-live status before publishing. | Invent missing prices, nutrition values, delivery coverage, or policies. |
 | Read-only backend | Validate and query content at build time, supply public data to pages, and emit a versioned public catalog snapshot. | Run a separate HTTP service, accept purchases, mutate inventory, authenticate customers, or process payments. |
 | Next.js frontend | Present searchable meals, plan comparisons, business information, and a request-review screen. | Promise that a displayed meal is reserved. |
@@ -62,6 +62,8 @@ Do not include `POST /orders`, payments, customer login, or menu editing. Add an
 - Reconcile all lines against that one snapshot. Preserve unchanged selections. Flag removed/unavailable meals, unsupported options, revised prices, and changed plan terms; require the customer to review affected lines again.
 - If freshness cannot be established, keep the draft but block an offer-specific WhatsApp handoff. Allow copying a clearly labeled unverified draft and, if separately enabled, a general availability inquiry.
 - Switching request purpose does not mix unrelated drafts. Keep meal and plan selections available to return to, but only include the active purpose in the reviewed message. Make any explicit reset reversible.
+- Track review flags separately for meals and plans. Retain inactive flags across checks and reloads without blocking an unchanged active inquiry. Acknowledgment clears only the active flag.
+- Keep meal dates, plan start dates and catering dates separate. The version-2 parser accepts earlier saved drafts and moves a legacy active catering date into its own field.
 - Opening WhatsApp does not clear a draft or mark it completed. Clear only on an explicit customer reset; provide an undo opportunity. Closing the browser tab ends the session-storage lifetime.
 
 ## 2. User journeys
@@ -71,7 +73,7 @@ Do not include `POST /orders`, payments, customer login, or menu editing. Add an
 1. See the delivery-area and ordering-window summary near Home/Menu entry, then browse the menu or open a featured meal.
 2. Read the ingredients, allergens, portion, verified nutrition when available, and supported options.
 3. Add the meal to a **request**, not a checkout cart.
-4. Review quantities and preferences. Design ordinary meal cards around both price and stated portion. In the concept, mark missing prices and service facts pending; confirmed ordinary-meal pricing is a launch decision. Separate the known meal subtotal from unconfirmed delivery or other charges rather than implying a final total.
+4. Review quantities and supported options. Cards show the supplied prices and state when portions are unknown. Separate the meal subtotal from unconfirmed delivery or other charges rather than implying a final total.
 5. Preview the exact WhatsApp message.
 6. Acknowledge that opening WhatsApp shares the prepared draft with WhatsApp, then manually send it to the business.
 7. Receive availability, the final total, delivery details, and explicit acceptance from the team in WhatsApp.
@@ -82,7 +84,7 @@ Provide the message as selectable text and a copy action before handoff. Keep th
 
 ### Meal plans
 
-Browse and compare plans -> review the sample weekly menu -> select a plan -> request a start date -> discuss and confirm through WhatsApp.
+Ask the team about current plan options through the inquiry above the example cards. The examples can be selected and reviewed locally, but cannot be sent as live offers. A real plan flow will include its name, terms and separate start date after the business approves those facts.
 
 The initial meal plan is team-managed. It does not automatically renew or debit a card. Compare meal count and duration alongside delivery cadence, meal-choice/substitution rules, and delivery-fee treatment. Five meals delivered together is not equivalent to five daily deliveries. All these details, plus skips and cancellation terms, must be agreed before publication; show them as pending in the concept rather than inventing terms.
 
@@ -94,7 +96,7 @@ Use a separate inquiry entry point. Catering can ask for a requested date and ap
 
 ## 3. Information architecture
 
-Keep primary navigation small: **Menu, Meal plans, Our story**, plus a visible **Your request** action.
+Keep primary navigation small: **The menu, Meal plans, About us**, plus a visible **Your request** action.
 
 | Screen | Main purpose | Primary action |
 | --- | --- | --- |
@@ -103,37 +105,38 @@ Keep primary navigation small: **Menu, Meal plans, Our story**, plus a visible *
 | Meal detail | Explain one meal, its verified facts, and supported options. | Add to request |
 | Meal plans | Compare options and show a sample weekly menu. | Ask about this plan |
 | Request review | Review selected items and understand the handoff. | Preview request / open WhatsApp |
-| Our story | Explain mission, values, and the people behind the food. | Explore the menu |
+| About us | Explain mission, values, and the people behind the food. | Explore the menu |
+| Kitchen photos | Show supplied photos without claiming exact dish matches or availability. | Browse photos / open the menu |
 | FAQs | Explain actual ordering, ingredients, and business policies. | Ask a question |
 | Corporate catering | Introduce a separate group-service inquiry. | Inquire about catering |
 
-FAQs, contact details, and catering can be sections rather than separate top-level pages initially. The weekly menu belongs close to meal plans. Meal details should eventually have stable, shareable URLs.
+About, FAQ, Catering and kitchen photos have separate pages without crowding the main navigation. Meal details have stable, shareable URLs. The weekly-menu section is beside the plan information; no weekly schedule was supplied.
 
-The visual prototype concentrates on four screen families: Home, Menu with meal detail, Meal plans, and Request review. Supporting content is represented in sections rather than as a separate screen for every future route.
+The current design view displays all application routes. The original four-screen sample prototype remains available only as historical review evidence.
 
-## 4. Proposed visual direction
+## 4. Visual direction
 
 **Direction: fresh, editorial, approachable.** This is a food brand, not a fitness dashboard or a medical service.
 
 - Use the confirmed **Healthy Nation** name and original green-and-white logo.
 - Use a white or softly warm background, deep-green primary actions, generous whitespace, and restrained sage/peach accents.
 - Pair an expressive editorial heading style with a clean, readable sans-serif body style. Typography remains open for review; it is not inferred from the logo.
-- Make food the visual focus. Use clearly labeled illustrations in this design review until actual meal photography is supplied.
+- Make food the visual focus. Use the supplied kitchen photos, with labels on unconfirmed dish examples. Keep illustrations clearly distinct from photographs.
 - Keep mission language warm and practical. Avoid unverified claims, exaggerated health promises, fake social proof, or a luxury-only tone.
 - On mobile, prioritize the meal name, dietary facts, portion, price status, and next action. Keep the request action reachable without covering content.
 
-Working UI palette, not an official brand specification:
+Current UI palette, not an official brand specification:
 
 | Role | Proposed color |
 | --- | --- |
-| Deep green / primary text | `#173D2C` |
-| Action green | `#0B763B` |
-| White | `#FFFFFF` |
-| Warm background | `#FAF9F4` |
-| Sage accent | `#E4ECDD` |
-| Peach accent | `#F2DFCF` |
+| Deep green / primary actions | `#173F2C` |
+| Green accent | `#277747` |
+| Paper white | `#FFFEF9` |
+| Warm background | `#FAF8F1` |
+| Sage accent | `#E5EDDF` |
+| Peach accent | `#F2D5BF` |
 
-Use sufficient text contrast, visible keyboard focus, meaningful headings and labels, large touch targets, and reduced-motion support. Check the final chosen colors and components before implementation.
+Keep sufficient contrast, visible keyboard focus, meaningful headings and labels, large touch targets and reduced-motion support. Application checks are not a full accessibility audit.
 
 ## 5. Content and configuration boundaries
 
@@ -150,7 +153,7 @@ Use sufficient text contrast, visible keyboard focus, meaningful headings and la
 
 ### Request draft
 
-Store only a draft schema version, source catalog revision, selected meal IDs, quantities, supported option IDs, selected plan, inquiry purpose, and optional requested date or catering headcount.
+Store only a draft schema version, source catalog revision, selected meal IDs, quantities, supported option IDs, selected plan, inquiry purpose, separate inquiry dates, pending meal/plan review flags and optional catering headcount.
 
 Use session-scoped storage for same-tab refresh/navigation continuity. Revalidate restored drafts against the current catalog. Do not put the whole draft into a page URL, and do not store free-form medical notes or payment/address data.
 
@@ -180,7 +183,7 @@ Number syntax validation is not ownership verification. Owner approval is a huma
 | No search results | Show a clear empty state and a reset-filters action. |
 | No selected meals | Explain how to add a meal; allow a separate general inquiry. |
 | Meal unavailable, removed, or changed | Refresh the catalog, preserve unaffected selections, identify changed lines, and require review before continuing. |
-| Old or malformed saved draft | Explain that it could not be restored and start a new draft; do not pretend restoration succeeded. |
+| Malformed or unsupported saved draft | Explain that it could not be restored and start a new draft; do not pretend restoration succeeded. |
 | Browser storage unavailable | Keep the current in-memory selection and warn that it will not survive a reload. |
 | WhatsApp unavailable | Show a copyable request and confirmed business contact details when available. |
 | Missing contact configuration | Disable the real handoff and explain that business contact setup is incomplete. |
@@ -196,7 +199,7 @@ Number syntax validation is not ownership verification. Owner approval is a huma
 Assign a business content approver, technical release owner, and backup owner before launch.
 
 1. The business approver verifies meal facts, prices, availability, delivery terms, contact settings, and publication validity.
-2. The release owner updates typed content and runs validation, TypeScript checking, linting, focused tests, and the production export.
+2. The release owner updates JSON content and runs validation, TypeScript checking, linting, focused tests and the production export.
 3. Review a preview for desktop/mobile customer flows and current menu correctness before releasing.
 4. Publish pages, catalog snapshot, configuration, and assets atomically; then smoke-test a meal route, 404, catalog freshness, and approved handoff rules.
 5. Keep a known-good artifact for rollback. Recheck current availability before restoring it: a technically sound old release may contain withdrawn offers.
@@ -251,6 +254,8 @@ The owner supplied founder **Shivansh Girdhar**, his **degree in Culinary Scienc
 
 ## Work status
 
-Application implementation is in progress following owner approval. The initial scaffold is being reconciled with these reviewed boundaries. Project documentation and review artifacts are consolidated under `docs`. Publishing source does not deploy the site. The standalone clickable concept remains separate from the application and does not send messages or place orders.
+The local application includes the storefront, 55 dish pages, request review, About, FAQ, Catering and a gallery of 75 unique supplied photos. Current dish-image assignments are labelled examples pending exact matches. Menu selection preserves browsing context; request checks retain separate review flags and dates.
+
+The current design view displays the local app. The original sample concept is preserved as `docs/design/concept-baseline.html` for historical review and illustration export. Project documentation is under `docs`. Publishing source does not deploy the site.
 
 This document records the accepted design direction, not a blanket claim that every implementation or business launch gate has passed. The root README links to the documentation index; the product brief and content-editing guide record supplied business facts and remaining inputs.

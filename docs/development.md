@@ -4,9 +4,11 @@
 
 ## Current state
 
-The owner approved implementing the reviewed Next.js + TypeScript design. The application is being built around a static export, validated editable content, and browser-side request drafts. The browser design concept remains a separate review artifact.
+The Next.js + TypeScript storefront runs locally as a static export with validated editable JSON and browser-side request drafts. The current design view displays this same app; the original sample concept is kept for historical review.
 
-The founder and public WhatsApp number are confirmed. The owner-supplied PDF now provides 55 dishes and their INR prices. Real meal requests are enabled; example plans remain gated. Ingredients, allergens, portions, individual dish photos, service coverage, and the founder photo remain unconfirmed or unmapped.
+The founder and public WhatsApp number are confirmed. The supplied PDF provides 55 dishes and INR prices. Real meal requests are enabled; example plans remain blocked. All 75 unique supplied food photos appear in the kitchen gallery. Dish examples are labelled pending exact matches. Ingredients, allergens, portions, service coverage and a founder portrait still need confirmation.
+
+The [customer review record](customer-reviews.md) lists the implemented changes and remaining decisions.
 
 ## Repository layout
 
@@ -24,7 +26,7 @@ healthy-nation
     development.md         This guide
     content-editing.md     Founder, contact, and catalog editing
     AGENTS.md              Project-specific contributor guidance
-    design                 Review-only visual/architecture artifacts
+    design                 Current app preview and historical design artifacts
   web                      Next.js application
 ```
 
@@ -95,7 +97,7 @@ Run these from `web`:
 | `npm run dev` | Start the local Next.js development server. |
 | `npm run lint` | Run ESLint. |
 | `npm run typecheck` | Generate Next.js route types and run TypeScript checking. |
-| `npm test` | Run the preliminary Vitest tests. |
+| `npm test` | Run domain, validation, configuration and photo-asset tests. |
 | `npm run build` | Produce the static export in `out`, validating build-time content. |
 | `npm run start` | Serve the exported site locally without a Next.js application server. |
 | `npm run test:e2e` | Run the application browser suite against a completed static build on port 3100. Windows uses installed Microsoft Edge; other platforms use Playwright Chromium. |
@@ -106,7 +108,9 @@ This table documents commands, not a claim that every check passed or that the b
 
 ## Images
 
-The supplied logo is preserved separately from its optimized web derivative. Original concept illustrations are exported into `public/images` and clearly identified as illustrations, not actual food photography.
+The supplied logo is preserved separately from its optimized web derivative. Kitchen photos use local 960px and 480px WebP files under `public/images/kitchen`. The photo source register accounts for all originals and the one exact duplicate. Only approved exact dish matches may use `kind: "photo"`; current dish examples use `kind: "example-photo"`.
+
+Original concept illustrations are kept as labelled illustrations, not actual food photography.
 
 To regenerate those illustrations from the reviewed design artifact:
 
@@ -114,7 +118,7 @@ To regenerate those illustrations from the reviewed design artifact:
 node scripts\export-illustrations.mjs
 ```
 
-Generated assets are stored with the app; the ordinary application build does not depend on extracting the prototype. See [content editing](content-editing.md) before replacing images or publishing real offers.
+The script reads `docs/design/concept-baseline.html`. Generated assets are stored with the app; the ordinary build does not extract the prototype. See [content editing](content-editing.md) before replacing images or publishing real offers.
 
 ## Preview the design documents
 
@@ -124,7 +128,7 @@ From the repository root:
 python -m http.server 4180 --bind 127.0.0.1 --directory docs
 ```
 
-Open `http://127.0.0.1:4180/design/architecture.html` for the system-design presentation. The [visual design guide](design/README.md) describes the storefront concept and its status.
+Open `http://127.0.0.1:4180/design/index.html` for the current desktop/phone design view, with the app also running on port 3000. Open `http://127.0.0.1:4180/design/architecture.html` for the system design. The [visual design guide](design/README.md) explains the preserved sample concept.
 
 This local server exposes only the documentation directory on this machine. It is not hosting the business website and does not change DNS. If the port is already in use, use another port rather than stopping an unrelated process.
 

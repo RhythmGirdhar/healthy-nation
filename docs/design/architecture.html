@@ -73,14 +73,14 @@
     </div>
   </header>
   <main id="main">
-    <span class="pill">Both independent reviews complete - owner approval pending</span>
+    <span class="pill">Reviewed V1 implemented locally - hosting and DNS deferred</span>
     <h1>Simple on purpose.<br>Ready to grow.</h1>
     <p class="intro">One Next.js + TypeScript application, published as static pages. A validated, read-only menu and a clear WhatsApp handoff. No database or payment complexity before the business needs it.</p>
 
     <section aria-labelledby="principles">
       <h2 id="principles">Three boundaries keep V1 small.</h2>
       <div class="grid">
-        <article class="card"><span class="label">01 / CONTENT</span><h3>The website reads.</h3><p>Meals, plans, and FAQs live in typed files. Build-time validation publishes pages and a versioned catalog snapshot. A browser admin can come later.</p></article>
+        <article class="card"><span class="label">01 / CONTENT</span><h3>The website reads.</h3><p>Meals, plans and FAQs live in validated JSON files. The build produces pages and a versioned menu snapshot. A browser-based editor can come later.</p></article>
         <article class="card"><span class="label">02 / CUSTOMER</span><h3>The browser prepares.</h3><p>Search, choices, and quantities form a local request draft. Nothing is purchased, reserved, or charged on the website.</p></article>
         <article class="card"><span class="label">03 / BUSINESS</span><h3>The team confirms.</h3><p>The customer sends the message in WhatsApp. The team checks availability, agrees on the details, and accepts the order.</p></article>
       </div>
@@ -91,7 +91,7 @@
       <a href="architecture.svg" aria-label="Open the system architecture diagram at full size">
         <img class="diagram" src="architecture.svg" width="1100" height="710" alt="Editable content flows through a validated Next.js catalog into pre-rendered pages. The browser builds a draft, the customer sends it in WhatsApp, and the Healthy Nation team confirms the order.">
       </a>
-      <p class="caption">Open the diagram to zoom. Hosting and the real domain are deliberately undecided.</p>
+      <p class="caption">Open the diagram to zoom. Two domain names are recorded; the primary domain, hosting and DNS remain undecided.</p>
       <div class="callout"><p><strong>Frontend + backend does not mean two separate applications.</strong></p><p>The backend validates content at build time. Next.js produces public pages and a small catalog snapshot; no permanent API service is needed. Generate meal routes and image variants for static delivery. A hosting vendor can still be chosen later.</p></div>
     </section>
 
@@ -187,7 +187,7 @@
     </section>
     <footer>
       <p><a href="index.html">Review the visual concept</a> &nbsp; / &nbsp; <a href="../architecture.md">Detailed system proposal</a></p>
-      <p class="quiet">Design artifacts only. Application implementation remains paused pending approval. Publishing a source checkpoint does not deploy the site.</p>
+      <p class="quiet">The local app includes the supplied menu and kitchen photos. Dish examples and sample plans remain labelled. Publishing source does not deploy the site.</p>
     </footer>
   </main>
 </body>

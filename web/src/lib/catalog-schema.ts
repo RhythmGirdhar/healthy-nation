@@ -33,7 +33,8 @@ const mealSchema = z.strictObject({
   image: z.strictObject({
     src: z.string().max(2000).refine(isLocalImage, "Use a local image path under /images"),
     alt: text,
-    kind: z.enum(["illustration", "photo"]),
+    kind: z.enum(["illustration", "photo", "example-photo"]),
+    width: z.int().positive().optional(),
   }).nullable(),
   isSample: z.boolean(),
 });

@@ -42,29 +42,8 @@
   background: #e5eddf;
 }
 .portraitImage { object-fit: cover; }
-.portraitPlaceholder {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 14px;
-  padding: 28px;
-  text-align: center;
-  color: var(--forest, #173f2c);
-}
-.initials {
-  width: 148px;
-  height: 148px;
-  display: grid;
-  place-items: center;
-  border: 1px solid #8aab7d;
-  border-radius: 50%;
-  background: #f2f5ed;
-  font-family: Georgia, serif;
-  font-size: 56px;
-}
-.portraitPlaceholder p { font-size: 14px; color: var(--muted, #57685d); margin: 0; }
+.founderTextOnly { grid-template-columns: minmax(0, 1fr); max-width: 760px; padding-block: 32px; border-block: 1px solid var(--line); }
+.founderCopy > :global(.text-link) { display: flex; margin-top: 16px; }
 .founderCopy h2, .sectionTitle, .contactCard h2 {
   font-family: var(--serif, Georgia, serif);
   font-weight: 400;

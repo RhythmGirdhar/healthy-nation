@@ -1,43 +1,45 @@
-# Design-review artifacts
+# Design references
 
-[Documentation index](../README.md) | [System proposal](../architecture.md) | [Review register](../reviews.md)
+[Documentation index](../README.md) | [Architecture](../architecture.md) | [Customer reviews](../customer-reviews.md)
 
-These are discussion artifacts, not production application code.
+## Current storefront
 
-## Architecture
+The [current design view](index.html) displays the real local Next.js application. It has desktop and phone widths and links to Home, Menu, Plans, About, kitchen photos and Request. Menu data, images and interface changes come from `web`, not a second frontend.
 
-- [Browser presentation](architecture.html)
-- [Architecture diagram](architecture.svg)
-- [Detailed system proposal](../architecture.md)
+The app includes the 55 priced PDF dishes, all 75 unique supplied food photos, labelled dish examples and manual WhatsApp requests. Exact photo matches, recipes, portions, delivery facts and real plan terms still need confirmation.
 
-## Storefront concept
-
-A self-contained [clickable storefront concept](index.html) is available with Home, Menu/meal details, Meal plans, and Request-review screens, plus desktop/mobile controls. The copied logo asset is [logo.webp](logo.webp); the original supplied artwork remains in [assets/brand](../../assets/brand/healthy-nation-logo.png).
-
-The concept is not a Figma document or a finished Next.js frontend. All dishes and illustrations are samples; no verified price list, food photography, service coverage, business number, or domain is supplied. It must not send a real WhatsApp message or accept an order.
-
-Both independent reviews are complete. The revised concept incorporates their actionable findings, including a genuinely empty initial request, clearer plan semantics, per-meal preferences, improved mobile menu discovery, larger decision text, and safer keyboard/undo behavior. The [review register](../reviews.md) records fixes, verification, remaining launch inputs, and review limitations.
-
-The navbar uses an opaque `#F9FBFC`, sampled from the displayed logo asset's background, so the logo does not appear as a differently colored rectangle. The rest of the warm-white/green palette is unchanged.
+The [customer review record](../customer-reviews.md) lists the findings from two independent customer-role assessments and their dispositions.
 
 ## Local preview
 
-From the repository root:
+Start the app from `web` with `npm run dev`, or use `npm run build` followed by `npm run start`. The design view expects it at `http://127.0.0.1:3000`.
+
+In another terminal, run from the repository root:
 
 ```powershell
 python -m http.server 4180 --bind 127.0.0.1 --directory docs
 ```
 
-Open `http://127.0.0.1:4180/design/index.html` for the storefront or `http://127.0.0.1:4180/design/architecture.html` for the system presentation. Use another port if 4180 is occupied by an unrelated process.
+Open `http://127.0.0.1:4180/design/index.html`. Its embedded preview blocks new tabs. Open the app directly for its WhatsApp links; the customer must still send the message and receive team confirmation.
 
-The actual application scaffold is in `web`. Do not copy a prototype wholesale into the app without reconciling the approved architecture, data boundaries, and accessibility requirements.
+These are local previews. They do not configure hosting or DNS.
 
-## Reproduce the prototype checks
+## Historical sample concept
 
-With the preview server above running, the `web` dependencies installed, and Microsoft Edge available, run from the repository root:
+The original reviewed [sample concept](concept-baseline.html) remains unchanged. It contains sample dishes, illustrations, simulated sending and the original review controls. It is not the current menu or a second app to update.
+
+The [historical review register](../reviews.md) records that review's scope, hashes and limits. The illustration-export script reads this preserved file. The supplied logo remains in [assets/brand](../../assets/brand/healthy-nation-logo.png); derived assets do not replace it.
+
+With the documentation server running, the `web` dependencies installed and Microsoft Edge available, run the historical checks from the repository root:
 
 ```powershell
 node docs\design\verify.cjs
 ```
 
-The script uses the existing Playwright dependency to check the local concept at desktop, 390px, and 320px widths, including the specific interaction regressions identified by reviewers. It blocks external network requests and does not send messages. This is prototype verification, not the application's future end-to-end suite or a full accessibility certification.
+These checks use the preserved concept, block external requests and do not send messages. The current application is covered by `npm run test:e2e` from `web`, after a static build. Neither suite is a full accessibility certification.
+
+## Architecture
+
+- [Browser presentation](architecture.html)
+- [Architecture diagram](architecture.svg)
+- [Detailed architecture](../architecture.md)

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getPublicCatalog } from "@/lib/catalog";
 import { formatPrice } from "@/lib/format";
 import { SelectPlanButton } from "@/components/selection-controls";
-import { WhatsAppLink } from "@/components/whatsapp-link";
+import { WhatsAppLink, PLAN_INQUIRY } from "@/components/whatsapp-link";
 import { MealImage } from "@/components/meal-image";
 
 export const metadata: Metadata = { title: "Meal plans", description: "Explore Healthy Nation team-managed meal plan ideas. Compare sample meal counts, durations, delivery details, and a rotating weekly menu." };
@@ -14,6 +14,7 @@ export default function PlansPage() {
   return <>
     <div className="container">
       <header className="page-intro"><span className="eyebrow">Team-managed plans</span><h1>Meal plans</h1><p>Compare meal counts, schedules, and choices. The team confirms the details with you.</p>{hasSamplePlans && <p className="small-note">Plans marked as samples are examples, not confirmed offers. The supplied menu did not include meal-plan pricing or terms.</p>}</header>
+      <div className="notice plan-inquiry"><p>Looking for a plan you can start? Ask the team about current options, prices and delivery.</p><WhatsAppLink message={PLAN_INQUIRY} className="text-link">Ask about current plan options</WhatsAppLink></div>
       <div className="plan-grid">{catalog.plans.map((plan, index) => <article key={plan.id} className={`plan-card${plan.featured ? " featured-plan" : ""}`}>
         <span className="plan-number" aria-hidden="true">0{index + 1} /</span><span className="eyebrow">{plan.eyebrow}</span><h2>{plan.name}</h2><p>{plan.description}</p>
         <p className="plan-count">{plan.meals} meals · {plan.days} days{plan.isSample ? " · sample" : ""}</p>

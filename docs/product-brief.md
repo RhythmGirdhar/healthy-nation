@@ -6,9 +6,9 @@
 
 Flavorful, nutritious everyday meals, made affordable and convenient.
 
-Healthy Nation is a planned food business web application for discovering individual meals, exploring meal plans, and connecting directly with the team to inquire and order.
+Healthy Nation is a food business website for finding individual meals, exploring meal-plan options and contacting the team to inquire and order.
 
-**Project status:** The owner has approved implementation of the reviewed V1 design. The application is being built in `web`; the roadmap below is not a claim that all business launch inputs are ready. No hosting, DNS, or production deployment has been configured.
+**Project status:** The V1 storefront runs locally in `web`, with editable JSON, the 55 priced PDF dishes, kitchen photos and reviewed WhatsApp requests. The [customer review record](customer-reviews.md) lists recent improvements and remaining business inputs. No hosting, DNS or production deployment has been configured.
 
 ## Confirmed brand identity
 
@@ -21,7 +21,7 @@ Exact UI color tokens, typography, and any alternate logo formats remain design 
 
 ## Confirmed founder and contact
 
-The founder is **Shivansh Girdhar**, who holds a **degree in Culinary Sciences**. The About page should state only these supplied biographical facts and use a labeled portrait placeholder until an approved photo is available.
+The founder is **Shivansh Girdhar**, who holds a **degree in Culinary Sciences**. The About page states only supplied facts. It has no portrait block until an approved photo is available.
 
 The owner supplied **+91 81049 60748** for WhatsApp contact and **Healthy Nation Online Menu.pdf**, containing 55 priced dishes. General, catering, and real-menu meal requests link to that number after review; example meal plans remain local previews. The team still confirms availability, delivery, and the final total.
 
@@ -60,6 +60,7 @@ V1 does not require customer accounts, an online checkout, automated recurring c
 | --- | --- |
 | **Home** | Introduce the mission, show real food photography, explain the value proposition, highlight meals and plans, and make the next action obvious. |
 | **About us** | Explain the business, values, approach to food, and commitment to affordable everyday nutrition. |
+| **Kitchen photos** | Show all 75 unique supplied photos, with numbered references for founder review. A photo in this gallery is not a claim that a dish is currently available. |
 | **Menu** | Show individual meal cards with photos, descriptions, prices, portions, availability, and relevant dietary information. |
 | **Meal details** | Give each meal a stable identity and shareable detail page with ingredients, allergens, customization options, and verified nutrition information where available. |
 | **Menu search** | Search dishes by name or description and filter using supported dietary or meal categories. A small menu does not need a dedicated search service. |
@@ -130,7 +131,7 @@ The website is only one part of the ordering experience. The team needs an agree
 
 | Responsibility | V1 process |
 | --- | --- |
-| Content updates | A designated developer maintains typed content files for meals, prices, availability, photography, plans, weekly menus, and FAQs. The business owner approves changes before a rebuild/release. A browser-based CMS is deferred. |
+| Content updates | A designated developer maintains validated JSON files for meals, prices, availability, photography, plans, weekly menus and FAQs. The business owner approves changes before a rebuild/release. A browser-based editor is deferred. |
 | Inquiry handling | Monitor the business WhatsApp account during published hours and explain expected response times. |
 | Order acceptance | Check the request, communicate the final price and terms, and send an explicit confirmation. |
 | Order tracking | Maintain a private operational register with order references, confirmed selections, fulfillment dates, and relevant payment and delivery status. Choose the tool and access owners before launch. |
@@ -143,7 +144,7 @@ Track inquiries, confirmed orders, and repeat purchases separately. A WhatsApp b
 
 ## Content model
 
-Use structured, editable TypeScript content files rather than hard-coding every menu card and plan. A shared build-time validation layer should check the catalog before publishing.
+Use structured, editable JSON rather than hard-coded menu cards and plans. TypeScript loaders validate these files at build time. The [editing guide](content-editing.md) names each file and explains dish-photo confirmation.
 
 | Content type | Initial fields |
 | --- | --- |
@@ -177,7 +178,7 @@ Next.js and TypeScript are the approved stack. Editable content files and static
 | --- | --- | --- |
 | Application | Next.js with React and TypeScript | Build public pages, meal details, search, and selection flows in one codebase, with room for server-side commerce features later. |
 | UI | Tailwind CSS; component choices under design review | Build a consistent responsive interface with accessible interaction patterns. |
-| Content management | Editable, validated TypeScript files | Keep V1 small; a developer updates the menu and the business owner approves publication. A browser-based CMS can be added later. |
+| Content management | Editable, validated JSON files | Keep V1 small; a developer updates the menu and the business owner approves publication. A browser-based editor can be added later. |
 | Image delivery | Local, optimized image assets | Preserve the original logo and prepare appropriately sized food images when supplied. |
 | Messaging | WhatsApp click-to-chat | Hand off customer-reviewed inquiry and order-request drafts to the business. |
 | Hosting | Deferred | Confirm the delivery mode, real domain ownership, provider, and costs after the application design is agreed. No provider has been selected. |
@@ -219,7 +220,7 @@ Automating billing does not by itself automate meal fulfillment. Define how sche
 ## V1 build sequence and launch decisions
 
 1. **Finalize the business rules and remaining assets.** Use the confirmed Healthy Nation name and supplied logo. Finalize approved food photos, the launch menu, prices, service area, operating hours, order cutoffs, delivery charges, and meal-plan terms.
-2. **Model and publish content.** Set up typed meals, plans, weekly menus, FAQs, and contact settings, with designated business approval and developer publishing owners.
+2. **Model and publish content.** Maintain validated JSON for meals, plans, weekly menus, FAQs and contact settings, with designated business approval and developer publishing owners.
 3. **Build the storefront.** Implement the public pages, meal details, search, plan discovery, and responsive navigation.
 4. **Build the WhatsApp handoff.** Implement selection retention, request review, encoded message drafts, clear confirmation expectations, and contact fallbacks.
 5. **Exercise the full operation.** Walk through meal, plan, customization, and catering inquiries on mobile and desktop, including unavailability and failed handoff cases.

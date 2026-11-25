@@ -22,7 +22,7 @@ export function isLocalImage(value: string): boolean {
     !value.includes("..") && !value.includes("//");
 }
 
-export function record(input: unknown, path: string, keys: readonly string[]): Record<string, unknown> {
+export function record(input: unknown, path: string, keys: readonly string[], optionalKeys: readonly string[] = []): Record<string, unknown> {
   if (typeof input !== "object" || input === null || Array.isArray(input)) {
     throw new Error(`${path}: Expected an object`);
   }
@@ -30,7 +30,7 @@ export function record(input: unknown, path: string, keys: readonly string[]): R
   const extra = Object.keys(value).filter((key) => !keys.includes(key));
   if (extra.length) throw new Error(`${path}: Unrecognized key "${extra[0]}"`);
   for (const key of keys) {
-    if (!Object.hasOwn(value, key)) throw new Error(`${path}.${key}: Required field is missing`);
+    if (!Object.hasOwn(value, key) && !optionalKeys.includes(key)) throw new Error(`${path}.${key}: Required field is missing`);
   }
   return value;
 }

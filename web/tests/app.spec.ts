@@ -1,7 +1,9 @@
 import { test as base, expect } from "@playwright/test";
 import businessContent from "../content/business.json";
+import kitchenPhotos from "../content/kitchen-photos.json";
 import { parsePublicCatalog } from "../src/lib/catalog-client";
 import { formatPrice } from "../src/lib/format";
+import { EMPTY_DRAFT } from "../src/lib/inquiry";
 
 const test = base.extend<{ observePage: void }>({
   observePage: [async ({ page, baseURL }, use) => {
@@ -21,11 +23,11 @@ const test = base.extend<{ observePage: void }>({
   }, { auto: true }],
 });
 
-test("About page shows the confirmed founder, qualification, and honest portrait placeholder", async ({ page }) => {
+test("About page shows the confirmed founder without an empty portrait block", async ({ page }) => {
   await page.goto("/about/");
   await expect(page.getByRole("heading", { name: "Shivansh Girdhar", exact: true })).toBeVisible();
   await expect(page.getByText("Degree in Culinary Sciences", { exact: true })).toBeVisible();
-  await expect(page.getByRole("img", { name: /Portrait placeholder for Shivansh Girdhar/ })).toBeVisible();
+  await expect(page.getByRole("img", { name: /Portrait placeholder/ })).toHaveCount(0);
   await expect(page.getByRole("main")).toContainText("+91 81049 60748");
   const founderLink = page.getByRole("link", { name: "Message Shivansh" });
   const url = new URL((await founderLink.getAttribute("href"))!);
@@ -110,7 +112,7 @@ test("a real meal request opens a correctly addressed WhatsApp draft with quanti
   const message = url.searchParams.get("text");
   expect(url.origin).toBe("https://wa.me");
   expect(url.pathname).toBe(`/${businessContent.contact.phoneNumber}`);
-  expect(message).toBe(await dialog.getByLabel("Your message draft").inputValue());
+  expect(message).toBe(await dialog.getByLabel("Your message draft").textContent());
   expect(message).toContain(`Name: ${meal.name}`);
   expect(message).toContain("Quantity: 2");
   expect(message).toContain(`Unit price: ${formatPrice(meal.price)}`);
@@ -148,7 +150,7 @@ test("sample meal plans remain local-only despite the live menu and configured p
 });
 
 test("the main pages, logo and supporting content do not overflow", async ({ page }) => {
-  for (const route of ["/", "/menu/", "/plans/", "/request/", "/about/", "/faq/", "/catering/"]) {
+  for (const route of ["/", "/menu/", "/plans/", "/request/", "/about/", "/faq/", "/catering/", "/kitchen/"]) {
     await page.goto(route);
     await expect(page.getByRole("main")).toBeVisible();
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
@@ -158,4 +160,151 @@ test("the main pages, logo and supporting content do not overflow", async ({ pag
     }));
     expect(dimensions.content, `Horizontal overflow on ${route}`).toBeLessThanOrEqual(dimensions.viewport + 1);
   }
+});
+
+test("multiple quick selections retain the menu filters and selected quantities", async ({ page, request }) => {
+  const catalog = parsePublicCatalog(await (await request.get("/catalog.json")).json());
+  const category = catalog.meals.find((meal) => meal.available && meal.options.length === 1)!.category;
+  const meals = catalog.meals.filter((meal) => meal.category === category && meal.available && meal.options.length === 1).slice(0, 2);
+  expect(meals).toHaveLength(2);
+  await page.goto(`/menu/?category=${encodeURIComponent(category)}`);
+  for (const meal of meals) {
+    await page.getByRole("button", { name: `Add ${meal.name} to request`, exact: true }).click();
+    await expect(page.getByRole("form", { name: `Select ${meal.name}`, exact: true })).toContainText("1 in your request");
+    await expect(page).toHaveURL(/\/menu\/\?category=/);
+  }
+  await page.getByRole("form", { name: `Select ${meals[0].name}`, exact: true }).getByRole("button").click();
+  await expect(page.getByRole("form", { name: `Select ${meals[0].name}`, exact: true })).toContainText("2 in your request");
+  await page.locator(`a[href^="/menu/${meals[1].slug}/"]`).first().click();
+  await page.getByRole("button", { name: "Add & keep browsing", exact: true }).click();
+  await expect(page).toHaveURL(/\/menu\/\?category=/);
+  await expect(page.locator("#menu-category")).toHaveValue(category);
+  await expect(page.getByRole("form", { name: `Select ${meals[1].name}`, exact: true })).toContainText("2 in your request");
+  await page.goto("/request/");
+  for (const meal of meals) await expect(page.getByRole("main")).toContainText(meal.name);
+});
+
+test("meal and catering dates stay separate and the mobile shortcut focuses preview", async ({ page, request }) => {
+  const catalog = parsePublicCatalog(await (await request.get("/catalog.json")).json());
+  const meal = catalog.meals.find((entry) => entry.available)!;
+  await page.goto(`/menu/${meal.slug}/`);
+  await page.getByRole("button", { name: /Add to request & review/ }).click();
+  const year = new Date().getFullYear() + 1;
+  await page.getByLabel("Preferred meal date (optional)").fill(`${year}-03-11`);
+  await page.locator("#request-purpose").selectOption("catering");
+  await expect(page.getByLabel("Preferred event date (optional)")).toHaveValue("");
+  await page.getByLabel("Preferred event date (optional)").fill(`${year}-03-20`);
+  await page.getByRole("button", { name: "Preview message", exact: true }).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog.getByLabel("Your message draft")).toContainText(`${year}-03-20`);
+  await expect(dialog.getByLabel("Your message draft")).not.toContainText(`${year}-03-11`);
+  await page.getByRole("button", { name: "Close message preview" }).click();
+  await page.locator("#request-purpose").selectOption("meals");
+  await expect(page.getByLabel("Preferred meal date (optional)")).toHaveValue(`${year}-03-11`);
+  await page.reload();
+  await expect(page.getByLabel("Preferred meal date (optional)")).toHaveValue(`${year}-03-11`);
+  await page.locator("#request-purpose").selectOption("catering");
+  await expect(page.getByLabel("Preferred event date (optional)")).toHaveValue(`${year}-03-20`);
+  if ((page.viewportSize()?.width ?? 0) <= 760) {
+    await page.getByRole("link", { name: "Review message", exact: true }).click();
+    await expect(page.locator("#preview-message")).toBeFocused();
+  }
+});
+
+test("an inactive plan change does not block meals but still needs review when selected", async ({ page, request }) => {
+  const catalog = parsePublicCatalog(await (await request.get("/catalog.json")).json());
+  const meal = catalog.meals.find((entry) => entry.available)!;
+  const plan = catalog.plans[0];
+  await page.addInitScript((draft) => {
+    if (!sessionStorage.getItem("healthy-nation:request:v2")) sessionStorage.setItem("healthy-nation:request:v2", JSON.stringify(draft));
+  }, { ...EMPTY_DRAFT, catalogRevision: catalog.publication.revision, planId: plan.id, items: [{ mealId: meal.id, quantity: 1, option: meal.options[0] }] });
+  const updated = structuredClone(catalog);
+  updated.publication.revision = "a".repeat(64);
+  updated.plans[0].description += " Updated terms.";
+  await page.route("**/catalog.json", (route) => route.fulfill({ json: updated }));
+  await page.goto("/request/");
+  await page.getByRole("button", { name: "Preview message", exact: true }).click();
+  await expect(page.getByRole("dialog").getByRole("link", { name: "Open WhatsApp", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Close message preview" }).click();
+  await page.locator("#request-purpose").selectOption("plan");
+  await expect(page.getByRole("button", { name: "I reviewed the menu changes" })).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole("button", { name: "I reviewed the menu changes" })).toBeVisible();
+  expect(await page.evaluate(() => JSON.parse(sessionStorage.getItem("healthy-nation:request:v2")!).pendingReview)).toContain("plan");
+});
+
+test("acknowledging meal changes does not clear an inactive plan review", async ({ page, request }) => {
+  const catalog = parsePublicCatalog(await (await request.get("/catalog.json")).json());
+  const meal = catalog.meals.find((entry) => entry.available)!;
+  await page.addInitScript((draft) => sessionStorage.setItem("healthy-nation:request:v2", JSON.stringify(draft)),
+    { ...EMPTY_DRAFT, catalogRevision: catalog.publication.revision, planId: catalog.plans[0].id, pendingReview: ["meals", "plan"], items: [{ mealId: meal.id, quantity: 1, option: meal.options[0] }] });
+  await page.goto("/request/");
+  await page.getByRole("button", { name: "Preview message", exact: true }).click();
+  await expect(page.getByRole("dialog").getByRole("button", { name: "Check menu again", exact: true })).toBeEnabled();
+  await page.getByRole("button", { name: "Close message preview" }).click();
+  await page.getByRole("button", { name: "I reviewed the menu changes" }).click();
+  await expect(page.getByRole("button", { name: "I reviewed the menu changes" })).toHaveCount(0);
+  await page.locator("#request-purpose").selectOption("plan");
+  await expect(page.getByRole("button", { name: "I reviewed the menu changes" })).toBeVisible();
+  expect(await page.evaluate(() => JSON.parse(sessionStorage.getItem("healthy-nation:request:v2")!).pendingReview)).toEqual(["plan"]);
+});
+
+test("a failed menu check can be retried inside the readable single-scroll preview", async ({ page, request }) => {
+  const catalog = parsePublicCatalog(await (await request.get("/catalog.json")).json());
+  const meal = catalog.meals.find((entry) => entry.available)!;
+  let attempts = 0;
+  await page.route("**/catalog.json", (route) => {
+    attempts += 1;
+    return attempts === 1 ? route.fulfill({ status: 503, body: "Unavailable" }) : route.fulfill({ json: catalog });
+  });
+  await page.goto(`/menu/${meal.slug}/`);
+  await page.getByRole("button", { name: /Add to request & review/ }).click();
+  await page.getByRole("button", { name: "Preview message", exact: true }).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog.getByRole("alert")).toContainText("could not verify");
+  await expect(dialog.getByRole("link", { name: "Open WhatsApp", exact: true })).toHaveCount(0);
+  await dialog.getByRole("button", { name: "Check menu again", exact: true }).click();
+  await expect(dialog.getByRole("link", { name: "Open WhatsApp", exact: true })).toBeVisible();
+  const text = dialog.getByLabel("Your message draft");
+  expect(await text.evaluate((element) => element.scrollHeight <= element.clientHeight + 1)).toBe(true);
+  await page.evaluate(() => Object.defineProperty(navigator, "clipboard", { configurable: true, value: undefined }));
+  await dialog.getByRole("button", { name: "Copy draft", exact: true }).click();
+  await expect(dialog.getByRole("status")).toContainText("Select message");
+  await dialog.getByRole("button", { name: "Select message", exact: true }).click();
+  expect(await page.evaluate(() => window.getSelection()?.toString())).toBe(await text.textContent());
+});
+
+test("keyboard focus clears the fixed bars at narrow widths", async ({ page, request }) => {
+  const catalog = parsePublicCatalog(await (await request.get("/catalog.json")).json());
+  const meal = catalog.meals.find((entry) => entry.available)!;
+  for (const width of [320, 390]) {
+    await page.setViewportSize({ width, height: 720 });
+    await page.goto(`/menu/${meal.slug}/`);
+    await page.getByRole("combobox").focus();
+    await page.keyboard.press("Tab");
+    const add = page.getByRole("button", { name: /Add to request & review/ });
+    await expect(add).toBeFocused();
+    const bounds = await add.boundingBox();
+    const bar = await page.getByRole("complementary", { name: "Request quick action" }).boundingBox();
+    const header = await page.locator(".site-header").boundingBox();
+    expect(bounds).not.toBeNull();
+    expect(bar).not.toBeNull();
+    expect(bounds!.y + bounds!.height + 4).toBeLessThanOrEqual(bar!.y);
+    expect(bounds!.y - 4).toBeGreaterThanOrEqual(header!.y + header!.height);
+  }
+});
+
+test("the kitchen gallery includes every unique source and example images stay labelled", async ({ page, request }) => {
+  await page.goto("/kitchen/");
+  await expect(page.locator(".kitchen-photo")).toHaveCount(kitchenPhotos.length);
+  const category = kitchenPhotos[0].category;
+  await page.getByRole("link", { name: category, exact: true }).click();
+  await expect(page.getByRole("heading", { name: category, exact: true })).toBeInViewport();
+  const catalog = parsePublicCatalog(await (await request.get("/catalog.json")).json());
+  const meal = catalog.meals.find((entry) => entry.image?.kind === "example-photo")!;
+  await page.goto(`/menu/${meal.slug}/`);
+  await expect(page.locator(".detail-figure figcaption")).toContainText(/example|not.*confirmed/i);
+  const image = page.locator(".detail-figure img");
+  await expect(image).toHaveAttribute("alt", /example/i);
+  expect(await image.evaluate((element: HTMLImageElement) => element.complete && element.naturalWidth > 0)).toBe(true);
 });

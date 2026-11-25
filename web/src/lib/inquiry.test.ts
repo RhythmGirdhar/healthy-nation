@@ -66,7 +66,9 @@ describe("untrusted inquiry draft parsing", () => {
       items: [],
       planId: null,
       requestedDate: "",
+      cateringDate: "",
       planStartDate: "",
+      pendingReview: [],
       purpose: "meals",
       headcount: "",
     });
@@ -78,6 +80,21 @@ describe("untrusted inquiry draft parsing", () => {
     expect(parsed).toEqual(input);
     expect(parsed.items).not.toBe(input.items);
     expect(parseDraft(input).items[0]).not.toBe(input.items[0]);
+  });
+
+  it("restores older v2 drafts without assigning a meal date to catering", () => {
+    const saved: Partial<InquiryDraft> = draft({ requestedDate: "2030-01-20" });
+    delete saved.cateringDate;
+    delete saved.pendingReview;
+    expect(parseDraft(saved)).toMatchObject({ requestedDate: "2030-01-20", cateringDate: "", pendingReview: [] });
+    expect(parseDraft({ ...saved, purpose: "catering" })).toMatchObject({ requestedDate: "", cateringDate: "2030-01-20" });
+  });
+
+  it("rejects malformed catering dates and review flags in saved storage", () => {
+    expect(() => parseDraft({ ...draft(), cateringDate: null })).toThrow(/cateringDate/);
+    expect(() => parseDraft({ ...draft(), cateringDate: "2030-02-31" })).toThrow(/cateringDate/);
+    expect(() => parseDraft({ ...draft(), pendingReview: ["general"] })).toThrow(/pendingReview/);
+    expect(() => parseDraft({ ...draft(), pendingReview: "plan" })).toThrow(/pendingReview/);
   });
 
   it.each([null, undefined, [], "{}", 1, true])("rejects non-draft input %s", (input) => {
@@ -287,7 +304,7 @@ describe("inquiry message generation", () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date(2030, 0, 15, 12));
     const message = buildInquiryMessage(
-      draft({ purpose: "catering", headcount: "50", requestedDate: "2030-01-20" }),
+      draft({ purpose: "catering", headcount: "50", cateringDate: "2030-01-20" }),
     );
     expect(message).toContain("Requested headcount: 50");
     expect(message).toContain("Requested date: 2030-01-20 (please confirm)");
@@ -306,11 +323,19 @@ describe("inquiry message generation", () => {
     (purpose) => {
       vi.useFakeTimers();
       vi.setSystemTime(new Date(2030, 0, 15, 0, 1));
-      const input = draft({ purpose, planId: "sample-weekday", requestedDate: "2030-01-14", planStartDate: "2030-01-14" });
+      const input = draft({ purpose, planId: "sample-weekday", requestedDate: "2030-01-14", planStartDate: "2030-01-14", cateringDate: "2030-01-14" });
       expect(parseDraft(input).requestedDate).toBe("2030-01-14");
       expect(() => buildInquiryMessage(input)).toThrow(/Requested (start )?date is in the past/);
     },
   );
+
+  it("uses only the active inquiry's date, even when the other dates are in the past", () => {
+    const input = draft({ requestedDate: "2030-01-16", cateringDate: "2000-01-01", planStartDate: "2000-01-01" });
+    expect(buildInquiryMessage(input, catalog, NOW)).toContain("2030-01-16");
+    const catering = buildInquiryMessage({ ...input, purpose: "catering", cateringDate: "2030-01-18", requestedDate: "2000-01-01" }, catalog, NOW);
+    expect(catering).toContain("2030-01-18");
+    expect(catering).not.toContain("2000-01-01");
+  });
 
   it.each(["2030-01-15", "2030-01-16"])(
     "accepts today and future local-calendar dates: %s",
@@ -585,7 +610,7 @@ describe("WhatsApp configuration and URL encoding", () => {
     });
 
     it("blocks an expired active date but ignores dormant dates", () => {
-      expect(decision(draft({ purpose: "catering", requestedDate: "2000-01-01" })).reason).toMatch(/past/);
+      expect(decision(draft({ purpose: "catering", cateringDate: "2000-01-01" })).reason).toMatch(/past/);
       expect(decision(draft({ purpose: "general", requestedDate: "2000-01-01" })).allowed).toBe(true);
     });
 
@@ -662,7 +687,7 @@ describe("WhatsApp configuration and URL encoding", () => {
       const { previous, current, input } = snapshots();
       if (field === "price") current.plans[0].price = 200;
       else current.plans[0][field] = "Updated terms";
-      const result = reconcileDraft(input, previous, current);
+      const result = reconcileDraft({ ...input, purpose: "plan" }, previous, current);
       expect(result.needsReview).toBe(true);
       expect(result.issues.join(" ")).toMatch(/current plan/);
       expect(result.draft.planId).toBe(input.planId);
@@ -680,7 +705,7 @@ describe("WhatsApp configuration and URL encoding", () => {
     it("requires review after publication validity or status changes", () => {
       const { previous, current, input } = snapshots();
       current.publication.validUntil = "2030-01-21T00:00:00Z";
-      expect(reconcileDraft(input, previous, current).issues.join(" ")).toMatch(/validity window changed/);
+      expect(reconcileDraft(input, previous, current).issues.join(" ")).toMatch(/availability window changed/);
       current.publication.validUntil = previous.publication.validUntil;
       current.isPreview = true;
       expect(reconcileDraft(input, previous, current).needsReview).toBe(true);
@@ -689,7 +714,7 @@ describe("WhatsApp configuration and URL encoding", () => {
     it("does not mistake an unknown source revision for a successfully checked previous snapshot", () => {
       const { previous, current, input } = snapshots();
       input.catalogRevision = "c".repeat(64);
-      expect(reconcileDraft(input, previous, current).issues.join(" ")).toMatch(/different catalog/);
+      expect(reconcileDraft(input, previous, current).issues.join(" ")).toMatch(/older menu/);
     });
 
     it("requires review for existing selections without an originating revision", () => {
@@ -704,6 +729,27 @@ describe("WhatsApp configuration and URL encoding", () => {
       Object.assign(input, { requestedDate: "2030-01-16", planStartDate: "2030-01-17", purpose: "catering", headcount: "25" });
       const result = reconcileDraft(input, previous, current);
       expect(result.draft).toEqual({ ...input, catalogRevision: current.publication.revision });
+    });
+
+    it("keeps an inactive plan review pending without blocking unchanged meals", () => {
+      const { previous, current, input } = snapshots();
+      current.plans[0].description = "Changed plan details";
+      const mealResult = reconcileDraft(input, previous, current);
+      expect(mealResult).toMatchObject({ needsReview: false, issues: [], draft: { pendingReview: ["plan"] } });
+      expect(getHandoffDecision(mealResult.draft, current, approvedContact, { fresh: true, now: NOW }).allowed).toBe(true);
+      const restored = parseDraft(JSON.parse(JSON.stringify(mealResult.draft)));
+      const planResult = reconcileDraft({ ...restored, purpose: "plan" }, current, current);
+      expect(planResult.needsReview).toBe(true);
+      expect(getHandoffDecision(planResult.draft, current, approvedContact, { fresh: true, now: NOW }).allowed).toBe(false);
+    });
+
+    it("keeps an inactive meal review pending without blocking an unchanged plan", () => {
+      const { previous, current, input } = snapshots();
+      current.meals[0].price = 250;
+      const result = reconcileDraft({ ...input, purpose: "plan" }, previous, current);
+      expect(result).toMatchObject({ needsReview: false, issues: [], draft: { pendingReview: ["meals"] } });
+      expect(getHandoffDecision(result.draft, current, approvedContact, { fresh: true, now: NOW }).allowed).toBe(true);
+      expect(reconcileDraft({ ...result.draft, purpose: "meals" }, current, current).needsReview).toBe(true);
     });
   });
 

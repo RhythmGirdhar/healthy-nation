@@ -24,12 +24,12 @@ export default async function MealPage({ params }: { params: Promise<{ slug: str
   return <div className="container meal-detail-page">
     <Suspense fallback={<Link href="/menu/" className="text-link">← Back to the menu</Link>}><BackToMenu /></Suspense>
     <div className="meal-detail">
-      <figure className={`detail-figure accent-${meal.accent}`}><MealImage meal={meal} width={600} height={495} priority />{meal.image && <figcaption>{meal.image.kind === "illustration" ? "Original illustration · not actual food photography" : meal.name}</figcaption>}</figure>
+      <figure className={`detail-figure accent-${meal.accent}${!meal.image ? " no-photo" : meal.image.kind !== "illustration" ? " has-photo" : ""}`}><MealImage meal={meal} width={600} height={495} priority />{meal.image && <figcaption>{meal.image.kind === "illustration" ? "Original illustration, not actual food photography." : meal.image.kind === "example-photo" ? "Example photo from our kitchen. The photo for this dish is being confirmed." : meal.image.alt}</figcaption>}</figure>
       <div className="detail-info">
         <span className="eyebrow">{meal.category}{meal.diet !== "Not specified" ? ` · ${meal.diet}` : ""}{meal.isSample ? " · sample dish" : ""}</span><h1>{meal.name}</h1>{meal.description && <p>{meal.description}</p>}
         <p className="detail-price">{formatPrice(meal.price)}</p><p className="small-note">{meal.portion}</p>
         <AddMealForm meal={meal} />
-        <WhatsAppLink className="text-link">Ask about the current menu</WhatsAppLink>
+        <WhatsAppLink message={meal.isSample ? undefined : `Hi Healthy Nation! I'd like to ask about ${meal.name} (${meal.id}). Please confirm its ingredients, allergens, portion size and availability before I order.`} className="text-link">Ask about this meal</WhatsAppLink>
       </div>
     </div>
     <section className="ingredient-section" aria-labelledby="ingredients-heading">

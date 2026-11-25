@@ -85,7 +85,7 @@ export function RequestReview() {
     return () => { window.clearTimeout(first); window.clearInterval(timer); };
   }, []);
   const today = now ? getLocalCalendarDate(new Date(now)) : "";
-  const date = draft.purpose === "plan" ? draft.planStartDate : draft.requestedDate;
+  const date = draft.purpose === "plan" ? draft.planStartDate : draft.purpose === "catering" ? draft.cateringDate : draft.requestedDate;
   const dateInvalid = Boolean(date && today && date < today);
   const offer = draft.purpose === "meals" || draft.purpose === "plan";
   const plan = snapshot.plans.find((entry) => entry.id === draft.planId);
@@ -110,7 +110,7 @@ export function RequestReview() {
   const total = draft.items.reduce((sum, line) => sum + line.quantity, 0);
   const pricesKnown = draft.items.every((line) => snapshot.meals.find((meal) => meal.id === line.mealId)?.price != null);
   const subtotal = pricesKnown ? draft.items.reduce((sum, line) => sum + (snapshot.meals.find((meal) => meal.id === line.mealId)?.price || 0) * line.quantity, 0) : null;
-  const dateId = draft.purpose === "plan" ? "plan-start-date" : "requested-date";
+  const dateId = draft.purpose === "plan" ? "plan-start-date" : draft.purpose === "catering" ? "catering-date" : "requested-date";
 
   return <>
     <div className="request-notices">
@@ -152,7 +152,7 @@ export function RequestReview() {
           <label htmlFor={dateId}>{draft.purpose === "plan" ? "Requested start date" : draft.purpose === "catering" ? "Preferred event date" : "Preferred meal date"} (optional)</label>
           <input id={dateId} name={dateId} type="date" min={today || undefined} autoComplete="off" value={date} disabled={!ready} aria-invalid={dateInvalid} aria-describedby={`${dateId}-help${dateInvalid ? ` ${dateId}-error` : ""}`} onChange={(event) => {
             const value = event.target.value;
-            updateDraft((current) => draft.purpose === "plan" ? { ...current, planStartDate: value } : { ...current, requestedDate: value }, "Requested date updated. No delivery slot has been reserved.");
+            updateDraft((current) => draft.purpose === "plan" ? { ...current, planStartDate: value } : draft.purpose === "catering" ? { ...current, cateringDate: value } : { ...current, requestedDate: value }, "Requested date updated. No delivery slot has been reserved.");
           }} />
           <p id={`${dateId}-help`} className="small-note">A preference only, not a booking. {draft.purpose === "plan" ? "Your plan start date is separate from your meal date." : "Availability and delivery timing must be confirmed."}</p>
           {dateInvalid && <p className="form-error" id={`${dateId}-error`} role="alert">Choose today or a future date, or clear this optional field.</p>}
@@ -160,27 +160,26 @@ export function RequestReview() {
         <p className="small-note privacy-note">No name, address, medical details, or payment information is collected here. Only limited selections are saved for this browser tab; closing the tab ends the session.</p>
       </section>
       <aside className="request-summary" id="request-actions" aria-labelledby="request-summary-heading">
-        <span className="eyebrow">A conversation, not a checkout</span><h2 id="request-summary-heading">The small print,<br />up front.</h2>
+        <span className="eyebrow">A conversation, not a checkout</span><h2 id="request-summary-heading">Review your request</h2>
         <dl className="summary-list">
           <div><dt>Active inquiry</dt><dd>{{ meals: "Individual meals", plan: "One meal plan", general: "General question", catering: "Team catering" }[draft.purpose]}</dd></div>
           {offer && <div><dt>{draft.purpose === "plan" ? "Plan price" : "Meal subtotal"}</dt><dd>{empty ? "Nothing selected" : draft.purpose === "plan" ? formatPrice(plan?.price ?? null) : formatPrice(subtotal)}</dd></div>}
           <div><dt>Delivery & other fees</dt><dd>To be confirmed</dd></div>
           <div><dt>Final total</dt><dd>Not quoted</dd></div>
         </dl>
+        <p className="small-note">Check your selection, then preview the message. The team confirms availability, delivery fees and the final total before accepting an order.</p>
         {validationError && <p className="form-error" role="alert">{validationError}</p>}
+        <MessagePreview message={message} decision={decision} />
         {offer && !empty && <div className="catalog-check">
           {isSample && <p className="notice"><strong>Sample offers cannot be sent.</strong> These selections are for local review only. Ask the team about the real current menu instead.</p>}
-          <button type="button" className="button secondary" disabled={!ready || refreshing} onClick={request.refreshCatalog}>{refreshing ? "Checking menu…" : "Refresh menu details"}</button>
-          <p className="small-note">{checkedAt && !fresh && !needsReview ? "The menu check expired or your selection changed. Preview your message to check again." : "We check the latest menu when you preview a real meal request. Your selections stay here if the check fails."}</p>
-          {!!issues.length && <div className="catalog-issues" role="status" aria-live="polite"><h3>Catalog review</h3><ul>{issues.map((issue, index) => <li key={`${index}:${issue}`}>{issue}</li>)}</ul></div>}
-          {needsReview && <button type="button" className="button secondary" disabled={!checkedAt || refreshing} onClick={request.acknowledgeCatalog}>I reviewed the catalog changes</button>}
+          <p className="small-note">The latest menu is checked when you preview a meal request. Your selections stay here if that check fails.</p>
+          {(error || needsReview) && <button type="button" className="button secondary" disabled={!ready || refreshing} onClick={request.refreshCatalog}>{refreshing ? "Checking menu…" : "Check menu again"}</button>}
+          {!!issues.length && <div className="catalog-issues" role="status" aria-live="polite"><h3>Menu changes</h3><ul>{issues.map((issue, index) => <li key={`${index}:${issue}`}>{issue}</li>)}</ul></div>}
+          {needsReview && <button type="button" className="button secondary" disabled={!checkedAt || refreshing} onClick={request.acknowledgeCatalog}>I reviewed the menu changes</button>}
         </div>}
-        <MessagePreview message={message} decision={decision} />
-        {!decision.allowed && !empty && !validationError && <p className="small-note">{decision.reason}</p>}
         <WhatsAppLink className="text-link">Ask about the current menu</WhatsAppLink>
-        <p className="small-note">The general inquiry above contains no sample selections. Opening WhatsApp shares its prepared draft with WhatsApp; you still press Send yourself.</p>
-        <div className="next-steps"><h3>What happens next</h3><ol><li>You review your inquiry.</li><li>You choose whether to send it.</li><li>The team agrees the details and explicitly confirms.</li></ol><p>Nothing is reserved, charged, or accepted by this website.</p></div>
-        <Link href="/menu/" className="text-link">Keep exploring <span aria-hidden="true">↗</span></Link>
+        <details className="next-steps"><summary>How WhatsApp requests work</summary><ol><li>You review your inquiry.</li><li>You choose whether to send it.</li><li>The team agrees the details and confirms your order.</li></ol><p>The general question link does not include your selections. Opening WhatsApp shares its prepared draft with WhatsApp; you still press Send yourself. Nothing is reserved, charged or accepted by this website.</p></details>
+        <Link href={request.menuHref} scroll={false} className="text-link">Keep exploring <span aria-hidden="true">↗</span></Link>
       </aside>
     </div>
     <p className="repeat-note">Back for another meal? Browse the current menu or continue your existing chat. The team will reconfirm availability and pricing for every new request.</p>

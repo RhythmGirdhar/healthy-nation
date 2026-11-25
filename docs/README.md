@@ -10,6 +10,8 @@ This folder is the home for project requirements, architecture, design, reviews,
 | [Architecture proposal](architecture.md) | System boundaries, data model, draft lifecycle, handoff policy, publishing process, and proposed quality gates. |
 | [Visual design](design/README.md) | Screen concept, preview instructions, and the distinction between the prototype and the real app. |
 | [Independent reviews](reviews.md) | Engineering and business/product findings, corrections, and outstanding review work. |
+| [Customer journey reviews](customer-reviews.md) | Two independent customer-role reviews, applied changes and remaining food/service inputs. |
+| [Founder questions](founder-questions.md) | Questions to confirm delivery, food details, photos, plans and operating policies. |
 | [Development guide](development.md) | Repository layout, local commands, configuration, and current implementation limitations. |
 | [Content editing](content-editing.md) | Founder/contact facts, portrait setup, editable catalog, and safe sample-to-live publication. |
 | [Future content editor](future-content-admin.md) | A separate self-service admin UI for meals, plans, contact settings, photo uploads, previews, and publishing. |
@@ -21,19 +23,19 @@ This folder is the home for project requirements, architecture, design, reviews,
 | --- | --- |
 | Brand | Confirmed: **Healthy Nation**, supplied green-and-white logo. |
 | Founder and contact | Confirmed: Shivansh Girdhar, degree in Culinary Sciences; WhatsApp **+91 81049 60748**. Founder photograph not supplied. |
-| Menu | 55 priced dishes imported from the supplied PDF. Missing food facts and per-dish photos are explicit; sample meal plans remain protected. |
+| Menu and photos | 55 priced dishes imported from the supplied PDF. All 75 unique supplied food photos are in the kitchen gallery. Fifty-two dishes use labelled example photos; exact matches and food facts need confirmation. Sample plans remain protected. |
 | Application stack | Confirmed: Next.js and TypeScript in one project. |
 | Content management | Confirmed: editable content files first; CMS/admin later. |
 | V1 transaction model | Confirmed: WhatsApp inquiry/request and manual team confirmation, not website checkout. |
 | Architecture and visual design | Reviewed direction approved by the owner for V1 implementation. |
 | Technical delivery mode | Static export with build-validated content; hosting vendor still deferred. |
-| Initial code | Scaffolding and preliminary catalog/domain modules exist under `web`. |
-| Implementation | In progress, applying the independent-review corrections and confirmed founder/contact details. |
-| Independent reviews | Both architecture and visual passes completed; corrections are applied to the proposal and concept, with reproducible prototype regression checks. |
+| Application | Working local storefront, dish pages, plans, request review, About, FAQ, Catering and kitchen gallery under `web`. |
+| Request flow | Multi-meal selection, filter restoration, separate inquiry dates, same-tab storage, purpose-specific change review, copy and manual WhatsApp sending. |
+| Independent reviews | Architecture/product and customer-role passes completed. The review documents distinguish historical design findings, implemented fixes and business inputs. |
 | Hosting, domain, DNS | Owner reported **thehealthynation.in** and **healthynation.co.in**. Primary domain, hosting, and DNS configuration remain deferred. |
-| Source checkpoint | Reviewed documentation/prototype and the unfinished scaffold are preserved together; source publication is not a deployment. |
+| Design reference | The current design view uses the real local app. The original sample prototype is preserved as a historical review artifact. Source publication is not a deployment. |
 
-The preliminary code does not yet implement all design corrections. Do not treat an architecture target, a clickable mock, or a configured test command as a delivered feature or a passed check.
+Local checks do not establish business readiness, production performance or a complete accessibility audit. Confirm the [founder inputs](founder-questions.md) before launch.
 
 ## Documentation ownership
 

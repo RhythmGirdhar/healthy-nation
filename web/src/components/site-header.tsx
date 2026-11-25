@@ -9,11 +9,15 @@ import { WhatsAppLink } from "./whatsapp-link";
 
 const links = [{ href: "/menu/", label: "The menu" }, { href: "/plans/", label: "Meal plans" }, { href: "/about/", label: "About us" }];
 
+function activeCount(draft: ReturnType<typeof useRequest>["draft"]) {
+  return draft.purpose === "meals" ? draft.items.reduce((sum, item) => sum + item.quantity, 0) : draft.purpose === "plan" && draft.planId ? 1 : 0;
+}
+
 export function SiteHeader({ isPreview }: { isPreview: boolean }) {
   const pathname = usePathname();
   const { draft } = useRequest();
   const disclosure = useRef<HTMLDetailsElement>(null);
-  const total = draft.items.reduce((sum, item) => sum + item.quantity, 0) + (draft.planId ? 1 : 0);
+  const total = activeCount(draft);
   function closeMenu() { if (disclosure.current) disclosure.current.open = false; }
 
   useEffect(() => {
@@ -59,7 +63,7 @@ export function SiteHeader({ isPreview }: { isPreview: boolean }) {
           </nav>
           <div className="header-actions">
             <WhatsAppLink className="text-link header-chat">Ask the team</WhatsAppLink>
-            <Link className="button compact" href="/request/">Your request <span className="request-count" aria-label={`${total} saved selections`}>{total}</span></Link>
+            <Link className="button compact" href="/request/">Your request <span className="request-count" aria-label={`${total} selections in the active inquiry`}>{total}</span></Link>
           </div>
           <details ref={disclosure} className="mobile-navigation">
             <summary>Explore <span aria-hidden="true">☰</span></summary>
@@ -80,9 +84,17 @@ export function SiteHeader({ isPreview }: { isPreview: boolean }) {
 export function MobileRequestBar() {
   const { draft } = useRequest();
   const pathname = usePathname();
-  const count = draft.items.reduce((sum, item) => sum + item.quantity, 0) + (draft.planId ? 1 : 0);
+  const count = activeCount(draft);
   return <aside className="mobile-request-bar" aria-label="Request quick action">
-    <div><strong>Your request <span aria-label={`${count} saved selections`}>{count}</span></strong><small>Not an accepted order</small></div>
-    <Link className="button compact" href={pathname.startsWith("/request") ? "/request/#request-actions" : "/request/"}>{pathname.startsWith("/request") ? "Review next steps" : "Review request"} <span aria-hidden="true">↗</span></Link>
+    <div><strong>Your request <span aria-label={`${count} selections in the active inquiry`}>{count}</span></strong><small>{{ meals: "Meal selection", plan: "Plan selection", general: "General question", catering: "Catering question" }[draft.purpose]}</small></div>
+    <Link className="button compact" href={pathname.startsWith("/request") ? "/request/#preview-message" : "/request/"} onClick={(event) => {
+      if (!pathname.startsWith("/request")) return;
+      const target = document.getElementById("preview-message");
+      if (target instanceof HTMLButtonElement && !target.disabled) {
+        event.preventDefault();
+        target.scrollIntoView({ block: "center" });
+        target.focus({ preventScroll: true });
+      }
+    }}>{pathname.startsWith("/request") ? "Review message" : "Review request"} <span aria-hidden="true">↗</span></Link>
   </aside>;
 }

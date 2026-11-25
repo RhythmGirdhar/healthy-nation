@@ -2,9 +2,9 @@
 
 ## Current phase
 
-The owner has approved implementing the reviewed design. Both independent reviews are complete and their corrections are documented. Build the V1 application using those decisions; hosting, DNS, payments, and customer accounts remain deferred.
+The reviewed V1 storefront runs locally. Architecture/product reviews and two independent customer-role reviews are recorded. Keep the application and its documentation aligned; hosting, DNS, payments, and customer accounts remain deferred.
 
-Read the [documentation index](README.md), [product brief](product-brief.md), [architecture proposal](architecture.md), and [review register](reviews.md). Preserve the difference between approved requirements, proposed design, incomplete scaffolding, and delivered behavior.
+Read the [documentation index](README.md), [product brief](product-brief.md), [architecture](architecture.md), [review register](reviews.md) and [customer findings](customer-reviews.md). Preserve the difference between approved requirements, targets, delivered behavior and unconfirmed business facts.
 
 ## Product boundaries
 
@@ -17,7 +17,7 @@ Read the [documentation index](README.md), [product brief](product-brief.md), [a
 
 ## Architecture guidance
 
-The accepted V1 direction is one Next.js App Router + TypeScript project with build-validated editable content and static delivery. Existing preliminary code must be reconciled with these boundaries as implementation proceeds.
+V1 uses one Next.js App Router + TypeScript project with build-validated editable JSON content and static delivery.
 
 - Keep content loading and full catalog validation on the build/server side.
 - Supply small serializable public data snapshots to interactive components. Do not import the full content/validation graph into client code.
@@ -36,19 +36,21 @@ The accepted V1 direction is one Next.js App Router + TypeScript project with bu
 - Do not prefetch handoff URLs or log complete URLs/message bodies. Keep copyable/selectable text available as a fallback.
 - Treat nutrition and medical-condition positioning as business/professional-review decisions. Never imply treatment or guaranteed suitability.
 
-## Code and UX standards when implementation resumes
+## Code and UX standards
 
 - Use strict TypeScript and explicit data contracts; validate external or editable inputs at their boundary.
 - Follow the installed framework's APIs and the local guidance in [web/AGENTS.md](../web/AGENTS.md). Next.js bundles version-matched documentation with the installed package.
 - Surface loading, invalid content, missing configuration, storage failure, unavailable selections, and network/clipboard errors with actionable messages.
 - Follow the architecture's accessibility and performance acceptance criteria. Use semantic controls, visible focus, accessible names, honest status messages, and reduced-motion support.
 - Keep food illustrations and sample offers labeled until replaced by approved content. Do not use fake reviews, popularity rankings, prices, or customer counts.
+- Supplied food photos may be shown as labelled examples. Do not change `example-photo` to `photo` for a dish until the founder confirms that exact match. Keep the source register accurate.
+- Keep review requirements separate for meals and plans, including inactive selections and saved drafts. Each inquiry has its own date.
 - Add focused tests for behavior changes. Distinguish what was actually exercised from what remains a proposed test or launch target.
 
 ## Files and documentation
 
-- `web` contains the application scaffold, not the design-review prototype.
-- `docs/design` contains review-only browser artifacts, not production frontend code.
+- `web` contains the working application and editable JSON.
+- `docs/design/index.html` previews the local application. `concept-baseline.html` preserves the old sample prototype and illustration source; do not maintain a second current frontend.
 - `assets/brand` preserves the original supplied logo. Derived web assets must not overwrite it.
 - Put substantive project documentation under `docs`; maintain short root entry points instead of duplicating entire documents.
 - Preserve the generated Next.js instruction block in `web/AGENTS.md` and the `web/CLAUDE.md` discovery pointer.

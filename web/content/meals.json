@@ -19,7 +19,12 @@
     "portion": "Portion to be confirmed",
     "accent": "gold",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-029.webp",
+      "alt": "Seasoned potato wedges with a red dipping sauce",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -42,7 +47,12 @@
     "portion": "Portion to be confirmed",
     "accent": "gold",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-033.webp",
+      "alt": "Potato wedges served around a red dipping sauce",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -111,7 +121,12 @@
     "portion": "Portion to be confirmed",
     "accent": "gold",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-051.webp",
+      "alt": "Falafel served on hummus in a grey bowl",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -134,7 +149,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-005.webp",
+      "alt": "A salad photographed in the Healthy Nation kitchen",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -157,7 +177,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-022.webp",
+      "alt": "A salad photographed in the Healthy Nation kitchen",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -180,7 +205,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-064.webp",
+      "alt": "A salad photographed in the Healthy Nation kitchen",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -203,7 +233,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-053.webp",
+      "alt": "Pasta served on a grey plate",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -226,7 +261,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-006.webp",
+      "alt": "A salad photographed in the Healthy Nation kitchen",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -249,7 +289,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-026.webp",
+      "alt": "A salad photographed in the Healthy Nation kitchen",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -272,7 +317,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-008.webp",
+      "alt": "A salad photographed in the Healthy Nation kitchen",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -295,7 +345,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-064.webp",
+      "alt": "A salad photographed in the Healthy Nation kitchen",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -318,7 +373,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-053.webp",
+      "alt": "Pasta served on a grey plate",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -341,7 +401,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-026.webp",
+      "alt": "A salad photographed in the Healthy Nation kitchen",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -364,7 +429,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-059.webp",
+      "alt": "Rice, salad and a main dish in a Healthy Nation meal tray",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -387,7 +457,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-019.webp",
+      "alt": "Rice, salad and a main dish in a Healthy Nation meal tray",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -410,7 +485,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-063.webp",
+      "alt": "Rice, salad and a main dish in a Healthy Nation meal tray",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -433,7 +513,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-061.webp",
+      "alt": "Rice, salad and a main dish in a Healthy Nation meal tray",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -456,7 +541,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-061.webp",
+      "alt": "Rice, salad and a main dish in a Healthy Nation meal tray",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -479,7 +569,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-063.webp",
+      "alt": "Rice, salad and a main dish in a Healthy Nation meal tray",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -502,7 +597,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-054.webp",
+      "alt": "Rice, salad and a main dish in a Healthy Nation meal tray",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -525,7 +625,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-072.webp",
+      "alt": "Rice, salad and a main dish in a Healthy Nation meal tray",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -548,7 +653,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-062.webp",
+      "alt": "Rice, salad and a main dish in a Healthy Nation meal tray",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -571,7 +681,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-072.webp",
+      "alt": "Rice, salad and a main dish in a Healthy Nation meal tray",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -594,7 +709,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-072.webp",
+      "alt": "Rice, salad and a main dish in a Healthy Nation meal tray",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -617,7 +737,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-007.webp",
+      "alt": "Rice, salad and a main dish in a Healthy Nation meal tray",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -640,7 +765,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "wrap",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-009.webp",
+      "alt": "A toasted wrap served on a long white plate",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -663,7 +793,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "wrap",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-014.webp",
+      "alt": "A toasted wrap served on a long white plate",
+      "kind": "example-photo",
+      "width": 640
+    },
     "isSample": false
   },
   {
@@ -686,7 +821,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "wrap",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-003.webp",
+      "alt": "A toasted wrap served on a long white plate",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -709,7 +849,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "wrap",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-016.webp",
+      "alt": "A toasted wrap served on a long white plate",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -732,7 +877,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "wrap",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-018.webp",
+      "alt": "A toasted wrap served on a long white plate",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -755,7 +905,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "wrap",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-012.webp",
+      "alt": "A toasted wrap served on a long white plate",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -778,7 +933,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "wrap",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-010.webp",
+      "alt": "A toasted wrap served on a long white plate",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -801,7 +961,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "wrap",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-004.webp",
+      "alt": "A toasted wrap served on a long white plate",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -824,7 +989,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "wrap",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-023.webp",
+      "alt": "A toasted wrap served on a long white plate",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -847,7 +1017,12 @@
     "portion": "Portion to be confirmed",
     "accent": "sage",
     "art": "wrap",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-020.webp",
+      "alt": "A toasted wrap served on a long white plate",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -870,7 +1045,12 @@
     "portion": "Portion to be confirmed",
     "accent": "gold",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-011.webp",
+      "alt": "A prepared bowl from the Healthy Nation kitchen",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -893,7 +1073,12 @@
     "portion": "Portion to be confirmed",
     "accent": "gold",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-021.webp",
+      "alt": "A prepared bowl from the Healthy Nation kitchen",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -916,7 +1101,12 @@
     "portion": "Portion to be confirmed",
     "accent": "gold",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-021.webp",
+      "alt": "A prepared bowl from the Healthy Nation kitchen",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -939,7 +1129,12 @@
     "portion": "Portion to be confirmed",
     "accent": "gold",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-043.webp",
+      "alt": "A prepared bowl from the Healthy Nation kitchen",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -962,7 +1157,12 @@
     "portion": "Portion to be confirmed",
     "accent": "gold",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-024.webp",
+      "alt": "A prepared bowl from the Healthy Nation kitchen",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -985,7 +1185,12 @@
     "portion": "Portion to be confirmed",
     "accent": "gold",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-027.webp",
+      "alt": "A prepared bowl from the Healthy Nation kitchen",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -1008,7 +1213,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-031.webp",
+      "alt": "Toasted sandwich triangles served with a dipping sauce",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -1031,7 +1241,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-038.webp",
+      "alt": "Toasted sandwich triangles served with a dipping sauce",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -1054,7 +1269,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-037.webp",
+      "alt": "Toasted sandwich triangles served with a dipping sauce",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -1077,7 +1297,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-042.webp",
+      "alt": "Toasted sandwich triangles served with a dipping sauce",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -1100,7 +1325,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-046.webp",
+      "alt": "Toasted sandwich triangles served with a dipping sauce",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -1123,7 +1353,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-044.webp",
+      "alt": "Toasted sandwich triangles served with a dipping sauce",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -1146,7 +1381,12 @@
     "portion": "Portion to be confirmed",
     "accent": "peach",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-045.webp",
+      "alt": "Toasted sandwich triangles served with a dipping sauce",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -1169,7 +1409,12 @@
     "portion": "Portion to be confirmed",
     "accent": "lilac",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-050.webp",
+      "alt": "A chocolate-coloured drink with a dark topping",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -1192,7 +1437,12 @@
     "portion": "Portion to be confirmed",
     "accent": "lilac",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-056.webp",
+      "alt": "A purple drink served beside berries",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -1215,7 +1465,12 @@
     "portion": "Portion to be confirmed",
     "accent": "lilac",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-056.webp",
+      "alt": "A purple drink served beside berries",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   },
   {
@@ -1261,7 +1516,12 @@
     "portion": "Portion to be confirmed",
     "accent": "lilac",
     "art": "bowl",
-    "image": null,
+    "image": {
+      "src": "/images/kitchen/kitchen-055.webp",
+      "alt": "An orange drink topped with mango pieces",
+      "kind": "example-photo",
+      "width": 960
+    },
     "isSample": false
   }
 ]

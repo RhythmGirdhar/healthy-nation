@@ -9,7 +9,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: { default: "Healthy Nation | Meals & meal plans", template: "%s | Healthy Nation" },
-  description: "Explore Healthy Nation’s approach to flavorful, balanced individual meals and team-managed meal plans. View sample ideas and speak directly with the team.",
+  description: "Browse Healthy Nation's dishes, listed prices and kitchen photos. Choose your meals and prepare a request for the team on WhatsApp.",
   robots: getPublicCatalog().isPreview ? { index: false, follow: false } : { index: true, follow: true },
 };
 

@@ -16,7 +16,7 @@ export type Meal = {
   portion: string;
   accent: "sage" | "peach" | "lilac" | "gold";
   art: "bowl" | "wrap" | "oats";
-  image: { src: string; alt: string; kind: "illustration" | "photo" } | null;
+  image: { src: string; alt: string; kind: "illustration" | "photo" | "example-photo"; width?: number } | null;
   isSample: boolean;
 };
 
@@ -72,7 +72,9 @@ export type InquiryDraft = {
   items: DraftItem[];
   planId: string | null;
   requestedDate: string;
+  cateringDate: string;
   planStartDate: string;
+  pendingReview: ("meals" | "plan")[];
   purpose: InquiryPurpose;
   headcount: string;
 };

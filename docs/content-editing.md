@@ -17,7 +17,7 @@ Do not add a university, graduation year, awards, professional history, nutritio
 
 ## Founder photograph
 
-No photograph has been supplied. The About page uses a clearly labeled portrait placeholder instead of a fabricated person or an unrelated stock photo.
+No founder portrait has been supplied. The About page shows the confirmed biography without an empty photo block, a fabricated person or a stock portrait.
 
 When an approved photo is available:
 
@@ -35,7 +35,7 @@ When an approved photo is available:
 
 Keep the original supplied logo under `assets/brand`. Web derivatives are separate assets.
 
-## Sample meals and plans
+## Meals and sample plans
 
 Edit [meals.json](../web/content/meals.json) for dishes, [plans.json](../web/content/plans.json) for meal plans, and [catalog.json](../web/content/catalog.json) for the weekly menu, FAQs, preview status, and publication metadata. The TypeScript catalog module loads and validates these files.
 
@@ -47,12 +47,30 @@ The example meal plans remain `isSample: true` with `price: null`, so they canno
 
 Domain names reported by the owner are recorded in `business.json`: **thehealthynation.in** and **healthynation.co.in**. Neither has been selected as canonical or connected through DNS by this work.
 
+## Supplied kitchen photos
+
+All 76 supplied files were inspected. The gallery uses 75 unique photos; one source is an exact duplicate. Optimized 960px and 480px WebP files are under `web/public/images/kitchen`. The originals have not been changed.
+
+- [`kitchen-photos.json`](../web/content/kitchen-photos.json) controls the gallery, category and alternative text.
+- [`photo-source.json`](../web/content/photo-source.json) records source filenames, hashes, the duplicate and current dish examples. It is an audit, not a second menu.
+- `image.kind` accepts `illustration`, `example-photo` or `photo`. Example photos have a visible label and an alternative-text disclosure. `image: null` remains valid.
+- Kitchen images record their actual pixel width as `image.width`. The smaller variant has half that width. Portrait photos are 640px/320px wide, not 960px/480px. Keep this value accurate so the browser selects the right file.
+
+Fifty-two dishes use category-matched examples. French Fries, Peri Peri French Fries and Strawberry Smoothie have no suitable confirmed photo. Pasta and other gallery photos do not add dishes to the menu.
+
+To confirm or replace an example:
+
+1. Ask the founder to match the gallery's Photo number to a real dish. Confirm the ingredients and portion separately.
+2. Set that dish's `image.src` and accurate `image.alt` in `meals.json`. Use `kind: "photo"` only for a confirmed exact match. Keep uncertain matches as `example-photo` or `null`.
+3. If adding a new image, prepare both optimized sizes and strip private metadata. Keep filenames, gallery entries and the source register consistent.
+4. Run checks and inspect the card/detail crop at desktop and phone widths before publishing.
+
 ## Publishing real offers
 
 Before enabling meal or plan handoff:
 
 1. Use owner-approved dish names and prices. Leave missing descriptions blank, unknown ingredient/allergen lists empty, and unmapped photos `null` rather than inventing information. The team must clarify food suitability and fulfillment details before accepting an order.
-2. Replace sample descriptions and images with accurate content. Only label an image as a photograph if it actually shows approved food imagery.
+2. Replace sample descriptions with accurate content. Do not label an example image as a confirmed dish photo without an approved exact match.
 3. Confirm plan duration/count, delivery cadence, choice/substitution rules, delivery-fee treatment, and cancellation/refund terms.
 4. Set publication validity deliberately. `publishedAt` and `validFrom` are required for a published catalog. `validUntil: null` means no fixed expiry is configured; the PDF supplied no expiry, so none was invented. A configured expiry is still enforced. These fields do not promise stock or delivery.
 5. Set actual dishes to `isSample: false` only when their names/prices are approved. Unpriced or sample selections remain blocked. A published catalog can include explicitly marked sample plans, but those plans must retain `isSample: true` and `price: null`.
@@ -64,6 +82,8 @@ Do not flip sample flags merely to make a button clickable. The PDF dishes are e
 ## Menu changes and existing drafts
 
 The public catalog has a deterministic revision. The browser must check a current snapshot before a live offer handoff, preserve unaffected selections, and require review of changed prices, options, plans, or availability.
+
+Meal and plan review flags are saved separately. A changed inactive plan does not block unchanged meals, but still needs review when the customer returns to it. Acknowledging one inquiry does not clear the other. Meal, plan-start and catering dates are also separate. Older version-2 drafts are migrated without copying a meal date into a new catering inquiry.
 
 Correct urgent unavailability through the same validated publishing process. A rollback must not silently reactivate withdrawn meals. See the [architecture](architecture.md) for ownership and recovery rules.
 

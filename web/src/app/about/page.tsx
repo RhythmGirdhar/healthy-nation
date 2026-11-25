@@ -18,13 +18,12 @@ export default function AboutPage() {
       <span className={styles.eyebrow}>About us</span>
       <h1 className={styles.title}>About Healthy Nation</h1>
       <p className={styles.lede}>
-        Healthy Nation is a food business offering individual meals and meal plans.
-        Contact us for the current menu, prices, and delivery details.
+        Healthy Nation offers individual meals. Browse the menu for dishes and
+        prices, or ask the team about current meal plans and delivery.
       </p>
 
-      <section className={styles.founder} aria-labelledby="founder-heading">
-        <div className={styles.portrait}>
-          {founder.portrait ? (
+      <section className={`${styles.founder}${!founder.portrait ? ` ${styles.founderTextOnly}` : ""}`} aria-labelledby="founder-heading">
+        {founder.portrait && <div className={styles.portrait}>
             <Image
               src={founder.portrait.src}
               alt={founder.portrait.alt}
@@ -32,14 +31,7 @@ export default function AboutPage() {
               sizes="(max-width: 700px) 90vw, 460px"
               className={styles.portraitImage}
             />
-          ) : (
-            <div className={styles.portraitPlaceholder} role="img" aria-label="Portrait placeholder for Shivansh Girdhar; a founder photo has not been supplied">
-              <span className={styles.initials} aria-hidden="true">SG</span>
-              <strong>Founder portrait</strong>
-              <p>Photo not added yet</p>
-            </div>
-          )}
-        </div>
+        </div>}
         <div className={styles.founderCopy}>
           <span className={styles.eyebrow}>Meet the founder</span>
           <h2 id="founder-heading">{founder.name}</h2>
@@ -59,6 +51,7 @@ export default function AboutPage() {
           <WhatsAppLink message="Hi Shivansh! I'd like to learn about Healthy Nation and your current meal options.">
             Message Shivansh
           </WhatsAppLink>
+          <Link href="/kitchen/" className="text-link">See photos from our kitchen</Link>
         </div>
       </section>
 

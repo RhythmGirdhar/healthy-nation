@@ -63,13 +63,17 @@ export function MenuBrowser({ meals }: { meals: Meal[] }) {
     searchRef.current?.focus();
   }
   return <>
+    <nav className="category-links menu-categories" aria-label="Browse menu categories">
+      <button type="button" aria-pressed={!category} onClick={() => change("category", "")}>All dishes</button>
+      {categories.map((entry) => <button key={entry} type="button" aria-pressed={category === entry} onClick={() => change("category", entry)}>{entry}</button>)}
+    </nav>
     <div className="menu-controls">
       <div className="field menu-search"><label htmlFor="meal-search">Find a meal</label><input ref={searchRef} id="meal-search" name="q" type="search" autoComplete="off" maxLength={80} placeholder="Try chickpea or berry…" value={text} onChange={(event) => change("q", event.target.value)} /></div>
       <div className="field"><label htmlFor="menu-diet">Menu dietary label</label><select id="menu-diet" name="diet" value={diet} onChange={(event) => change("diet", event.target.value)}><option value="">All labels</option>{diets.map((entry) => <option key={entry}>{entry}</option>)}</select></div>
       <div className="field"><label htmlFor="menu-category">Meal category</label><select id="menu-category" name="category" value={category} onChange={(event) => change("category", event.target.value)}><option value="">All categories</option>{categories.map((entry) => <option key={entry}>{entry}</option>)}</select></div>
     </div>
     <div className="menu-result-heading"><p role="status" aria-live="polite">{matches.length} {matches.length === 1 ? "menu item" : "menu items"}{text || diet || category ? " matching your filters" : ""}</p>{query && <button type="button" className="text-button" onClick={reset}>Reset filters</button>}</div>
-    {matches.length ? <div className="meal-grid menu-grid">{matches.map((meal) => <MealCard key={meal.id} meal={meal} query={query} onNavigate={() => rememberMenu(query, window.scrollY)} />)}</div> : <div className="empty-state"><h2>No matches on this menu.</h2><p>Try another dish name, or reset your search and filters.</p><button type="button" className="button secondary" onClick={reset}>Show all meals</button></div>}
+    {matches.length ? <div className="meal-grid menu-grid">{matches.map((meal) => <MealCard key={meal.id} meal={meal} query={query} quickAdd onNavigate={() => rememberMenu(query, window.scrollY)} />)}</div> : <div className="empty-state"><h2>No matches on this menu.</h2><p>Try another dish name, or reset your search and filters.</p><button type="button" className="button secondary" onClick={reset}>Show all meals</button></div>}
   </>;
 }
 

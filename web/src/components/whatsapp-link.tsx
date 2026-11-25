@@ -7,6 +7,10 @@ export const GENERAL_INQUIRY =
   "Hi Healthy Nation! I'd like to ask about your current menu, prices, delivery area, and how to request a meal.";
 export const CATERING_INQUIRY =
   "Hi Healthy Nation! I'd like to discuss food for a team or event. Please confirm your catering options, service area, availability, pricing, and terms.";
+export const DELIVERY_INQUIRY =
+  "Hi Healthy Nation! Before I choose a meal, could you confirm your delivery areas, ordering hours, delivery time, minimum order and delivery charges?";
+export const PLAN_INQUIRY =
+  "Hi Healthy Nation! I'd like to ask about your current meal-plan options, prices, meal counts, delivery schedule and terms. I am not requesting an example plan.";
 
 export function WhatsAppLink({
   children = "Chat on WhatsApp",

@@ -17,13 +17,14 @@ function meal(input: unknown, path: string): Meal {
   ]);
   let image: Meal["image"] = null;
   if (value.image !== null) {
-    const fields = record(value.image, `${path}.image`, ["src", "alt", "kind"]);
+    const fields = record(value.image, `${path}.image`, ["src", "alt", "kind", "width"], ["width"]);
     const src = text(fields.src, `${path}.image.src`);
     if (!isLocalImage(src)) throw new Error(`${path}.image.src: Use a local image path under /images`);
     image = {
       src,
       alt: text(fields.alt, `${path}.image.alt`),
-      kind: choice(fields.kind, `${path}.image.kind`, ["illustration", "photo"]),
+      kind: choice(fields.kind, `${path}.image.kind`, ["illustration", "photo", "example-photo"]),
+      ...(fields.width === undefined ? {} : { width: positiveInteger(fields.width, `${path}.image.width`) }),
     };
   }
   return {

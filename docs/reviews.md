@@ -1,17 +1,17 @@
-# Independent design reviews
+# Independent review register
 
 [Documentation index](README.md) | [Architecture proposal](architecture.md) | [Visual design](design/README.md)
 
 ## Scope and status
 
-The owner requested two independent perspectives before implementation resumes:
+The first review round assessed the design before implementation:
 
 - **Principal engineer:** technical efficiency, ownership, TypeScript/Next.js boundaries, standards, reliability, accessibility architecture, privacy, and maintainability.
 - **Business/product/marketing reviewer:** customer fit, conversion, personas, operational viability, usability, visual hierarchy, typography, color, and imagery.
 
-**Both independent reviews are complete.** Each reviewer assessed the architecture first, then independently inspected the same frozen storefront concept. Their actionable findings have been incorporated into the proposal and [revised visual concept](design/index.html).
+**Both design reviews are complete.** Each reviewer assessed the architecture first, then independently inspected the same frozen concept. Their findings were applied to the proposal and [preserved sample concept](design/concept-baseline.html).
 
-Corrections below have been applied to the design proposal, prototype, and supporting documentation, not to the paused Next.js application. Owner approval and implementation are still separate steps.
+The tables below preserve that design review's evidence and decisions. The owner later approved implementation, and the app now runs locally. A new [customer review record](customer-reviews.md) contains two independent first-time/returning customer assessments, current fixes and remaining business inputs. The [current design view](design/index.html) uses the real local app.
 
 Reviewed baseline SHA256: `51AA8DF2DB086A62C4AE7D80333B81CEE6CDA9D4B56EAE2DAEC2DF5D14FB1C3D`.
 
@@ -75,9 +75,9 @@ The reviewers worked from the unchanged baseline above without reading each othe
 | VIS-11 | P2 | Product: the mobile menu introduction hid the first identifiable dish below the initial viewport. | Shortened the Menu introduction, reduced duplicate navigation, and used compact mobile meal cards. The first meal heading is fully visible at 390x844. |
 | VIS-12 | P3 | Product: hero positioning was generic and two inquiry labels implied the wrong action. | Explicit individual-meal/team-managed-plan positioning, aspirational affordability, and clear team-message/inquiry copy. |
 
-### Optional idea deliberately deferred
+### Original deferral, now superseded
 
-The product reviewer suggested adding meals without always navigating to Request Review. The current control explicitly says **Add to request & review**, so it remains truthful. Choosing a browse-first versus review-first flow is left for the owner's design discussion rather than expanding the interaction model during correction.
+The original review deferred selection without leaving Menu. The owner later authorized customer-flow improvements. The app now has quick selection on menu cards and **Add & keep browsing** on dish details, while retaining **Add to request & review**.
 
 ### Positive visual decisions retained
 
@@ -103,6 +103,6 @@ The product reviewer inspected a desktop Home screenshot, but further image-view
 - Actual food photography before claiming that concept illustrations show the meals being sold.
 - Confirmation of price/value fit and contribution margin after ingredients, labor, packaging, delivery, waste, and manual inquiry handling.
 
-## Next decision
+## Current decisions
 
-The owner should review the corrected concept and approve or revise its direction before application implementation resumes. Keep **design fixed**, **implemented**, and **verified** as distinct states in future updates.
+The owner approved V1 implementation and the later customer-flow changes. Food details, exact photo matches, service rules, plan terms and the primary domain remain [founder questions](founder-questions.md). Hosting, DNS and commerce remain deferred. Keep historical design evidence, current implementation and business readiness distinct.

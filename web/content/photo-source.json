@@ -1,0 +1,521 @@
+{
+  "sourceFiles": 76,
+  "uniquePhotos": 75,
+  "mappingStatus": "Visual category matches only. Exact dish names need founder confirmation.",
+  "files": [
+    {
+      "source": "PHOTO-2025-02-27-19-07-38.jpg",
+      "sha256": "30f3ad4eba330411477ec975ef381c37fcc44eab4815523984b255254a171894",
+      "photoId": "kitchen-001",
+      "category": "Salads"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-38[1].jpg",
+      "sha256": "496b5eb5df9b5ad00818931775b3e8c7b7ae9ec3b3004bcfe136b15447ceb4b8",
+      "photoId": "kitchen-002",
+      "category": "Meals"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-38[2].jpg",
+      "sha256": "4a49f3915c9168e73e62929200fc905c28a7c5a8ca16a2c9e35abafb549349bd",
+      "photoId": "kitchen-003",
+      "category": "Wraps"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-38[3].jpg",
+      "sha256": "0b1a36b5ee93e7a541d11f33d5284e04bf87f064bd9d2f3b8f559c2d28c4bab0",
+      "photoId": "kitchen-004",
+      "category": "Wraps"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-39.jpg",
+      "sha256": "d7ce8bf92a2b6a92b26784a9ee3e4b501c80711d5a11afb46d03f6093cd7b084",
+      "photoId": "kitchen-005",
+      "category": "Salads"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-39[1].jpg",
+      "sha256": "fcf71c9d20a82514436834e7a1d5e53e2f71640391a99161a6deeb77c8e35d7c",
+      "photoId": "kitchen-006",
+      "category": "Salads"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-39[2].jpg",
+      "sha256": "7b452d7981fbbabc8e5a3130083cbda9e62c78ace9c7d27fdc801005539cbe58",
+      "photoId": "kitchen-007",
+      "category": "Meals"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-39[3].jpg",
+      "sha256": "58f5eaf4c82d038a05c2dd4454bfb29d679f664bd71f2992413f723e325ff805",
+      "photoId": "kitchen-008",
+      "category": "Salads"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-39[4].jpg",
+      "sha256": "c70307dd246dad6866216fe094ffad16674a33a464baa0a2ce45e9064bf2332a",
+      "photoId": "kitchen-009",
+      "category": "Wraps"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-39[5].jpg",
+      "sha256": "a8b7e0a6efb11300dc669ba753beee97c11005152f0c4b4965a5ef515965263b",
+      "photoId": "kitchen-010",
+      "category": "Wraps"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-39[6].jpg",
+      "sha256": "46f67e10d35a031f013bf566dc6b1776386acb0f6492900d3630ba0d960a3e2a",
+      "photoId": "kitchen-011",
+      "category": "Bowls"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-39[7].jpg",
+      "sha256": "0146470ac9834cea8dbacf2cda25c206b7cb53561624c35ebf4a0ac79eec2108",
+      "photoId": "kitchen-012",
+      "category": "Wraps"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-40.jpg",
+      "sha256": "dd4fc64679f95eca81930637b061973626735f31b84b4520cecaab67788543ba",
+      "photoId": "kitchen-013",
+      "category": "Wraps"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-40[1].jpg",
+      "sha256": "16c35324d9cff3f54360ccbceaccbd91203be4c65e14cb541b7c0da454061239",
+      "photoId": "kitchen-014",
+      "category": "Wraps"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-40[2].jpg",
+      "sha256": "11e850cccd3c299d9300918d2034f1e0588cdd493836f183642b1caf9c4b2a14",
+      "photoId": "kitchen-015",
+      "category": "Wraps"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-40[3].jpg",
+      "sha256": "c9603a342c9168e93b9683e33291993679ebde75c3924cb4765a8f655b428f6e",
+      "photoId": "kitchen-016",
+      "category": "Wraps"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-40[4].jpg",
+      "sha256": "db08964c46b8d27292c94f785c69021990e117f81555573b058d5242603a863b",
+      "photoId": "kitchen-017",
+      "category": "Bowls"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-40[5].jpg",
+      "sha256": "c997635943fd47c9127f68cdbb65247d4d8940c604946da93ca13de0b6ad1c9d",
+      "photoId": "kitchen-018",
+      "category": "Wraps"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-40[6].jpg",
+      "sha256": "cb701ce563f93905616d182f5472d9b0508d80853a85726c976533678a574b25",
+      "photoId": "kitchen-019",
+      "category": "Meals"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-40[7].jpg",
+      "sha256": "b4ede8412ec5352022b7ac1c310fc2e30b095eed4ac066f6a182bae26a7ecd8e",
+      "photoId": "kitchen-020",
+      "category": "Wraps"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-41.jpg",
+      "sha256": "d01d0f6f01476c73980bf095d6cb5c7fcf484d85a83c4c555fbf7237673ac543",
+      "photoId": "kitchen-021",
+      "category": "Bowls"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-41[1].jpg",
+      "sha256": "30cc5f6e15d781eaa4553e59bfe4af39b621693884c01a96422d7b1a7632cd1e",
+      "photoId": "kitchen-022",
+      "category": "Salads"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-41[2].jpg",
+      "sha256": "2b0c9f567e3c38651d19806692e147199fac4b502298df743728b165f5742d6d",
+      "photoId": "kitchen-023",
+      "category": "Wraps"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-41[3].jpg",
+      "sha256": "001c1f25afda7b877f32799f65d283607411469145b9faf2f4e9e8b96a354044",
+      "photoId": "kitchen-024",
+      "category": "Bowls"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-41[4].jpg",
+      "sha256": "a1475b39e6809e6e724aedcc9a6883f57ca9bfcbc4dc26d33dc882af7ddc945b",
+      "photoId": "kitchen-025",
+      "category": "Meals"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-42.jpg",
+      "sha256": "44cf4ede6e475c4abb219dc9563e25050245488e9ba0251cc25373c21f57d8bf",
+      "photoId": "kitchen-026",
+      "category": "Salads"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-42[1].jpg",
+      "sha256": "71191f380cc2971c193779ef8625a3245c8d72fec5cf9195387448af08cb35e2",
+      "photoId": "kitchen-027",
+      "category": "Bowls"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-42[2].jpg",
+      "sha256": "e7507d8a2ecf75019eb1c27b2dd10956c57bb12da86400691164cb9c311f5b3e",
+      "photoId": "kitchen-028",
+      "category": "Bowls"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-07-42[3].jpg",
+      "sha256": "7e71719fd989b702a1a2f6467c8853b1a744d1f97e8f07f78a15fc6a3320028f",
+      "photoId": "kitchen-029",
+      "category": "Sides"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-20.jpg",
+      "sha256": "117de65449f92bb3eeb5344ab0dfe1354b946d5558b9441046f4a15ffa227346",
+      "photoId": "kitchen-030",
+      "category": "Bowls"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-20[1].jpg",
+      "sha256": "241c581c93da208e9f2df1d80f5da2f815e1f395df62b9a861efff4090f9ba0c",
+      "photoId": "kitchen-031",
+      "category": "Sandwiches"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-21.jpg",
+      "sha256": "9a6972dd14a569470ca7406cf2149cd86c4c6f10d88e49c8c6185b7240290a97",
+      "photoId": "kitchen-032",
+      "category": "Sandwiches"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-21[1].jpg",
+      "sha256": "f4f89d3d4287190b074a901f50d2c8d2be1576e4c6a3c66e783dde4f44805848",
+      "photoId": "kitchen-033",
+      "category": "Sides"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-21[2].jpg",
+      "sha256": "6d4aff180361ffa03db22ccb4eb7406cb4b2702e84423e327aa3eecd77757d43",
+      "photoId": "kitchen-034",
+      "category": "Bowls"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-21[3].jpg",
+      "sha256": "2d87ecfaf90834e0f28b83595b23c779238664880e279f9de374a056a0d9cb4b",
+      "photoId": "kitchen-035",
+      "category": "Bowls"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-21[4].jpg",
+      "sha256": "8e48cca3481b256921d9ff5f8a78e387b3bdd78634c9900255246179bc41285a",
+      "photoId": "kitchen-036",
+      "category": "Bowls"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-21[5].jpg",
+      "sha256": "23040f7cc77e3f1ca64222c0a47fc3e72f37e7cf8a622082b514ac8ebd514a5d",
+      "photoId": "kitchen-037",
+      "category": "Sandwiches"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-21[6].jpg",
+      "sha256": "862c54545d686c46ec728903f8a3d6bb0e6ed89e4e83117b3427c9464ef69284",
+      "photoId": "kitchen-038",
+      "category": "Sandwiches"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-21[7].jpg",
+      "sha256": "f2366d226ccfd7bcb82e4c670c8b4a5b26ff894b916dc128fc49a50a9e462947",
+      "photoId": "kitchen-039",
+      "category": "Bowls"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-21[8].jpg",
+      "sha256": "650edcfc0b62af11ebdf420ce6cb4777a746848f8769d7756610151c57d38984",
+      "photoId": "kitchen-040",
+      "category": "Bowls"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-22.jpg",
+      "sha256": "d1cd99b3cd6754743185cd2caab8a9efb858082f45fd2520b4ddb12eec17c1ea",
+      "photoId": "kitchen-041",
+      "category": "Drinks"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-22[1].jpg",
+      "sha256": "bdbde3bb65f80b28b0bbbc3e5a7565f071fb50e9c06acfa208da2dcd3fe3f1cb",
+      "photoId": "kitchen-042",
+      "category": "Sandwiches"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-22[2].jpg",
+      "sha256": "d65411ddde6af0d2d601dc0273cb99e74bede18b29aaa04c64c92d498257ace5",
+      "photoId": "kitchen-043",
+      "category": "Bowls"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-22[3].jpg",
+      "sha256": "48e864f7892d7788965e209cde8a76bf5e8abdd14c7f17e478f18fc977a45a9d",
+      "photoId": "kitchen-044",
+      "category": "Sandwiches"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-22[4].jpg",
+      "sha256": "3dbe898d00765077441667755b4a82d0b46dd2156d8b14276beda251d17fc2ac",
+      "photoId": "kitchen-045",
+      "category": "Sandwiches"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-22[5].jpg",
+      "sha256": "5b01e18a272254729ba6623cc385be37b2851880e31c135e565347dd145624f8",
+      "photoId": "kitchen-046",
+      "category": "Sandwiches"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-22[6].jpg",
+      "sha256": "5924d19ad882882855a2b30b2eecd3ff98fb38756e7aba54f29069bb73808fb7",
+      "photoId": "kitchen-047",
+      "category": "Sandwiches"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-23.jpg",
+      "sha256": "0f9b46cd4077df486d48dfd87ae5e292b33c5da1f74eadc9176c3739b0d06a22",
+      "photoId": "kitchen-048",
+      "category": "Drinks"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-23[1].jpg",
+      "sha256": "e570da4581efc524d180ce2fb9acdb7c45a58ae8c6669cd5c81c96109edfa71a",
+      "photoId": "kitchen-049",
+      "category": "Drinks"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-23[2].jpg",
+      "sha256": "4d4ea8902e954105f23ecc7e06f9ed6d347a75de7ab844e7b4f42b842c60b196",
+      "photoId": "kitchen-050",
+      "category": "Drinks"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-23[3].jpg",
+      "sha256": "b685a01d6e8612e7347094123384e3087d5f02e5b97cf5828f87adf90fc37a70",
+      "photoId": "kitchen-051",
+      "category": "Sides"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-23[4].jpg",
+      "sha256": "bf560cfcb5804a92b38b887116dee638ab9df35d14cf95aea067dca0a94104f4",
+      "photoId": "kitchen-052",
+      "category": "Pasta"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-23[5].jpg",
+      "sha256": "df8eec24cc22996443105c07beda4e81bd532d965557e6a674f436f98732224c",
+      "photoId": "kitchen-053",
+      "category": "Pasta"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-23[6].jpg",
+      "sha256": "6b765271b6ba328556b5dcc2e063469b62af18d0272f0fa6a1f0055572b303bd",
+      "photoId": "kitchen-054",
+      "category": "Meals"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-24.jpg",
+      "sha256": "019dfe9d01f80aefb6a02d64ef709c7da381bbc69aa782ba29387d81da83e041",
+      "photoId": "kitchen-055",
+      "category": "Drinks"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-24[1].jpg",
+      "sha256": "9aa0395ea160e5988d2357a46019b80323ebfc8f5a514b2479bc011bdb19acda",
+      "photoId": "kitchen-056",
+      "category": "Drinks"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-24[2].jpg",
+      "sha256": "b1fdee79b9b7a8c807b5e100e846bbf7a538917fc9fa21041148670c4cd450d3",
+      "photoId": "kitchen-057",
+      "category": "Pasta"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-24[3].jpg",
+      "sha256": "99a632ab17a71cd9c32a26bc44da5cbd0e80afc605cb7072c1b543549a25cd1c",
+      "photoId": "kitchen-058",
+      "category": "Meals"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-24[4].jpg",
+      "sha256": "16df5b0634246888c3f86d21c837b641f5df973ca1a3f5cf547cc3df78bfcedb",
+      "photoId": "kitchen-059",
+      "category": "Meals"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-36.jpg",
+      "sha256": "a6cfd80768276aa106aa202ab2adc81475dbabff2946d7376d1d9b9ecd7136e3",
+      "photoId": "kitchen-060",
+      "category": "Salads"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-36[1].jpg",
+      "sha256": "b3292ec942070362cdec94906e991a5d5839ad785ce1c84d1487ee6c952fbfd0",
+      "photoId": "kitchen-061",
+      "category": "Meals"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-36[2].jpg",
+      "sha256": "5937ad914803a7c2c82693b606061500ac218df89270e34a88c680602d291eb1",
+      "photoId": "kitchen-062",
+      "category": "Meals"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-36[3].jpg",
+      "sha256": "4b778561abd5b9e581ebafa9a6374e90249bdfa0c1bfa9ade2c74ee62dc91add",
+      "photoId": "kitchen-063",
+      "category": "Meals"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-36[4].jpg",
+      "sha256": "fde06dc82b52bd836eadd0594972a18db46ed329fe7db0f6a0fd45ea7b76c6f1",
+      "photoId": "kitchen-064",
+      "category": "Salads"
+    },
+    {
+      "source": "PHOTO-2025-02-27-19-08-36[5].jpg",
+      "sha256": "1833ac019c251548c8f11b565b6a7c2fd1733a8ab60709621b0c2041f03574dd",
+      "photoId": "kitchen-065",
+      "category": "Salads"
+    },
+    {
+      "source": "PHOTO-2025-03-12-18-54-35.jpg",
+      "sha256": "e104c65fa281a8810ab2f31f7e2688ad2c95429020285c60811bfcb5abd9dab9",
+      "photoId": "kitchen-066",
+      "category": "Pasta"
+    },
+    {
+      "source": "PHOTO-2025-03-12-18-54-36.jpg",
+      "sha256": "ff30034ce5cb90846a596db802c10b9ea41fdcc91fa00d8769ae1000d29f6423",
+      "photoId": "kitchen-067",
+      "category": "Pasta"
+    },
+    {
+      "source": "PHOTO-2025-03-12-18-54-36[1].jpg",
+      "sha256": "74281b10b628d4432c8488245ddc8b552a035881f3731cbb2cde4f3e8d345119",
+      "photoId": "kitchen-068",
+      "category": "Pasta"
+    },
+    {
+      "source": "PHOTO-2025-03-12-18-58-24.jpg",
+      "sha256": "2f92f8fbf6a77260524e2b564aacdee1728f83bf5001babf30a542a09df0aaa6",
+      "photoId": "kitchen-069",
+      "category": "Bowls"
+    },
+    {
+      "source": "PHOTO-2025-03-12-18-58-24[1].jpg",
+      "sha256": "d4f06c645650efcd3694c9aea64ce0abaa28925dfa62766f9bd3da310f179290",
+      "photoId": "kitchen-070",
+      "category": "Bowls"
+    },
+    {
+      "source": "PHOTO-2025-03-12-19-01-42.jpg",
+      "sha256": "bf9375f4507611d104161dc70ab79ad04ad9d9c62423cce6f4a444351069170a",
+      "photoId": "kitchen-071",
+      "category": "Bowls"
+    },
+    {
+      "source": "PHOTO-2025-03-12-19-03-56.jpg",
+      "sha256": "9903676361917d46164a37ec0c198d699855b5a39546a61eba024d5fb3366edc",
+      "photoId": "kitchen-072",
+      "category": "Meals"
+    },
+    {
+      "source": "PHOTO-2025-03-13-11-21-01.jpg",
+      "sha256": "d91930bbe2b4b6c37014fec0c29fb3faf562dbea79824b436638e92bc14f9880",
+      "photoId": "kitchen-073",
+      "category": "Salads"
+    },
+    {
+      "source": "PHOTO-2025-03-13-11-21-01[1].jpg",
+      "sha256": "7e76c5718b7ce59e3be951342da90cf06798efdd6285f4bf89d7bd593892c805",
+      "photoId": "kitchen-074",
+      "category": "Wraps"
+    },
+    {
+      "source": "PHOTO-2025-03-17-13-06-57.jpg",
+      "sha256": "48478047e3e34c60eb2a22cb616c4a897ae1ea23cc7d60f028195962bb41c20d",
+      "photoId": "kitchen-075",
+      "category": "Salads"
+    },
+    {
+      "source": "PHOTO-2025-03-17-13-06-57[1].jpg",
+      "sha256": "d91930bbe2b4b6c37014fec0c29fb3faf562dbea79824b436638e92bc14f9880",
+      "duplicateOf": "kitchen-073"
+    }
+  ],
+  "mealExamples": {
+    "potato-wedges": "kitchen-029",
+    "peri-peri-potato-wedges": "kitchen-033",
+    "falafel-and-hummus": "kitchen-051",
+    "grilled-paneer-salad": "kitchen-005",
+    "peri-peri-paneer-salad": "kitchen-022",
+    "watermelon-feta-paneer-salad": "kitchen-064",
+    "pesto-pasta-paneer-salad": "kitchen-053",
+    "creamy-paneer-salad": "kitchen-006",
+    "grilled-chicken-salad": "kitchen-026",
+    "peri-peri-chicken-salad": "kitchen-008",
+    "watermelon-feta-chicken-salad": "kitchen-064",
+    "pesto-pasta-chicken-salad": "kitchen-053",
+    "caesar-salad": "kitchen-026",
+    "makhani-paneer-meal": "kitchen-059",
+    "paneer-tikka-meal": "kitchen-019",
+    "peri-peri-paneer-meal": "kitchen-063",
+    "pesto-paneer-meal": "kitchen-061",
+    "garden-spinach-paneer-meal": "kitchen-061",
+    "creamy-paneer-meal": "kitchen-063",
+    "makhani-chicken-meal": "kitchen-054",
+    "chicken-tikka-meal": "kitchen-072",
+    "peri-peri-chicken-meal": "kitchen-062",
+    "pesto-chicken-meal": "kitchen-072",
+    "garden-spinach-chicken-meal": "kitchen-072",
+    "creamy-chicken-meal": "kitchen-007",
+    "grilled-paneer-wrap": "kitchen-009",
+    "peri-peri-paneer-wrap": "kitchen-014",
+    "paneer-makhani-wrap": "kitchen-003",
+    "hummus-paneer-wrap": "kitchen-016",
+    "paneer-tikka-wrap": "kitchen-018",
+    "grilled-chicken-wrap": "kitchen-012",
+    "peri-peri-chicken-wrap": "kitchen-010",
+    "chicken-makhani-wrap": "kitchen-004",
+    "hummus-chicken-wrap": "kitchen-023",
+    "chicken-tikka-wrap": "kitchen-020",
+    "paneer-hummus-power-bowl": "kitchen-011",
+    "peri-peri-paneer-cheesy-bowl": "kitchen-021",
+    "asian-paneer-power-bowl": "kitchen-021",
+    "chicken-hummus-power-bowl": "kitchen-043",
+    "peri-peri-chicken-cheesy-bowl": "kitchen-024",
+    "asian-chicken-power-bowl": "kitchen-027",
+    "masala-paneer-sandwich": "kitchen-031",
+    "falafel-hummus-sandwich": "kitchen-038",
+    "peri-peri-paneer-sandwich": "kitchen-037",
+    "grilled-chicken-sandwich": "kitchen-042",
+    "masala-chicken-sandwich": "kitchen-046",
+    "peri-peri-chicken-sandwich": "kitchen-044",
+    "egg-sandwich": "kitchen-045",
+    "rich-thick-chocolate-smoothie": "kitchen-050",
+    "royal-blueberry-smoothie": "kitchen-056",
+    "mixed-berries-smoothie": "kitchen-056",
+    "mango-smoothie": "kitchen-055"
+  },
+  "unmatchedMeals": [
+    "french-fries",
+    "peri-peri-french-fries",
+    "strawberry-smoothie"
+  ]
+}

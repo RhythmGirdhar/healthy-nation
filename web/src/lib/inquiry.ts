@@ -15,7 +15,9 @@ export const EMPTY_DRAFT: InquiryDraft = {
   items: [],
   planId: null,
   requestedDate: "",
+  cateringDate: "",
   planStartDate: "",
+  pendingReview: [],
   purpose: "meals",
   headcount: "",
 };
@@ -30,8 +32,8 @@ function calendarDate(input: unknown, path: string): string {
 export function parseDraft(input: unknown): InquiryDraft {
   try {
     const value = record(input, "draft", [
-      "version", "catalogRevision", "items", "planId", "requestedDate", "planStartDate", "purpose", "headcount",
-    ]);
+      "version", "catalogRevision", "items", "planId", "requestedDate", "cateringDate", "planStartDate", "pendingReview", "purpose", "headcount",
+    ], ["cateringDate", "pendingReview"]);
     if (value.version !== 2) throw new Error("version: Unsupported draft version; start a new request");
     let catalogRevision: string | null = null;
     if (value.catalogRevision !== null) {
@@ -58,14 +60,20 @@ export function parseDraft(input: unknown): InquiryDraft {
     ) {
       throw new Error("headcount: Use an empty value or a positive safe integer string");
     }
+    const purpose = choice(value.purpose, "purpose", ["meals", "plan", "catering", "general"]);
+    const legacyCateringDate = value.cateringDate === undefined && purpose === "catering";
+    const pendingReview = value.pendingReview === undefined ? [] : array(value.pendingReview, "pendingReview",
+      (entry, path) => choice(entry, path, ["meals", "plan"]));
     return {
       version: 2,
       catalogRevision,
       items,
       planId: value.planId === null ? null : identifier(value.planId, "planId"),
-      requestedDate: calendarDate(value.requestedDate, "requestedDate"),
+      requestedDate: legacyCateringDate ? "" : calendarDate(value.requestedDate, "requestedDate"),
+      cateringDate: calendarDate(value.cateringDate === undefined ? (legacyCateringDate ? value.requestedDate : "") : value.cateringDate, "cateringDate"),
       planStartDate: calendarDate(value.planStartDate, "planStartDate"),
-      purpose: choice(value.purpose, "purpose", ["meals", "plan", "catering", "general"]),
+      pendingReview: [...new Set(pendingReview)],
+      purpose,
       headcount: value.headcount,
     };
   } catch (error) {
@@ -115,7 +123,7 @@ export function buildInquiryMessage(input: InquiryDraft, snapshot: PublicCatalog
   const draft = parseDraft(input);
   const meals = draft.purpose === "meals" ? selectedMeals(draft, snapshot) : [];
   const plan = draft.purpose === "plan" ? selectedPlan(draft, snapshot) : null;
-  const activeDate = draft.purpose === "plan" ? draft.planStartDate : draft.purpose === "general" ? "" : draft.requestedDate;
+  const activeDate = draft.purpose === "plan" ? draft.planStartDate : draft.purpose === "catering" ? draft.cateringDate : draft.purpose === "meals" ? draft.requestedDate : "";
   const dateLabel = draft.purpose === "plan" ? "Requested start date" : "Requested date";
   if (activeDate && activeDate < getLocalCalendarDate(now)) {
     throw new Error(`${dateLabel} is in the past; choose today or a future date`);
@@ -173,6 +181,7 @@ export function getHandoffDecision(
     if (draft.purpose === "general" || draft.purpose === "catering") {
       if (contact.generalInquiriesEnabled !== true) return blocked("General and catering inquiries are not enabled yet.");
     } else {
+      if (draft.pendingReview.includes(draft.purpose)) return blocked("Review the updated details for this request before opening WhatsApp.");
       if (contact.offerRequestsEnabled !== true) return blocked("Live meal and plan requests are not enabled. You can still ask a general question.");
       if (snapshot.schemaVersion !== 1) return blocked("This catalog version is unsupported. Refresh the page before requesting an offer.");
       if (snapshot.isPreview !== false || (draft.purpose === "meals"
@@ -207,20 +216,22 @@ export function getHandoffDecision(
 
 export function reconcileDraft(input: InquiryDraft, previous: PublicCatalog, current: PublicCatalog): Reconciliation {
   const draft = parseDraft(input);
-  const issues: string[] = [];
+  const mealIssues: string[] = [];
+  const planIssues: string[] = [];
   if ((draft.items.length > 0 || draft.planId !== null) && draft.catalogRevision !== previous.publication.revision) {
-    issues.push("The saved request came from a different catalog. Review all selections against the refreshed menu.");
+    if (draft.items.length) mealIssues.push("This saved request uses an older menu. Review the current meal details.");
+    if (draft.planId) planIssues.push("This saved request uses an older menu. Review the current plan details.");
   }
   for (const item of draft.items) {
     const before = previous.meals.find((meal) => meal.id === item.mealId);
     const after = current.meals.find((meal) => meal.id === item.mealId);
     if (!after) {
-      issues.push(`"${before?.name ?? item.mealId}" was removed. Remove this selection or choose a current meal.`);
+      mealIssues.push(`"${before?.name ?? item.mealId}" was removed. Remove this selection or choose a current meal.`);
       continue;
     }
-    if (!after.available) issues.push(`"${after.name}" is unavailable. Remove it or ask a general question.`);
-    if (!after.options.includes(item.option)) issues.push(`"${after.name}" no longer supports "${item.option}". Choose a current option.`);
-    if (!before) issues.push(`Review the current details for "${after.name}"; the previous catalog did not contain this meal.`);
+    if (!after.available) mealIssues.push(`"${after.name}" is unavailable. Remove it or ask a general question.`);
+    if (!after.options.includes(item.option)) mealIssues.push(`"${after.name}" no longer supports "${item.option}". Choose a current option.`);
+    if (!before) mealIssues.push(`Review the current details for "${after.name}"; the previous catalog did not contain this meal.`);
     else {
       const terms = (meal: Meal) => ({
         name: meal.name, description: meal.description, price: meal.price, currency: meal.currency,
@@ -228,16 +239,16 @@ export function reconcileDraft(input: InquiryDraft, previous: PublicCatalog, cur
         options: meal.options, isSample: meal.isSample, available: meal.available,
       });
       if (JSON.stringify(terms(before)) !== JSON.stringify(terms(after))) {
-        issues.push(`The price, options or food details for "${after.name}" changed. Review the current terms.`);
+        mealIssues.push(`The price, options or food details for "${after.name}" changed. Review the current terms.`);
       }
     }
   }
   if (draft.planId !== null) {
     const before = previous.plans.find((plan) => plan.id === draft.planId);
     const after = current.plans.find((plan) => plan.id === draft.planId);
-    if (!after) issues.push(`"${before?.name ?? draft.planId}" was removed. Choose a current plan.`);
+    if (!after) planIssues.push(`"${before?.name ?? draft.planId}" was removed. Choose a current plan.`);
     else if (!before || JSON.stringify(before) !== JSON.stringify(after)) {
-      issues.push(`The price, cadence, choices or terms for "${after.name}" changed. Review the current plan.`);
+      planIssues.push(`The price, cadence, choices or terms for "${after.name}" changed. Review the current plan.`);
     }
   }
   if (
@@ -245,11 +256,20 @@ export function reconcileDraft(input: InquiryDraft, previous: PublicCatalog, cur
     previous.publication.validFrom !== current.publication.validFrom ||
     previous.publication.validUntil !== current.publication.validUntil
   ) {
-    issues.push("The catalog's publication status or validity window changed. Review availability before continuing.");
+    const issue = "The menu's availability window changed. Review availability before continuing.";
+    if (draft.items.length) mealIssues.push(issue);
+    if (draft.planId) planIssues.push(issue);
   }
+  const pendingReview = new Set(draft.pendingReview);
+  if (mealIssues.length) pendingReview.add("meals");
+  if (planIssues.length) pendingReview.add("plan");
+  const active = draft.purpose === "meals" || draft.purpose === "plan" ? draft.purpose : null;
+  const issues = active === "meals" ? mealIssues : active === "plan" ? planIssues : [];
+  const needsReview = active !== null && pendingReview.has(active);
+  if (needsReview && !issues.length) issues.push("Menu details changed. Review your current selections before continuing.");
   return {
-    draft: { ...draft, catalogRevision: current.publication.revision },
+    draft: { ...draft, catalogRevision: current.publication.revision, pendingReview: [...pendingReview] },
     issues: [...new Set(issues)],
-    needsReview: issues.length > 0,
+    needsReview,
   };
 }

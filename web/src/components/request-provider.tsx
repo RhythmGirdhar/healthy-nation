@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useReducer, useRef, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useReducer, useRef, useState, type ReactNode } from "react";
 import { EMPTY_DRAFT, parseDraft, reconcileDraft } from "@/lib/inquiry";
 import { parsePublicCatalog } from "@/lib/catalog-client";
 import type { ContactSettings, InquiryDraft, PublicCatalog, Reconciliation } from "@/lib/types";
@@ -33,17 +33,27 @@ type Action =
   | { type: "acknowledge" };
 
 function emptyDraft(snapshot: PublicCatalog): InquiryDraft {
-  return { ...EMPTY_DRAFT, items: [], catalogRevision: snapshot.publication.revision };
+  return { ...EMPTY_DRAFT, items: [], pendingReview: [], catalogRevision: snapshot.publication.revision };
+}
+
+function needsActiveReview(draft: InquiryDraft) {
+  return (draft.purpose === "meals" || draft.purpose === "plan") && draft.pendingReview.includes(draft.purpose);
 }
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "restore": {
       const changed = action.draft.catalogRevision !== state.snapshot.publication.revision;
+      const draft = { ...action.draft, pendingReview: [...action.draft.pendingReview] };
+      if (changed) {
+        if (draft.items.length && !draft.pendingReview.includes("meals")) draft.pendingReview.push("meals");
+        if (draft.planId && !draft.pendingReview.includes("plan")) draft.pendingReview.push("plan");
+      }
+      const needsReview = needsActiveReview(draft);
       return {
-        ...state, ready: true, draft: action.draft, storageWarning: action.warning,
-        needsReview: changed,
-        issues: changed ? ["This saved draft refers to a different catalog revision. Check the current catalog and review your selections before handoff."] : [],
+        ...state, ready: true, draft, storageWarning: action.warning,
+        needsReview,
+        issues: needsReview ? ["This saved request needs a menu check. Review the current details before continuing."] : [],
       };
     }
     case "storage-error":
@@ -52,19 +62,25 @@ function reducer(state: State, action: Action): State {
       if (!state.ready) return state;
       try {
         const draft = parseDraft(action.update(state.draft));
+        const needsReview = needsActiveReview(draft);
         return {
           ...state, draft, change: state.change + 1, checkedAt: null,
+          needsReview,
+          issues: needsReview ? (draft.purpose === state.draft.purpose && state.issues.length ? state.issues : ["Menu details changed. Review your current selections before continuing."]) : [],
           undo: action.reversible ? state.draft : null,
           status: action.message, error: "",
         };
       } catch (failure) {
         return { ...state, error: failure instanceof Error ? failure.message : "That change could not be saved. Check the quantity, date, and selected option, then try again." };
       }
-    case "undo":
+    case "undo": {
+      const needsReview = state.undo ? needsActiveReview(state.undo) : state.needsReview;
       return state.undo ? {
         ...state, draft: state.undo, undo: null, change: state.change + 1, checkedAt: null,
+        needsReview, issues: needsReview ? ["Review the restored selections against the current menu."] : [],
         status: "Your previous selection has been restored.", error: "",
       } : state;
+    }
     case "dismiss-undo":
       return { ...state, undo: null };
     case "refresh-start":
@@ -75,9 +91,7 @@ function reducer(state: State, action: Action): State {
       }
       return {
         ...state, snapshot: action.snapshot,
-        draft: action.result.needsReview
-          ? { ...action.result.draft, catalogRevision: state.draft.catalogRevision }
-          : action.result.draft,
+        draft: action.result.draft,
         issues: action.result.issues, needsReview: action.result.needsReview,
         checkedAt: action.checkedAt, refreshing: false, undo: null,
         status: action.result.needsReview ? "Catalog changes need your review." : "The current catalog has been checked. Availability still needs team confirmation.",
@@ -87,7 +101,8 @@ function reducer(state: State, action: Action): State {
     case "acknowledge":
       return {
         ...state,
-        draft: { ...state.draft, catalogRevision: state.snapshot.publication.revision },
+        draft: { ...state.draft, catalogRevision: state.snapshot.publication.revision,
+          pendingReview: state.draft.pendingReview.filter((purpose) => purpose !== state.draft.purpose) },
         needsReview: false, undo: null, change: state.change + 1,
         status: "Catalog changes acknowledged. Invalid or unavailable selections still need correction.",
       };
@@ -103,6 +118,7 @@ type RequestContextValue = State & {
   acknowledgeCatalog: () => void;
   rememberMenu: (query: string, position: number) => void;
   takeMenuPosition: (query: string) => number | null;
+  menuHref: string;
 };
 const RequestContext = createContext<RequestContextValue | null>(null);
 
@@ -114,7 +130,8 @@ export function RequestProvider({ catalog, contact, children }: {
     storageWarning: "", status: "", error: "", issues: [], needsReview: false,
     refreshing: false, checkedAt: null, change: 0, undo: null,
   });
-  const menuPosition = useRef<{ query: string; position: number } | null>(null);
+  const menuPosition = useRef<{ query: string; position: number | null } | null>(null);
+  const [menuHref, setMenuHref] = useState("/menu/");
   const fetchController = useRef<AbortController | null>(null);
 
   useEffect(() => {
@@ -179,12 +196,16 @@ export function RequestProvider({ catalog, contact, children }: {
       dismissUndo: () => dispatch({ type: "dismiss-undo" }),
       acknowledgeCatalog: () => dispatch({ type: "acknowledge" }),
       refreshCatalog,
-      rememberMenu: (query, position) => { menuPosition.current = { query, position }; },
+      rememberMenu: (query, position) => {
+        menuPosition.current = { query, position };
+        setMenuHref(`/menu/${query ? `?${query}` : ""}`);
+      },
       takeMenuPosition: (query) => {
         const saved = menuPosition.current;
-        menuPosition.current = null;
+        if (saved) menuPosition.current = { ...saved, position: null };
         return saved?.query === query ? saved.position : null;
       },
+      menuHref,
     }}>
       {children}
       <div className="sr-only" role="status" aria-live="polite" aria-atomic="true">{state.status}</div>

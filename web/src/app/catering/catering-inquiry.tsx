@@ -26,7 +26,7 @@ export function CateringInquiry({ catalog }: { catalog: PublicCatalog }) {
       const prepared = getHandoffDecision({
         ...EMPTY_DRAFT,
         purpose: "catering",
-        requestedDate: date,
+        cateringDate: date,
         headcount,
       }, catalog, business.contact, { fresh: false });
       if (!prepared.message) {
